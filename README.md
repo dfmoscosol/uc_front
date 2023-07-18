@@ -1,6 +1,6 @@
-## Factory Bike - Panel de Administración
+## Pentagono UC
 
-Esta aplicación ha sida creada para administrar un sistema de recompensas, donde los administardores de Factory Bike podrán manejar vendedores, recompensas, ingreso de items, puntos, campañas.
+Esta aplicación ha sida creada para evaluar las competencias TIC docentes en la Universidad de Cuenca
 
 ## Tecnologías
 
@@ -11,19 +11,6 @@ Esta aplicación ha sida creada para administrar un sistema de recompensas, dond
 - [Redux Toolkit](https://redux-toolkit.js.org/) Gestor de estados de la aplicación.
 - [Axios](https://axios-http.com/docs/intro) Cliente para peticiones HTTP
 
-## Credenciales (dev environment)
-
-Administrador
-
-```
-email: admin@admin.com
-password: 123456
-```
-
-## Características
-
-- _Sección autenticación_: Ingreso a la aplicación únciamente para administradores
-- TODO
 
 ## Instalación
 
@@ -61,20 +48,3 @@ npm run dev
 ```
 
 Navega a `http://localhost:3000/`. Y verifica el funcionamiento de la aplicación.
-
-## Aspectos importantes
-
-## Estructura de directorios
-
-## Contacto de Soporte
-
-El código fuente de esta aplicación esta escrito por Ariel Bravo (Desarrollador Frontend de Eitecknologia) en conjunto con el equipo de Eiteck.
-
-- Sitio web - [arielbravo](https://www.arielbravo.com/en/)
-- GitHub - [arielBravoEc](https://github.com/arielBravoEc)
-- LinkedIn - [ariel-bravo-chuqui-6b49321b8](https://www.linkedin.com/in/ariel-bravo-chuqui-6b49321b8/)
-- Email - [arielbravo.ec@gmail.com](mailto:arielbravo.ec@gmail.com)
-
-## Licencia
-
-El código fuente de esta aplicación y todos los recursos asociados únicamente pueden ser usados bajo consentimiento del equipo de Eiteck.
