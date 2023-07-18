@@ -1,7 +1,6 @@
 import { ReactNode, FC } from "react";
 
 //images components
-import RightSidebar from "./rightSidebar.layout";
 import LeftSidebar from "./leftSidebar.layout";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
@@ -16,7 +15,6 @@ const Skeleton = ({ children }: Props): JSX.Element => {
     <div className="theme-blush">
       <div className="overlay"></div>
       <LeftSidebar />
-      {/* <RightSidebar /> */}
 
       
       <section className="content">

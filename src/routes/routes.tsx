@@ -16,9 +16,9 @@ const RoutesApp = () => {
   return (
     <Skeleton>
       <Routes>
-      <Route path={INTERNAL_ROUTES.HOME} element={<HomePage />} />
-      <Route path={INTERNAL_ROUTES.ENCUESTA} element={<EncuestaPage />} />
-      <Route path={INTERNAL_ROUTES.RESULTADOS} element={<ResultadosPage />} />
+        <Route path={INTERNAL_ROUTES.HOME} element={<HomePage />} />
+        <Route path={INTERNAL_ROUTES.ENCUESTA} element={<EncuestaPage />} />
+        <Route path={INTERNAL_ROUTES.RESULTADOS} element={<ResultadosPage />} />
       </Routes>
     </Skeleton>
   );

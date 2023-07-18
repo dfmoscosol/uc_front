@@ -25,7 +25,7 @@ const EncuestaPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   // constants
   const {
-    encuesta: { pageTitle, breadcrumbs },
+    encuesta: { pageTitle},
   } = BREADCRUMBS_ITEMS;
   const {
     register,
@@ -97,7 +97,7 @@ const EncuestaPage = (): JSX.Element => {
 
   return (
     <>
-      <Header title={pageTitle} breadcrumbs={breadcrumbs} />
+      <Header title={pageTitle} />
       {!dataPreguntas ? (
         <>
           <Loader></Loader>
