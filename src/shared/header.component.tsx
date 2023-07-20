@@ -33,7 +33,7 @@ const Header: React.FC<Props> = ({
   return (
     <div className="block-header" style={{ marginBottom: "0" }}>
       <div className="row">
-        <div className="col-lg-7 col-md-6 col-sm-12">
+        <div className="col-lg-12 col-md-12 col-sm-12">
           <h2 style={{ color: "#002856" }}>{title}</h2>
           {/* <ul className="breadcrumb mt-2">
             <li className="breadcrumb-item">

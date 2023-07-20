@@ -18,24 +18,26 @@ import { login } from "../../redux/auth/login.slice";
 
 const HomePage = (): JSX.Element => {
   // local variables
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   // constants
   const {
-    home: { pageTitle, breadcrumbs },
+    home: { pageTitle },
   } = BREADCRUMBS_ITEMS;
 
 
   return (
     <>
-      <Header title={pageTitle} breadcrumbs={breadcrumbs} />
+    <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3",borderTop:"1px solid #d7dfe3" }}>
+      <Header title={pageTitle} />
+      </div>
       {false ? (
         <>
           <Loader></Loader>
         </>
       ) : (
         <>
+        <div className="pb-5" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3" }}>
           <YoutubeVideo></YoutubeVideo>
+          </div>
         </>
       )}
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const BREADCRUMBS_ITEMS = {
   home: {
-    pageTitle: "Inicio",
+    pageTitle: "Pentágono de Competencias para el Desarrollo Profesional Docente",
     breadcrumbs: [
      
     ],
@@ -12,7 +12,7 @@ const BREADCRUMBS_ITEMS = {
   /* SELLERS */
 
   encuesta: {
-    pageTitle: "Encuesta",
+    pageTitle: "Cuestionario de Competencias",
     breadcrumbs: [
       {
         title: "Encuesta",
