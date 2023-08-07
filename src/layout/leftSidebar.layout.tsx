@@ -20,12 +20,10 @@ import { validateEncuesta } from "../redux/encuesta/validateEncuesta.slice";
 const LeftSidebar = (): JSX.Element => {
   // local variables
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState<boolean>(false);
   const auth = getAuth();
   const a = getUserFromLocalStorage()?.photoUrl;
-  const { encuesta} = useAppSelector((state) => state.encuesta)
   // get store data
 
   // local methods
@@ -49,9 +47,7 @@ const LeftSidebar = (): JSX.Element => {
     }
   }, [navigate, auth, location]);
 
-   useEffect((): void => {
-    dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
-  }, [dispatch]); 
+    
 
   return (
     <>
@@ -103,7 +99,7 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Inicio</span>
               </NavLink>
             </li>
-            <li >{ encuesta? (<></>):(
+            <li >
               <NavLink
                 to={INTERNAL_ROUTES.ENCUESTA}
 
@@ -115,7 +111,7 @@ const LeftSidebar = (): JSX.Element => {
               >
                 <i className="zmdi zmdi-assignment" title="Encuesta"></i>
                 <span>Encuesta</span>
-              </NavLink>)}
+              </NavLink>
             </li>
             <li >
               <NavLink

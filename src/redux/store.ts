@@ -5,6 +5,7 @@ import { facusGetAllReducer } from "./encuesta/getFacultades.slice";
 import { carrerasGetAllReducer } from "./encuesta/getCarreras.slice";
 import { preguntasGetAllReducer } from "./encuesta/getPreguntas.slice";
 import { validateEncuestaReducer } from "./encuesta/validateEncuesta.slice";
+import { postPreguntasReducer } from "./encuesta/postRespuesta.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
@@ -15,6 +16,7 @@ const store = configureStore({
     carreras: carrerasGetAllReducer,
     preguntas: preguntasGetAllReducer,
     encuesta: validateEncuestaReducer,
+    save_encuesta: postPreguntasReducer,
 
   },
 });

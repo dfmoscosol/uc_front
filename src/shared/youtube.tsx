@@ -13,7 +13,7 @@ const YoutubeVideo: React.FC<Props> = ({
         title="YouTube video player"
         width="560"
         height="315"
-        src="https://www.youtube.com/embed/iVIe-wW49zE"
+        src="https://www.youtube-nocookie.com/embed/iVIe-wW49zE"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

@@ -42,8 +42,14 @@ export interface PreguntasState {
     data: Carrera[];
   }
 
+  export interface PostPreguntasResponse {
+    error: string,
+    estado: boolean,
+    respuesta: any,
+  }
+
   export interface RespuestaPostState {
-    Resultado: string;
+    exito: boolean;
   }
   
   export interface ValidarEncuestaState {
