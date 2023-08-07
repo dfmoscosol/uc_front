@@ -28,18 +28,18 @@ const ResultadosPage = (): JSX.Element => {
 
   return (
     <>
-      <Header title={pageTitle} breadcrumbs={breadcrumbs} />
+      <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3", }}><Header title={pageTitle} /></div>
       {false ? (
         <>
           <Loader></Loader>
         </>
       ) : (
         <>
-          <div className="container" >
+          <div className="container" style={{paddingBottom:"10%",background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }} >
             <div className="row" >
               <div className="col-md-8 col-sm-6" style={{ padding: "10px"}} >
                 <div
-                  style={{ background:"", "border-color": "#e0ebf2", "border-width": "1px", "border-style": "solid", padding: "10px", "height": "100%"}}
+                  style={{ background:"#ffffff", borderColor: "#e0ebf2", borderWidth: "1px", borderStyle: "solid", padding: "10px", height: "100%"}}
                 >
                   <RadarChart 
                     data={[
