@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import axiosInstance from "../../services/api.services";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
-import { CarrerasState, RespuestaPostState } from "../utils/encuestaState.model";
+import { CarrerasState, PostPreguntasResponse, RespuestaPostState } from "../utils/encuestaState.model";
 import { EncuestaForm } from "../../data/interfaces/encuesta.model";
 
 const initialState: RespuestaPostState = {
-  Resultado: "",
+  exito: false,
 };
 
 export const postPreguntasSlice = createSlice({
@@ -24,7 +24,7 @@ export const postPreguntasSlice = createSlice({
     ): RespuestaPostState => {
       return {
         ...state,
-        Resultado: action.payload,
+        exito: action.payload,
       };
     },
     postPreguntasFail: (
@@ -40,14 +40,16 @@ export const postPreguntasSlice = createSlice({
 
 export const postPreguntas =
   (form:EncuestaForm): AppThunk =>
+  
   async (dispatch: AppThunkDispatch): Promise<void> => {
     dispatch(postPreguntasRequest());
     try {
-      const { data }: AxiosResponse<RespuestaPostState> = await axiosInstance.post(
+      console.log(form)
+      const { data }: AxiosResponse<PostPreguntasResponse> = await axiosInstance.post(
         "/save_form",
         form
       );
-      dispatch(postPreguntasSuccess(data.Resultado));
+      dispatch(postPreguntasSuccess(data.estado));
     } catch (err) {
       dispatch(postPreguntasFail(err));
     }
@@ -56,4 +58,4 @@ export const postPreguntas =
 export const { postPreguntasSuccess, postPreguntasRequest, postPreguntasFail } =
 postPreguntasSlice.actions;
 
-export const carrerasGetAllReducer = postPreguntasSlice.reducer;
+export const postPreguntasReducer = postPreguntasSlice.reducer;

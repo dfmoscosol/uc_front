@@ -60,7 +60,15 @@
   color: #fff;
 }
 
-.form-group label.error {
+
+
+/* Estilos para el botón de cierre "x" */
+.btn-close.btn-close-white {
+  color: #fff !important;
+  opacity: 1;
+}
+
+.error {
   color: #ee2558;
   font-size: 12px;
 }

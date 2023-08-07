@@ -17,10 +17,6 @@ import $ from "jquery";
       $.each($(".menu .list li.active"), function (a, b) {
         var c = $(b).find("a:eq(0)");
         c.addClass("toggled"), c.next().show();
-      }),
-      a.checkStatuForResize(!0),
-      $(window).resize(function () {
-        a.checkStatuForResize(!1);
       });
   },
   isOpenSideBar: function () {
