@@ -35,6 +35,22 @@ const EncuestaPage = (): JSX.Element => {
     handleSubmit,
     formState: { errors },
   } = useForm<EncuestaForm>();
+  const { data: dataFacus } = useAppSelector((state) => state.facus)
+  const { data: dataCarreras } = useAppSelector((state) => state.carreras)
+  const { encuesta } = useAppSelector((state) => state.encuesta)
+  const { exito } = useAppSelector((state) => state.save_encuesta)
+  const { num_preguntas, data: dataPreguntas } = useAppSelector((state) => state.preguntas)
+  const [secondSelectOptions, setSecondSelectOptions] = useState<{ value: string; label: string; }[]>([]);
+  const [selectFacultad, setselectFacultad] = useState(0);
+  const [selectCarrera, setselectCarrera] = useState(0);
+  const [selectedNumber, setSelectedNumber] = useState(Array(num_preguntas).fill(0));
+  const [errorPreguntas, setErrorPreguntas] = useState(Array(num_preguntas).fill(false));
+  const [errorSelectCarrera, setErrorSelectCarrera] = useState(false);
+  const [errorSelectFacu, setErrorSelectFacu] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const toastRefError = useRef<HTMLDivElement>(null);
+  const toastRefSuccess = useRef<HTMLDivElement>(null);
 
   const onSubmit: SubmitHandler<EncuestaForm> = ({
     cedula,
@@ -71,22 +87,7 @@ const EncuestaPage = (): JSX.Element => {
     }
   };
 
-  const { data: dataFacus } = useAppSelector((state) => state.facus)
-  const { data: dataCarreras } = useAppSelector((state) => state.carreras)
-  const { encuesta } = useAppSelector((state) => state.encuesta)
-  const { exito } = useAppSelector((state) => state.save_encuesta)
-  const { num_preguntas, data: dataPreguntas } = useAppSelector((state) => state.preguntas)
-  const [secondSelectOptions, setSecondSelectOptions] = useState<{ value: string; label: string; }[]>([]);
-  const [selectFacultad, setselectFacultad] = useState(0);
-  const [selectCarrera, setselectCarrera] = useState(0);
-  const [selectedNumber, setSelectedNumber] = useState(Array(num_preguntas).fill(0));
-  const [errorPreguntas, setErrorPreguntas] = useState(Array(num_preguntas).fill(false));
-  const [errorSelectCarrera, setErrorSelectCarrera] = useState(false);
-  const [errorSelectFacu, setErrorSelectFacu] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const toastRefError = useRef<HTMLDivElement>(null);
-  const toastRefSuccess = useRef<HTMLDivElement>(null);
+
 
 
 
@@ -156,11 +157,11 @@ const EncuestaPage = (): JSX.Element => {
   return (
     <>
       <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3", }}><Header title={pageTitle} /></div>
-
-
-      {!dataPreguntas ? (
+      {console.log(dataPreguntas)}
+      
+      {dataPreguntas?.comunicativa.length === 0|| dataPreguntas?.gestion.length === 0||dataPreguntas?.investigativa.length === 0||dataPreguntas?.pedagogica.length === 0||dataPreguntas?.tecnologica.length === 0?  (
         <>
-          <div className="row justify-content-center pb-4" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
+          <div className="row justify-content-center" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
             <div className="col-6">
               <Loader></Loader>
             </div>
@@ -171,8 +172,8 @@ const EncuestaPage = (): JSX.Element => {
         <>
           {encuesta ? (
             <>
-              <div className="row justify-content-center" style={{paddingTop:"5%",paddingBottom:"10%",background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
-                <div className="col-6" style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+              <div className="row justify-content-center" style={{ paddingTop: "5%", paddingBottom: "10%", background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
+                <div className="col-6" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
                   <img
                     src={encuestaRealizada}
                     width="350"
@@ -495,19 +496,6 @@ const EncuestaPage = (): JSX.Element => {
                     </Toast>
                   </div>
                 )}
-                {/* <div className="d-grid gap-2">
-              <button
-                className="btn btn-success btn-lg"
-                type="submit"
-                disabled={isLoading}
-              >
-                <span
-                  className={`${isLoading && "spinner-border spinner-border-sm"
-                    }`}
-                ></span>{" "}
-                {!isLoading ? "CREAR ADMINISTRADOR" : "Cargando..."}
-              </button>
-            </div> */}
 
               </form>
 
