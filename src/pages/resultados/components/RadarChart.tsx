@@ -112,50 +112,50 @@ const RadarChart: React.FC<RadarChartProps> = (props) => {
     responsive: true,
     maintainAspectRatio: false, //para que su tamaño no sea menor al div
     layout: {
-        padding: 5
+      padding: 5
     },
     tooltips: {
-        callbacks: {
-          title: (tooltipItem, data) => data.labels[tooltipItem[0].index]
-        }
+      callbacks: {
+        title: (tooltipItem, data) => data.labels[tooltipItem[0].index]
+      }
     },
     animation: {
       duration: 2
     },
     plugins: {
-        title: {
-          display: props.showTittle,
-          text: 'PENTÁGONO DE COMPETENCIAS',
-          paddingTop: 4
-        },
-        subtitle: {
-          display: false,
-          text: 'AQUÍ VA UN SUBTÍTULO'
-        },
-        legend: {
-          display: props.showLabel,
-          labels: {
-              filter: function (item, chart) {
-                return item.datasetIndex !== datas.length - 4 && item.datasetIndex !== datas.length - 3 && item.datasetIndex !== datas.length - 2 && item.datasetIndex !== datas.length - 1;
-              }
-          }
-        },
-        tooltip: {
-          enabled: true,
-          callbacks: {
-              label: function(context) {
-                let label = context.formattedValue;
-                if (label === "1,5") {
-                    label = "  Momento Explorador";
-                } else if (label === "2,5"){
-                  label = "  Momento Integrador";
-                } else {
-                  label = "  Momento Innovador";
-                }
-                return label;
-              }
-          }
+      title: {
+        display: props.showTittle,
+        text: 'PENTÁGONO DE COMPETENCIAS',
+        paddingTop: 4
+      },
+      subtitle: {
+        display: false,
+        text: 'AQUÍ VA UN SUBTÍTULO'
+      },
+      legend: {
+        display: props.showLabel,
+        labels: {
+            filter: function (item, chart) {
+              return item.datasetIndex !== datas.length - 4 && item.datasetIndex !== datas.length - 3 && item.datasetIndex !== datas.length - 2 && item.datasetIndex !== datas.length - 1;
+            }
         }
+      },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+            label: function(context) {
+              let label = context.formattedValue;
+              if (label === "1,5") {
+                  label = "  Momento Explorador";
+              } else if (label === "2,5"){
+                label = "  Momento Integrador";
+              } else {
+                label = "  Momento Innovador";
+              }
+              return label;
+            }
+        }
+      }
     },
 
     elements: {
@@ -207,10 +207,10 @@ const RadarChart: React.FC<RadarChartProps> = (props) => {
 
   return (
     <>
-        <Radar
-          data={data}
-          options={options}
-        />
+      <Radar
+        data={data}
+        options={options}
+      />
     </>
   );
 };
