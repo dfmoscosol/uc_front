@@ -33,7 +33,11 @@ export const postPreguntasSlice = createSlice({
     ): RespuestaPostState => {
       return {
         ...state,
+        exito: action.payload,
       };
+    },
+    postPreguntasReset: (state): RespuestaPostState => {
+      return initialState;
     },
   },
 });
@@ -55,7 +59,7 @@ export const postPreguntas =
     }
   };
 
-export const { postPreguntasSuccess, postPreguntasRequest, postPreguntasFail } =
+export const { postPreguntasSuccess, postPreguntasRequest, postPreguntasFail,postPreguntasReset } =
 postPreguntasSlice.actions;
 
 export const postPreguntasReducer = postPreguntasSlice.reducer;

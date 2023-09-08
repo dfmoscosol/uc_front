@@ -62,7 +62,7 @@ const LeftSidebar = (): JSX.Element => {
             <i className="zmdi zmdi-menu"></i>
           </button>
           <Link className='logo' to={INTERNAL_ROUTES.HOME} style={{ paddingLeft: "11px" }} >
-            <img src={logo} width="200" alt="Universidad de Cuenca" />
+            <img src={logo} height="78.66px" alt="Universidad de Cuenca" />
           </Link>
         </div>
 

@@ -34,6 +34,9 @@ export const validateEncuestaSlice = createSlice({
         ...state,
       };
     },
+    validateEncuestaReset: (state): ValidarEncuestaState => {
+      return initialState;
+    },
   },
 });
 
@@ -51,7 +54,7 @@ export const validateEncuesta =
       }
     };
 
-export const { validateEncuestaSuccess, validateEncuestaRequest, validateEncuestaFail } =
+export const { validateEncuestaSuccess, validateEncuestaRequest, validateEncuestaFail,validateEncuestaReset } =
   validateEncuestaSlice.actions;
 
 export const validateEncuestaReducer = validateEncuestaSlice.reducer;

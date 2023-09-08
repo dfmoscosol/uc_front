@@ -34,27 +34,30 @@ export const facusGetAllSlice = createSlice({
         ...state,
       };
     },
+    getFacultadesReset: (state): FacultadesState => {
+      return initialState;
+    },
   },
 });
 
 export const getFacus =
   (): AppThunk =>
-  async (dispatch: AppThunkDispatch): Promise<void> => {
-    dispatch(getFacultadesRequest());
-    try {
-      const { data }: AxiosResponse<FacultadesResponse> = await axiosInstance.post(
-        "/facultad_by_id_universidad",
-        {
-          id_universidad: 1,
-        }
-      );
-      dispatch(getFacultadesSuccess(data.respuesta.data));
-    } catch (err) {
-      dispatch(getFacultadesFail(err));
-    }
-  };
+    async (dispatch: AppThunkDispatch): Promise<void> => {
+      dispatch(getFacultadesRequest());
+      try {
+        const { data }: AxiosResponse<FacultadesResponse> = await axiosInstance.post(
+          "/facultad_by_id_universidad",
+          {
+            id_universidad: 1,
+          }
+        );
+        dispatch(getFacultadesSuccess(data.respuesta.data));
+      } catch (err) {
+        dispatch(getFacultadesFail(err));
+      }
+    };
 
-export const { getFacultadesSuccess, getFacultadesRequest, getFacultadesFail } =
-facusGetAllSlice.actions;
+export const { getFacultadesSuccess, getFacultadesRequest, getFacultadesFail, getFacultadesReset } =
+  facusGetAllSlice.actions;
 
 export const facusGetAllReducer = facusGetAllSlice.reducer;

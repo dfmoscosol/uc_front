@@ -13,14 +13,17 @@ import Select from "react-select"
 import Loader from "../../shared/loader.component";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { EncuestaForm, Puntaje } from "../../data/interfaces/encuesta.model";
-import { getFacus } from "../../redux/encuesta/getFacultades.slice";
-import { getCarreras } from "../../redux/encuesta/getCarreras.slice";
-import { getPreguntas } from "../../redux/encuesta/getPreguntas.slice";
-import { postPreguntas } from "../../redux/encuesta/postRespuesta.slice";
+import { getFacultadesReset, getFacus } from "../../redux/encuesta/getFacultades.slice";
+import { getCarreras, getCarrerasReset } from "../../redux/encuesta/getCarreras.slice";
+import { getPreguntas, getPreguntasReset } from "../../redux/encuesta/getPreguntas.slice";
+import { postPreguntas, postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
 import { getUserFromLocalStorage } from "../../services/persistUser.service";
-import { Alert, Toast } from "react-bootstrap";
+import { Toast } from "react-bootstrap";
 import encuestaRealizada from "../../assets/images/encuesta.png";
-import { validateEncuesta } from "../../redux/encuesta/validateEncuesta.slice";
+import { validateEncuesta, validateEncuestaRequest, validateEncuestaReset } from "../../redux/encuesta/validateEncuesta.slice";
+import INTERNAL_ROUTES from "../../data/constants/internalRoutes";
+import { getResultadosReset } from "../../redux/resultados/getResultados.slice";
+import { getPeriodosReset } from "../../redux/resultados/getPeriodos.slice";
 
 const EncuestaPage = (): JSX.Element => {
   // local variables
@@ -35,6 +38,19 @@ const EncuestaPage = (): JSX.Element => {
     handleSubmit,
     formState: { errors },
   } = useForm<EncuestaForm>();
+  
+  useEffect(() => {
+    dispatch(getResultadosReset())
+    dispatch(getPeriodosReset())
+    dispatch(getFacultadesReset())
+    dispatch(getCarrerasReset())
+    dispatch(validateEncuestaReset())
+    dispatch(postPreguntasReset())
+    dispatch(getFacus());
+    dispatch(getPreguntas());
+    dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
+  }, [dispatch]);
+
   const { data: dataFacus } = useAppSelector((state) => state.facus)
   const { data: dataCarreras } = useAppSelector((state) => state.carreras)
   const { encuesta } = useAppSelector((state) => state.encuesta)
@@ -43,8 +59,8 @@ const EncuestaPage = (): JSX.Element => {
   const [secondSelectOptions, setSecondSelectOptions] = useState<{ value: string; label: string; }[]>([]);
   const [selectFacultad, setselectFacultad] = useState(0);
   const [selectCarrera, setselectCarrera] = useState(0);
-  const [selectedNumber, setSelectedNumber] = useState(Array(num_preguntas).fill(0));
-  const [errorPreguntas, setErrorPreguntas] = useState(Array(num_preguntas).fill(false));
+  const [selectedNumber, setSelectedNumber] = useState(Array(80).fill(0));
+  const [errorPreguntas, setErrorPreguntas] = useState(Array(80).fill(false));
   const [errorSelectCarrera, setErrorSelectCarrera] = useState(false);
   const [errorSelectFacu, setErrorSelectFacu] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -59,9 +75,11 @@ const EncuestaPage = (): JSX.Element => {
     console.log("carrera", selectCarrera)
     console.log("facultad", selectFacultad)
     console.log("cedula", cedula)
+    console.log("selectednumbers", selectedNumber)
+    console.log("errores", errorPreguntas)
     console.log("uid", getUserFromLocalStorage()?.uid)
     const puntajes: Puntaje[] = selectedNumber.map((num, index) => ({ id_pregunta: index + 1, puntaje: num }));
-    console.log(puntajes)
+    console.log("puntaje", puntajes)
     if (selectFacultad === 0) {
       setErrorSelectFacu(true)
       setShowErrorAlert(true)
@@ -86,10 +104,6 @@ const EncuestaPage = (): JSX.Element => {
       setShowSuccessAlert(true)
     }
   };
-
-
-
-
 
   const handleFacultadSelectChange = (selectedOption) => {
     const value = selectedOption ? selectedOption.value : '';
@@ -118,11 +132,7 @@ const EncuestaPage = (): JSX.Element => {
     }))
   }, [dataCarreras]);
 
-  useEffect(() => {
-    dispatch(getFacus());
-    dispatch(getPreguntas());
-    dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
-  }, [dispatch]);
+
 
   useEffect((): void => {
     dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
@@ -157,9 +167,9 @@ const EncuestaPage = (): JSX.Element => {
   return (
     <>
       <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3", }}><Header title={pageTitle} /></div>
-      {console.log(dataPreguntas)}
-      
-      {dataPreguntas?.comunicativa.length === 0|| dataPreguntas?.gestion.length === 0||dataPreguntas?.investigativa.length === 0||dataPreguntas?.pedagogica.length === 0||dataPreguntas?.tecnologica.length === 0?  (
+      {console.log(errorPreguntas)}
+
+      {dataPreguntas?.comunicativa.length === 0 || dataPreguntas?.gestion.length === 0 || dataPreguntas?.investigativa.length === 0 || dataPreguntas?.pedagogica.length === 0 || dataPreguntas?.tecnologica.length === 0 ? (
         <>
           <div className="row justify-content-center" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
             <div className="col-6">
@@ -175,6 +185,7 @@ const EncuestaPage = (): JSX.Element => {
               <div className="row justify-content-center" style={{ paddingTop: "5%", paddingBottom: "10%", background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
                 <div className="col-6" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
                   <img
+                  style={{ borderRadius: "8px" }}
                     src={encuestaRealizada}
                     width="350"
                     alt="Cargando Contenido"
@@ -187,10 +198,10 @@ const EncuestaPage = (): JSX.Element => {
             <>
 
               <div className="row justify-content-center pb-4" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
-                <div className="col-6">
-                  <p>El presente cuestionario tiene como objetivo evaluar la <b>comprensión</b>, el <b>uso</b> y la <b>aplicación</b> de las <b>Tecnologías de la Información y la Comunicación (TIC)</b> en el proceso educativo en relación a cinco competencias: Competencia Tecnológica, Competencia Pedagógica, Competencia Comunicativa, Competencia de Gestión y Competencia Investigativa. La información recopilada se utilizará como base para innovar las prácticas pedagógicas y lograr una educación de calidad con el apoyo de las TIC.</p>
-                  <p>Entiéndase como <b>competencia</b> al conjunto de conocimientos, habilidades, actitudes, comprensiones y disposiciones cognitivas, socioafectivas y psicomotoras apropiadamente relacionadas entre sí, para facilitar el desempeño efectivo y significativo de una actividad en contextos nuevos y desafiantes.</p>
-                  <p>La presente evaluacion es de carácter cualitativo por lo cual se emplea la siguiente escala de <b>likert</b>:</p>
+                <div className="col-xl-6 col-sm-12">
+                  <p style={{ textAlign: "justify", paddingInline: "10px" }}>El presente cuestionario tiene como objetivo evaluar la <b>comprensión</b>, el <b>uso</b> y la <b>aplicación</b> de las <b>Tecnologías de la Información y la Comunicación (TIC)</b> en el proceso educativo en relación a cinco competencias: Competencia Tecnológica, Competencia Pedagógica, Competencia Comunicativa, Competencia de Gestión y Competencia Investigativa. La información recopilada se utilizará como base para innovar las prácticas pedagógicas y lograr una educación de calidad con el apoyo de las TIC.</p>
+                  <p style={{ textAlign: "justify", paddingInline: "10px" }}>Entiéndase como <b>competencia</b> al conjunto de conocimientos, habilidades, actitudes, comprensiones y disposiciones cognitivas, socioafectivas y psicomotoras apropiadamente relacionadas entre sí, para facilitar el desempeño efectivo y significativo de una actividad en contextos nuevos y desafiantes.</p>
+                  <p style={{ textAlign: "justify", paddingInline: "10px" }}>La presente evaluacion es de carácter cualitativo por lo cual se emplea la siguiente escala de <b>likert</b>:</p>
                   <h6 className="text-center"><b>1</b> = Nada Competente</h6>
                   <h6 className="text-center"><b>2</b> = Poco Competente</h6>
                   <h6 className="text-center"><b>3</b> = Competente</h6>
@@ -204,7 +215,7 @@ const EncuestaPage = (): JSX.Element => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-4 pb-4">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ paddingInlineStart: "30px" }}>
                       <label className="form-label">Cédula:</label>
                       <input
                         type="text"
@@ -227,7 +238,7 @@ const EncuestaPage = (): JSX.Element => {
                   </div>
 
                   <div className="row justify-content-center pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ paddingInlineStart: "30px" }}>
                       <label className="form-label">Facultad:</label>
                       <Select
                         placeholder="Elegir Facultad"
@@ -241,7 +252,7 @@ const EncuestaPage = (): JSX.Element => {
                   </div>
 
                   <div className="row justify-content-center pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ paddingInlineStart: "30px" }}>
                       <label className="form-label">Carrera:</label>
                       <Select
                         placeholder="Elegir Carrera"
@@ -255,7 +266,7 @@ const EncuestaPage = (): JSX.Element => {
                 <br></br>
                 <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-3 pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                       <h5>Competencia Investigativa</h5>
                       <p>Esta competencia se define como la capacidad de <b>utilizar las TIC para la transformación</b> del saber <b>y la generación</b> de nuevos conocimientos.</p>
                       <p>Documenta observaciones de su práctica con TIC.</p>
@@ -266,10 +277,10 @@ const EncuestaPage = (): JSX.Element => {
                       (pregunta, index): JSX.Element => (
                         <>
                           <div className="row justify-content-center pb-3">
-                            <div className="col-6">
+                            <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                               <label className="form-label">{pregunta.id_pregunta}. {pregunta.pregunta}</label><br></br>
                               <div className="radio-group">
-                                <label className="px-3 form-label">Nada Competente</label>
+                                <label className="px-1 form-label">Nada Competente</label>
                                 {[1, 2, 3, 4, 5].map((number) => (
                                   <label className="radio-label">
                                     <span className="number">{number}</span>
@@ -283,9 +294,11 @@ const EncuestaPage = (): JSX.Element => {
                                   </label>
 
                                 ))}
-                                <label className="px-3 form-label">Totalmente Competente</label>
+                                <label className="px-1 form-label">Totalmente Competente</label>
                               </div>
                               {errorPreguntas[pregunta.id_pregunta - 1] ? (<><label className="error">{`Este campo es obligatorio`}</label></>) : (<></>)}
+                              <br></br>
+                              <br></br>
                             </div>
                           </div>
                         </>
@@ -295,7 +308,7 @@ const EncuestaPage = (): JSX.Element => {
                 <br></br>
                 <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-3 pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                       <h5>Competencia de Gestión</h5>
                       <p>Esta competencia se define como la capacidad para <b>utilizar las TIC en la planeación, organización, administración y evaluación</b> de manera efectiva los procesos educativos; tanto a nivel de prácticas pedagógicas como de desarrollo institucional.</p>
                       <p>Utilización de TIC en actividades organizadas por la institución.</p>
@@ -306,10 +319,10 @@ const EncuestaPage = (): JSX.Element => {
                       (pregunta, index): JSX.Element => (
                         <>
                           <div className="row justify-content-center pb-3">
-                            <div className="col-6">
+                            <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                               <label className="form-label">{pregunta.id_pregunta}. {pregunta.pregunta}</label><br></br>
                               <div className="radio-group">
-                                <label className="px-3 form-label">Nada Competente</label>
+                                <label className="px-1 form-label">Nada Competente</label>
                                 {[1, 2, 3, 4, 5].map((number) => (
                                   <label className="radio-label">
                                     <span className="number">{number}</span>
@@ -323,9 +336,10 @@ const EncuestaPage = (): JSX.Element => {
                                   </label>
 
                                 ))}
-                                <label className="px-3 form-label">Totalmente Competente</label>
+                                <label className="px-1 form-label">Totalmente Competente</label>
                               </div>
                               {errorPreguntas[pregunta.id_pregunta - 1] ? (<><label className="error">{`Este campo es obligatorio`}</label></>) : (<></>)}
+                              <br></br><br></br>
                             </div>
                           </div>
                         </>
@@ -335,7 +349,7 @@ const EncuestaPage = (): JSX.Element => {
                 <br></br>
                 <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-3 pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                       <h5>Competencia Comunicativa</h5>
                       <p>Esta competencia se define como la capacidad para <b>expresarse, establecer contacto y relacionarse</b> en espacios virtuales y audiovisuales a través de diversos medios y con el manejo de múltiples lenguajes, de manera sincrónica y asincrónica.</p>
                       <p>Comunicación adecuada con los integrantes de la comunidad educativa usando TIC.</p>
@@ -346,10 +360,10 @@ const EncuestaPage = (): JSX.Element => {
                       (pregunta, index): JSX.Element => (
                         <>
                           <div className="row justify-content-center pb-3">
-                            <div className="col-6">
+                            <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                               <label className="form-label">{pregunta.id_pregunta}. {pregunta.pregunta}</label><br></br>
                               <div className="radio-group">
-                                <label className="px-3 form-label">Nada Competente</label>
+                                <label className="px-1 form-label">Nada Competente</label>
                                 {[1, 2, 3, 4, 5].map((number) => (
                                   <label className="radio-label">
                                     <span className="number">{number}</span>
@@ -363,9 +377,10 @@ const EncuestaPage = (): JSX.Element => {
                                   </label>
 
                                 ))}
-                                <label className="px-3 form-label">Totalmente Competente</label>
+                                <label className="px-1 form-label">Totalmente Competente</label>
                               </div>
                               {errorPreguntas[pregunta.id_pregunta - 1] ? (<><label className="error">{`Este campo es obligatorio`}</label></>) : (<></>)}
+                              <br></br><br></br>
                             </div>
                           </div>
                         </>
@@ -375,7 +390,7 @@ const EncuestaPage = (): JSX.Element => {
                 <br></br>
                 <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-3 pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                       <h5>Competencia Pedagógica</h5>
                       <p>Esta competencia se define como la capacidad de <b>utilizar</b> las TIC <b>para fortalecer los procesos de enseñanza y aprendizaje</b>, reconociendo alcances y limitaciones de la incorporación de estas tecnologías en la formación integral de los estudiantes y en su propio desarrollo profesional.</p>
                       <p>Uso de las TIC para actualizarse de forma autodidacta.</p>
@@ -386,10 +401,10 @@ const EncuestaPage = (): JSX.Element => {
                       (pregunta, index): JSX.Element => (
                         <>
                           <div className="row justify-content-center pb-3">
-                            <div className="col-6">
+                            <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                               <label className="form-label">{pregunta.id_pregunta}. {pregunta.pregunta}</label><br></br>
                               <div className="radio-group">
-                                <label className="px-3 form-label">Nada Competente</label>
+                                <label className="px-1 form-label">Nada Competente</label>
                                 {[1, 2, 3, 4, 5].map((number) => (
                                   <label className="radio-label">
                                     <span className="number">{number}</span>
@@ -403,9 +418,10 @@ const EncuestaPage = (): JSX.Element => {
                                   </label>
 
                                 ))}
-                                <label className="px-3 form-label">Totalmente Competente</label>
+                                <label className="px-1 form-label">Totalmente Competente</label>
                               </div>
                               {errorPreguntas[pregunta.id_pregunta - 1] ? (<><label className="error">{`Este campo es obligatorio`}</label></>) : (<></>)}
+                              <br></br><br></br>
                             </div>
                           </div>
                         </>
@@ -415,7 +431,7 @@ const EncuestaPage = (): JSX.Element => {
                 <br></br>
                 <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-3 pb-3">
-                    <div className="col-6">
+                    <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                       <h5>Competencia Teconológica</h5>
                       <p>Esta competencia se define como la capacidad para <b>seleccionar</b> y <b>utilizar</b> de forma pertinente, responsable y eficiente una variedad de <b>herramientas tecnológicas</b> entendiendo los principios que las rigen, la forma de combinarlas y su utilización en el contexto educativo.</p>
                       <p>Identificación de características, usos y oportunidades de las TIC en los procesos educativos.</p>
@@ -426,10 +442,10 @@ const EncuestaPage = (): JSX.Element => {
                       (pregunta, index): JSX.Element => (
                         <>
                           <div className="row justify-content-center pb-3">
-                            <div className="col-6">
+                            <div className="col-xl-6 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
                               <label className="form-label">{pregunta.id_pregunta}. {pregunta.pregunta}</label><br></br>
                               <div className="radio-group">
-                                <label className="px-3 form-label">Nada Competente</label>
+                                <label className="px-1 form-label">Nada Competente</label>
                                 {[1, 2, 3, 4, 5].map((number) => (
                                   <label className="radio-label">
                                     <span className="number">{number}</span>
@@ -443,17 +459,18 @@ const EncuestaPage = (): JSX.Element => {
                                   </label>
 
                                 ))}
-                                <label className="px-3 form-label">Totalmente Competente</label>
+                                <label className="px-1 form-label">Totalmente Competente</label>
                               </div>
                               {errorPreguntas[pregunta.id_pregunta - 1] ? (<><label className="error">{`Este campo es obligatorio`}</label></>) : (<></>)}
+                              <br></br><br></br>
                             </div>
                           </div>
                         </>
                       )
                     )}
 
-                  <div className="row justify-content-center text-center pt-3 pb-3">
-                    <div className="col-6">
+                  <div className="row justify-content-center text-center pb-3">
+                    <div className="col-6" style={{transform: "translateX(-22px)"}}>
                       <button
                         className="btn btn-success btn-lg"
                         type="submit"

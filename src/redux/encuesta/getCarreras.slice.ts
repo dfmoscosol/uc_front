@@ -34,6 +34,9 @@ export const carrerasGetAllSlice = createSlice({
         ...state,
       };
     },
+    getCarrerasReset: (state): CarrerasState => {
+      return initialState;
+    },
   },
 });
 
@@ -54,7 +57,7 @@ export const getCarreras =
     }
   };
 
-export const { getCarrerasSuccess, getCarrerasRequest, getCarrerasFail } =
+export const { getCarrerasSuccess, getCarrerasRequest, getCarrerasFail,getCarrerasReset } =
 carrerasGetAllSlice.actions;
 
 export const carrerasGetAllReducer = carrerasGetAllSlice.reducer;

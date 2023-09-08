@@ -42,6 +42,9 @@ export const preguntasGetAllSlice = createSlice({
         ...state,
       };
     },
+    getPreguntasReset: (state): PreguntasState => {
+      return initialState;
+    },
   },
 });
 
@@ -59,7 +62,7 @@ export const getPreguntas =
       }
     };
 
-export const { getPreguntasSuccess, getPreguntasRequest, getPreguntasFail } =
+export const { getPreguntasSuccess, getPreguntasRequest, getPreguntasFail,getPreguntasReset } =
   preguntasGetAllSlice.actions;
 
 export const preguntasGetAllReducer = preguntasGetAllSlice.reducer;

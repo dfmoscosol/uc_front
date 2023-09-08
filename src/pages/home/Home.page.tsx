@@ -1,6 +1,6 @@
 // components
 import Header from "../../shared/header.component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // constants
 import BREADCRUMBS_ITEMS from "../../data/constants/breadcrumbs.const";
@@ -11,6 +11,14 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import imginn from "../../assets/images/m_inn.png";
 import imgexp from "../../assets/images/m_exp.png";
 import imgint from "../../assets/images/m_int.png";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { getFacultadesReset } from "../../redux/encuesta/getFacultades.slice";
+import { getCarrerasReset } from "../../redux/encuesta/getCarreras.slice";
+import { validateEncuestaReset } from "../../redux/encuesta/validateEncuesta.slice";
+import { getPreguntasReset } from "../../redux/encuesta/getPreguntas.slice";
+import { getResultadosReset } from "../../redux/resultados/getResultados.slice";
+import { getPeriodosReset } from "../../redux/resultados/getPeriodos.slice";
+import { postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
 
 const HomePage = (): JSX.Element => {
   // local variables
@@ -20,8 +28,18 @@ const HomePage = (): JSX.Element => {
   } = BREADCRUMBS_ITEMS;
   const [show, setShow] = useState(0);
   const [showPopover, setShowPopover] = useState(false);
+  const dispatch = useAppDispatch();
 
-
+  useEffect(() => {
+    dispatch(getResultadosReset())
+    dispatch(getPeriodosReset())
+    dispatch(getPreguntasReset())
+    dispatch(getFacultadesReset())
+    dispatch(getCarrerasReset())
+    dispatch(validateEncuestaReset())
+    dispatch(postPreguntasReset())
+  }, [dispatch]);
+  
   const competencias = [
     {
       nombre: "Pedagógica",
@@ -79,7 +97,7 @@ const HomePage = (): JSX.Element => {
           <Popover className="popover" style={{ display: showPopover ? 'block' : 'none' }}>
             <Popover.Header >
               <div className="row justify-content-center">
-                <div className="col-lg-4 col-md-12 t-comp d-flex justify-content-center justify-content-lg-end align-items-center">
+                <div className="col-lg-4 col-md-12 t-comp d-flex justify-content-center align-items-center justify-content-lg-end ">
                   {competencias[show].icono}
                 </div>
                 <div className="col-lg-8 col-md-12 t-comp d-flex text-center justify-content-center justify-content-lg-start align-items-center">
@@ -94,21 +112,21 @@ const HomePage = (): JSX.Element => {
                 </div>
                 <div className="col-lg-6 col-md-12 d-flex flex-column justify-content-center align-items-center">
                   <div className="row descripcion">
-                    <div className="col-12 titulo-mom" style={{background:"#00b4d8"}}>Momento Explorador</div>
+                    <div className="col-12 titulo-mom" style={{ background: "#00b4d8" }}>Momento Explorador</div>
                     <div className="col-xl-2 col-lg-3 col-md-12 img-mom d-flex flex-column justify-content-center align-items-center">
                       <img src={imgexp} width="50" />
                     </div>
                     <div className="col-xl-10 col-lg-9 col-md-12 mt-2 mb-2 d-flex flex-column justify-content-center align-items-center">{competencias[show].explorador}</div>
                   </div>
                   <div className="row descripcion">
-                    <div className="col-12 titulo-mom" style={{background:"#0077b6"}}>Momento Integrador</div>
+                    <div className="col-12 titulo-mom" style={{ background: "#0077b6" }}>Momento Integrador</div>
                     <div className="col-xl-2 col-lg-3 col-md-12  img-mom d-flex flex-column justify-content-center align-items-center">
                       <img src={imgint} width="50" />
                     </div>
                     <div className="col-xl-10 col-lg-9 col-md-12 mt-2 mb-2 d-flex flex-column justify-content-center align-items-center">{competencias[show].integrador}</div>
                   </div>
                   <div className="row descripcion">
-                    <div className="col-12 titulo-mom" style={{background:"#03045e"}}>Momento Innovador</div>
+                    <div className="col-12 titulo-mom" style={{ background: "#03045e" }}>Momento Innovador</div>
                     <div className="col-xl-2 col-lg-3 col-md-12  img-mom d-flex flex-column justify-content-center align-items-center">
                       <img src={imginn} width="50" />
                     </div>

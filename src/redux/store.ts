@@ -6,6 +6,8 @@ import { carrerasGetAllReducer } from "./encuesta/getCarreras.slice";
 import { preguntasGetAllReducer } from "./encuesta/getPreguntas.slice";
 import { validateEncuestaReducer } from "./encuesta/validateEncuesta.slice";
 import { postPreguntasReducer } from "./encuesta/postRespuesta.slice";
+import { periodosGetAllReducer } from "./resultados/getPeriodos.slice";
+import { ResultadosGetAllReducer } from "./resultados/getResultados.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
@@ -17,7 +19,8 @@ const store = configureStore({
     preguntas: preguntasGetAllReducer,
     encuesta: validateEncuestaReducer,
     save_encuesta: postPreguntasReducer,
-
+    periodos: periodosGetAllReducer,
+    resultados: ResultadosGetAllReducer,
   },
 });
 
