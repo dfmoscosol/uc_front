@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const baseURL = " http://10.26.180.102:8088/";
+const baseURL = " http://localhost:8088/";
 
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";

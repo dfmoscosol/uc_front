@@ -1,12 +1,12 @@
 export const config = {
     firebaseConfig: {
-        "apiKey": "AIzaSyAmxZ004uJdqkWn9gV2IIhObLFsWJMMKRM",
-        "authDomain": "ucuenca-auth.firebaseapp.com",
-        "projectId": "ucuenca-auth",
-        "storageBucket": "ucuenca-auth.appspot.com",
-        "messagingSenderId": "325487009275",
-        "appId": "1:325487009275:web:d6b2ddf2497b3d41e9bf5e",
-        "measurementId": "G-7FCE7VM1SZ",
-        "databaseURL": "https://ucuenca-auth.firebaseio.com",
-    }
+        "apiKey": "AIzaSyCbrHrP8s2YXznr5oLCTDp9pKtTxqazeuw",
+        "authDomain": "pentagono-ucuenca.firebaseapp.com",
+        "projectId": "pentagono-ucuenca",
+        "storageBucket": "pentagono-ucuenca.appspot.com",
+        "messagingSenderId": "1085630969641",
+        "appId": "1:1085630969641:web:60e6f3fe421759809c2938",
+        "measurementId": "G-Z72LNV2NVG",
+        "databaseURL": "https://pentagono-ucuenca.firebaseio.com",
+       }
 }

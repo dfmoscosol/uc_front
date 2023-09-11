@@ -38,18 +38,6 @@ const EncuestaPage = (): JSX.Element => {
     handleSubmit,
     formState: { errors },
   } = useForm<EncuestaForm>();
-  
-  useEffect(() => {
-    dispatch(getResultadosReset())
-    dispatch(getPeriodosReset())
-    dispatch(getFacultadesReset())
-    dispatch(getCarrerasReset())
-    dispatch(validateEncuestaReset())
-    dispatch(postPreguntasReset())
-    dispatch(getFacus());
-    dispatch(getPreguntas());
-    dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
-  }, [dispatch]);
 
   const { data: dataFacus } = useAppSelector((state) => state.facus)
   const { data: dataCarreras } = useAppSelector((state) => state.carreras)
@@ -68,6 +56,18 @@ const EncuestaPage = (): JSX.Element => {
   const toastRefError = useRef<HTMLDivElement>(null);
   const toastRefSuccess = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    dispatch(getResultadosReset())
+    dispatch(getPeriodosReset())
+    dispatch(getFacultadesReset())
+    dispatch(getCarrerasReset())
+    dispatch(validateEncuestaReset())
+    dispatch(postPreguntasReset())
+    dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
+    dispatch(getFacus());
+    dispatch(getPreguntas());
+  }, [dispatch, exito]);
+
   const onSubmit: SubmitHandler<EncuestaForm> = ({
     cedula,
 
@@ -78,7 +78,7 @@ const EncuestaPage = (): JSX.Element => {
     console.log("selectednumbers", selectedNumber)
     console.log("errores", errorPreguntas)
     console.log("uid", getUserFromLocalStorage()?.uid)
-    const puntajes: Puntaje[] = selectedNumber.map((num, index) => ({ id_pregunta: index + 1, puntaje: num }));
+    const puntajes: Puntaje[] = selectedNumber.map((num: number, index) => ({ id_pregunta: index + 1, puntaje: Number(num) }));
     console.log("puntaje", puntajes)
     if (selectFacultad === 0) {
       setErrorSelectFacu(true)
@@ -102,6 +102,7 @@ const EncuestaPage = (): JSX.Element => {
           uid_firebase_fk: getUserFromLocalStorage()?.uid
         }))
       setShowSuccessAlert(true)
+
     }
   };
 
@@ -132,13 +133,6 @@ const EncuestaPage = (): JSX.Element => {
     }))
   }, [dataCarreras]);
 
-
-
-  useEffect((): void => {
-    dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
-  }, [dispatch, exito]);
-
-
   useEffect(() => {
     // Enfocar el elemento del toast cuando se muestre
     if (showSuccessAlert && toastRefSuccess.current) {
@@ -167,7 +161,6 @@ const EncuestaPage = (): JSX.Element => {
   return (
     <>
       <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3", }}><Header title={pageTitle} /></div>
-      {console.log(errorPreguntas)}
 
       {dataPreguntas?.comunicativa.length === 0 || dataPreguntas?.gestion.length === 0 || dataPreguntas?.investigativa.length === 0 || dataPreguntas?.pedagogica.length === 0 || dataPreguntas?.tecnologica.length === 0 ? (
         <>
@@ -185,7 +178,7 @@ const EncuestaPage = (): JSX.Element => {
               <div className="row justify-content-center" style={{ paddingTop: "5%", paddingBottom: "10%", background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
                 <div className="col-6" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
                   <img
-                  style={{ borderRadius: "8px" }}
+                    style={{ borderRadius: "8px" }}
                     src={encuestaRealizada}
                     width="350"
                     alt="Cargando Contenido"
@@ -470,13 +463,13 @@ const EncuestaPage = (): JSX.Element => {
                     )}
 
                   <div className="row justify-content-center text-center pb-3">
-                    <div className="col-6" style={{transform: "translateX(-22px)"}}>
+                    <div className="col-6" style={{ transform: "translateX(-22px)" }}>
                       <button
                         className="btn btn-success btn-lg"
                         type="submit"
                         disabled={false}
                       >
-                        {"GUARDAR ENCUESTA"}
+                        {"ENVIAR ENCUESTA"}
                       </button>
                     </div>
                   </div>

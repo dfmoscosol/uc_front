@@ -166,7 +166,12 @@
 
 .btn {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
+  background-color: #049548;
+}
+
+.btn:hover{
+  background-color: #026a33;
 }
 
 .btn-img {
