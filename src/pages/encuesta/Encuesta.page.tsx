@@ -57,11 +57,11 @@ const EncuestaPage = (): JSX.Element => {
   const toastRefSuccess = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    dispatch(validateEncuestaReset())
     dispatch(getResultadosReset())
     dispatch(getPeriodosReset())
     dispatch(getFacultadesReset())
     dispatch(getCarrerasReset())
-    dispatch(validateEncuestaReset())
     dispatch(postPreguntasReset())
     dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
     dispatch(getFacus());
@@ -72,14 +72,8 @@ const EncuestaPage = (): JSX.Element => {
     cedula,
 
   }): void => {
-    console.log("carrera", selectCarrera)
-    console.log("facultad", selectFacultad)
-    console.log("cedula", cedula)
-    console.log("selectednumbers", selectedNumber)
-    console.log("errores", errorPreguntas)
-    console.log("uid", getUserFromLocalStorage()?.uid)
+
     const puntajes: Puntaje[] = selectedNumber.map((num: number, index) => ({ id_pregunta: index + 1, puntaje: Number(num) }));
-    console.log("puntaje", puntajes)
     if (selectFacultad === 0) {
       setErrorSelectFacu(true)
       setShowErrorAlert(true)
@@ -282,7 +276,7 @@ const EncuestaPage = (): JSX.Element => {
                                       placeholder={number + ""}
                                       value={number}
                                       checked={selectedNumber[pregunta.id_pregunta - 1] == number}
-                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1), console.log("selected aray", selectedNumber) }}
+                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1) }}
                                     />
                                   </label>
 
@@ -324,7 +318,7 @@ const EncuestaPage = (): JSX.Element => {
                                       placeholder={number + ""}
                                       value={number}
                                       checked={selectedNumber[pregunta.id_pregunta - 1] == number}
-                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1), console.log("selected aray", selectedNumber) }}
+                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1)}}
                                     />
                                   </label>
 
@@ -365,7 +359,7 @@ const EncuestaPage = (): JSX.Element => {
                                       placeholder={number + ""}
                                       value={number}
                                       checked={selectedNumber[pregunta.id_pregunta - 1] == number}
-                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1), console.log("selected aray", selectedNumber) }}
+                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1)}}
                                     />
                                   </label>
 
@@ -406,7 +400,7 @@ const EncuestaPage = (): JSX.Element => {
                                       placeholder={number + ""}
                                       value={number}
                                       checked={selectedNumber[pregunta.id_pregunta - 1] == number}
-                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1), console.log("selected aray", selectedNumber) }}
+                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1)}}
                                     />
                                   </label>
 
@@ -447,7 +441,7 @@ const EncuestaPage = (): JSX.Element => {
                                       placeholder={number + ""}
                                       value={number}
                                       checked={selectedNumber[pregunta.id_pregunta - 1] == number}
-                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1), console.log("selected aray", selectedNumber) }}
+                                      onChange={(event) => { handleNumberSelect(event, pregunta.id_pregunta - 1) }}
                                     />
                                   </label>
 

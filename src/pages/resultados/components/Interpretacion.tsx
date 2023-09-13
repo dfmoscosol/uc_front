@@ -44,8 +44,6 @@ const Interpretacion = (props): JSX.Element => {
   if (competencia === "Competencia Pedagógica") {
     icon = <MdSchool style={iconStyle} />
     competencia_single = "Pedagógica";
-    console.log("pedagogica")
-    console.log(momento)
     if (momento === "Momento Explorador") {
       image_comp_momento = PED1EXPL;
     } else if (momento === "Momento Integrador") {

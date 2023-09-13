@@ -20,11 +20,9 @@ const LoginPage = (): JSX.Element => {
     setAuthing(false);
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
-        console.log(response.user.uid);
         navigate(INTERNAL_ROUTES.HOME);
       })
       .catch((error) => {
-        console.log(error);
         setAuthing(false);
       });
   };

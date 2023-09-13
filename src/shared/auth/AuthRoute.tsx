@@ -39,7 +39,6 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
                 setUserLocalStorage(auxuser);
                 
             } else {
-                console.log('unauthorized')
                 navigate(INTERNAL_ROUTES.AUTH_LOGIN)
             }
         })

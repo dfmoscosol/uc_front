@@ -53,9 +53,6 @@ const RadarChart: React.FC<RadarChartProps> = (props) => {
   var contador = 0;
   const data_pentagono = props.data;
 
-  //console.log('In radar chart');
-  //console.log(props);
-  //console.log(data_pentagono);
 
   data_pentagono.forEach(element => {
     const values_pentagono = element.Pentagono;

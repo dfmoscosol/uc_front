@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const baseURL = " http://localhost:8088/";
+const baseURL = " http://pentagonoapi.ucuenca.edu.ec";
 
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";
@@ -20,7 +20,6 @@ axiosInstance.interceptors.request.use(function (
   if (request.url?.includes("assets") || request.headers?.Authorization)
     return request;
   const userInfo = getUserFromLocalStorage();
-  //console.log(userInfo?.token);
   request.headers = {
     ...request.headers,
     Authorization: `${userInfo?.token}`,
@@ -33,22 +32,19 @@ axiosInstance.interceptors.response.use(
   (response): AxiosResponse<any, any> => response,
   (error) => {
     // TODO: Validate all errors types
-    //console.log(error);
     switch (error.response.status) {
       case 401:
         //window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_401}`; // Unauthorized
         break;
       case 503:
-        window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`; // Service unavailable
+        window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Service unavailable
         break;
       case 404:
-        //window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`;
-        console.log(window.location.href);
-        //console.log("adasdas"); // Service unavailable
+        window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`;
         break;
-      /* case 500:
-        window.location.href = `/#${INTERNAL_ROUTES.SERVER_ERROR_500}`; // Server error
-        break;*/
+       case 500:
+        window.location.href = `/#${INTERNAL_ROUTES.AUTH_LOGIN}`; // Server error
+        break;
       default:
         break;
     }
