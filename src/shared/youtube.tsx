@@ -10,7 +10,7 @@ const YoutubeVideo: React.FC<Props> = ({
     <Container>
       <div className="ratio ratio-16x9">
             <iframe
-              src={`https://www.youtube.com/embed/iVIe-wW49zE`}
+              src={`https://www.youtube.com/embed/23XQSX566Ho`}
               title="YouTube Video"
               allowFullScreen
             ></iframe>
