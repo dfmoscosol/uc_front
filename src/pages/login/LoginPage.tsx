@@ -61,7 +61,6 @@ const LoginPage = (): JSX.Element => {
                     className={`${styles.btnLogin}`}
                     disabled={authing} onClick={() => signInWithGoogle()}
                   >
-                    {/* <i className="zmdi zmdi-google" style={{paddingInlineEnd:"10px"}}></i> */}
                     <img src={google} style={{paddingInlineEnd:"10px"}} />
 
                     {!authing ? "Iniciar Sesión" : "Cargando..."}

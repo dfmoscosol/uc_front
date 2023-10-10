@@ -170,7 +170,7 @@
   background-color: #049548;
 }
 
-.btn:hover{
+.btn:hover {
   background-color: #026a33;
 }
 
@@ -235,10 +235,66 @@ h3,
 
 h4,
 .h4 {
-  font-size: 1.614em;
-  line-height: 1.45em;
-  margin-top: 30px;
-  margin-bottom: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+
+.h4-curso {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 8px;
+}
+
+.curso-descripcion {
+  height: 20vh;
+  overflow-y: auto;
+  text-align: justify;
+  font-size: 12px;
+  
+}
+
+.curso-descripcion-lqa {
+  height: 15vh;
+  overflow-y: auto;
+  text-align: justify;
+  font-size: 12px;
+}
+
+.img-container {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  padding-top: 40%; /* Establece la altura como la mitad del ancho */
+}
+
+.corner-logo {
+  position: relative;
+  background-color: #fff;
+  display: inline-block;
+}
+
+.card-img-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen para llenar el contenedor */
+}
+
+.row-cursos {
+  padding-left: 35px;
+}
+
+.titulo-curso {
+  padding-inline: 100px;
+}
+
+.descripcion-cursos {
+  padding-inline: 100px;
 }
 
 h4+.category,
@@ -408,6 +464,32 @@ p.description {
 
   .nav-tabs .nav-item>.nav-link {
     margin-bottom: 5px;
+  }
+
+  .titulo-curso {
+    padding-inline: 40px;
+  }
+
+  .descripcion-cursos {
+    padding-inline: 40px;
+    font-size: 13px;
+  }
+
+  .text-footer{
+    font-size: 10px !important;
+    font-weight: 400 !important;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+
+  .h4-curso {
+    font-size: 12px;
+  }
+
+  .curso-descripcion {
+    font-size: 12px;
   }
 }
 
@@ -7625,7 +7707,7 @@ section.content.encuesta {
     margin-bottom: 15px;
   }
 
-  .popover{
+  .popover {
     max-width: 90vw;
   }
 
@@ -10058,4 +10140,118 @@ a:any-link {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
   /* Color cuando se pasa el ratón por encima */
+}
+
+.curso-descripcion::-webkit-scrollbar {
+  width: 3px; /* Ancho de la barra de desplazamiento */
+}
+
+.curso-descripcion::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del "pulggar" de la barra de desplazamiento */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.curso-descripcion::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color cuando se pasa el ratón por encima */
+}
+
+.curso-descripcion-lqa::-webkit-scrollbar {
+  width: 3px;
+  /* Ancho de la barra de desplazamiento */
+}
+
+.curso-descripcion-lqa::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* Color del "pulggar" de la barra de desplazamiento */
+  border-radius: 5px;
+  /* Borde redondeado */
+}
+
+.curso-descripcion-lqa::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+  /* Color cuando se pasa el ratón por encima */
+}
+
+/* Estilo base de la tarjeta */
+.card {
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05); 
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); 
+  z-index: 9999;
+}
+
+.card-link {
+  cursor: pointer;
+  color: black; 
+  text-decoration: none; 
+}
+
+.card-link:hover {
+  color: black; 
+  text-decoration: none;
+}
+
+.text-footer{
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Estilo para la paginación */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Estilo para los elementos de la paginación */
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+/* Estilo para los enlaces de página */
+.page-link {
+  background-color: #fff; /* Color de fondo principal */
+  color: #002856; /* Color de texto */
+  border: 1px solid #002856; /* Borde */
+}
+
+/* Estilo para los enlaces de página en hover y en foco */
+.page-link:hover,
+.page-link:focus {
+  background-color: #002856; /* Cambia el color de fondo al hacer hover o enfocar */
+  color: #fff; /* Cambia el color de texto al hacer hover o enfocar */
+}
+
+/* Estilo para el elemento de página activa */
+.page-item.active .page-link {
+  background-color: #002856; /* Color de fondo para la página activa */
+  border: 1px solid #002856; /* Borde para la página activa */
+}
+
+/* Estilo para los enlaces de página deshabilitados */
+.page-link[aria-disabled="true"] {
+  background-color: #ccc; /* Color de fondo para los enlaces de página deshabilitados */
+  color: #555; /* Color de texto para los enlaces de página deshabilitados */
+  cursor: not-allowed; /* Cursor no permitido */
+}
+
+/* Estilo para hacer la paginación responsive */
+/* Estilo para hacer la paginación responsive */
+@media (max-width: 576px) { /* Cambia el valor de acuerdo a tus necesidades */
+  .pagination {
+      flex-wrap: wrap; /* Cambia a flex-wrap para permitir que los elementos se envuelvan */
+      padding-inline: 30px;
+      font-size: 12px;
+  }
+
+  .page-item {
+      margin-right: 0; /* Elimina el margen derecho para que los elementos estén más juntos */
+      margin-bottom: 5px; /* Agrega un margen inferior para separar los elementos en pantallas pequeñas */
+      display: block; /* Cambia a bloque para que los elementos se muestren uno debajo del otro */
+  }
 }

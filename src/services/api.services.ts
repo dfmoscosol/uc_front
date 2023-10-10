@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const baseURL = " http://pentagonoapi.ucuenca.edu.ec";
+const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
 
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";

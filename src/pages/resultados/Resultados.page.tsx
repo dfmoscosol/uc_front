@@ -23,10 +23,12 @@ import { getFacultadesReset } from "../../redux/encuesta/getFacultades.slice";
 import { getCarrerasReset } from "../../redux/encuesta/getCarreras.slice";
 import { validateEncuestaReset } from "../../redux/encuesta/validateEncuesta.slice";
 import { postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
+import { getAuth } from "@firebase/auth";
 
 const ResultadosPage = (): JSX.Element => {
   // local variables
   const navigate = useNavigate();
+  const auth = getAuth();
   const dispatch = useAppDispatch();
   // constants
   const {
@@ -47,7 +49,9 @@ const ResultadosPage = (): JSX.Element => {
     setPeriodo(label)
     dispatch(getResultados(value))
   };
+
   useEffect(() => {
+
     dispatch(getResultadosReset())
     dispatch(getPeriodosReset())
     dispatch(getPreguntasReset())

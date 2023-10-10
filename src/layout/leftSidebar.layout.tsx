@@ -126,6 +126,19 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Resultados</span>
               </NavLink>
             </li>
+            <li >
+              <NavLink
+                to={INTERNAL_ROUTES.COURSES}
+                className={
+                  location.pathname.includes(INTERNAL_ROUTES.COURSES)
+                    ? "navbar_item_active"
+                    : ""
+                }
+              >
+                <i className="zmdi zmdi-collection-text" title="Cursos"></i>
+                <span>Cursos</span>
+              </NavLink>
+            </li>
 
           </ul>
         </div>

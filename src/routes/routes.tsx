@@ -10,6 +10,7 @@ import Skeleton from "../layout/skeleton.layout";
 import HomePage from "../pages/home/Home.page";
 import EncuestaPage from "../pages/encuesta/Encuesta.page";
 import ResultadosPage from "../pages/resultados/Resultados.page";
+import CoursesPage from "../pages/cursos/Cursos.page";
 
 
 const RoutesApp = () => {
@@ -19,6 +20,7 @@ const RoutesApp = () => {
         <Route path={INTERNAL_ROUTES.HOME} element={<HomePage />} />
         <Route path={INTERNAL_ROUTES.ENCUESTA} element={<EncuestaPage />} />
         <Route path={INTERNAL_ROUTES.RESULTADOS} element={<ResultadosPage />} />
+        <Route path={INTERNAL_ROUTES.COURSES} element={<CoursesPage />} />
       </Routes>
     </Skeleton>
   );

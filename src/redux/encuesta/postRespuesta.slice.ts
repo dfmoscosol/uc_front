@@ -48,7 +48,6 @@ export const postPreguntas =
   async (dispatch: AppThunkDispatch): Promise<void> => {
     dispatch(postPreguntasRequest());
     try {
-      console.log(form)
       const { data }: AxiosResponse<PostPreguntasResponse> = await axiosInstance.post(
         "/save_form",
         form

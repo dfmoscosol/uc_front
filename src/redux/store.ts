@@ -8,12 +8,15 @@ import { validateEncuestaReducer } from "./encuesta/validateEncuesta.slice";
 import { postPreguntasReducer } from "./encuesta/postRespuesta.slice";
 import { periodosGetAllReducer } from "./resultados/getPeriodos.slice";
 import { ResultadosGetAllReducer } from "./resultados/getResultados.slice";
+import { CursosPedagogicaGetAllReducer } from "./cursos/getCursosPedagogica.slice";
+import { CursosTecnologicaGetAllReducer } from "./cursos/getCursosTecnologica.slice";
+import { CursosInvestigativaGetAllReducer } from "./cursos/getCursosInvestigativa.slice";
+import { CursosGestionGetAllReducer } from "./cursos/getCursosGestionslice";
+import { CursosComunicativaGetAllReducer } from "./cursos/getCursosComunicativa.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
   reducer: {
-    
-
     facus: facusGetAllReducer,
     carreras: carrerasGetAllReducer,
     preguntas: preguntasGetAllReducer,
@@ -21,6 +24,11 @@ const store = configureStore({
     save_encuesta: postPreguntasReducer,
     periodos: periodosGetAllReducer,
     resultados: ResultadosGetAllReducer,
+    cursosPedagogica: CursosPedagogicaGetAllReducer,
+    cursosTecnologica: CursosTecnologicaGetAllReducer,
+    cursosInvestigativa: CursosInvestigativaGetAllReducer,
+    cursosGestion: CursosGestionGetAllReducer,
+    cursosComunicativa: CursosComunicativaGetAllReducer,
   },
 });
 
