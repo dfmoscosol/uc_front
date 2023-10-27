@@ -66,7 +66,7 @@ const TituloCurso = (props): JSX.Element => {
       >
         <div
           style={{
-            "fontSize": "22px",
+            "fontSize": "20px",
             "lineHeight": "28px",
             "fontWeight": "600",
             "marginLeft": "10px",
@@ -80,7 +80,7 @@ const TituloCurso = (props): JSX.Element => {
             background: momento_color,
             //"marginTop":"5px", 
             "marginLeft": "10px",
-            "fontSize": "16px",
+            "fontSize": "14px",
             "fontWeight": "500",
             //"lineHeight": "16px",
             //"borderColor": "#00b4d8", 

@@ -17,4 +17,6 @@ export interface Curso {
     url: string;
     ofertante: string;
     url_img_logo: string;
+    puntuacion: number;
+    key_words: string[];
 }

@@ -9,8 +9,6 @@ const BREADCRUMBS_ITEMS = {
     ],
   },
 
-  /* SELLERS */
-
   encuesta: {
     pageTitle: "Cuestionario de Competencias",
     breadcrumbs: [
@@ -23,6 +21,21 @@ const BREADCRUMBS_ITEMS = {
   },
   cursos: {
     pageTitle: "Cursos Recomendados",
+    breadcrumbs: [
+    ],
+  },
+  inscripciones: {
+    pageTitle: "Incripciones a Capacitaciones",
+    breadcrumbs: [
+    ],
+  },
+  certificados: {
+    pageTitle: "Generación de Certificados",
+    breadcrumbs: [
+    ],
+  },
+  certificados_cursos: {
+    pageTitle: "Acreditación de Certificados",
     breadcrumbs: [
     ],
   },

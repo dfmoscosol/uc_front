@@ -55,11 +55,11 @@ const Header: React.FC<Props> = ({
           </ul> */}
           <button
             onClick={handleRightSidebar}
-            className="btn btn-primary btn-icon"
+            className="btn"
             id="mobile_menu"
             type="button"
           >
-            <i className="zmdi zmdi-sort-amount-desc"></i>
+            <i className="zmdi zmdi-sort-amount-desc" style={{color:"white"}}></i>
           </button>
         </div>
         {/* <div className="col-lg-5 col-md-6 col-sm-12">

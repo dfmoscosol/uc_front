@@ -14,10 +14,16 @@ import { getResultados, getResultadosReset, initialState } from "../../redux/res
 import { getPeriodosReset } from "../../redux/resultados/getPeriodos.slice";
 import { postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
 import TituloCurso from "./componenets/TituloCurso";
-import Pagination from "./componenets/pagination.component";
+import Pagination from "./componenets/Pagination.component";
+import StarRating from "./componenets/StarRating.component";
+import ModalComponent from "./componenets/Modal.component";
 
 const CoursesPage = (): JSX.Element => {
   // local variables
+  const [open, setOpen] = useState(false);
+  const [keyWords, setKeyWords] = useState([]);
+  const [url, setUrl] = useState("");
+
   // constants
   const {
     cursos: { pageTitle },
@@ -54,6 +60,16 @@ const CoursesPage = (): JSX.Element => {
   const getCursosTecnologicaByPagination = (page: number): void => {
   }
 
+  const handleOpenModal = (keyWords, url) => {
+    setKeyWords(keyWords);
+    setUrl(url);
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  }
+
   useEffect(() => {
     dispatch(getResultadosReset())
     dispatch(getResultados(2))
@@ -61,6 +77,13 @@ const CoursesPage = (): JSX.Element => {
 
   return (
     <>
+      {open &&
+        <ModalComponent
+          url={url}
+          keyWords={keyWords}
+          onClose={handleCloseModal}
+        />
+      }
       <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3" }}>
         <Header title={pageTitle} />
         <p className="descripcion-cursos" style={{ textAlign: "justify", paddingBottom: "20px" }}>En esta sección, encontrará una <b>selección de cursos</b> extraídos de la web en base a su perfil para <b>mejorar sus competencias TIC como docente</b>. Estos cursos están diseñados por expertos y respaldados por plataformas de aprendizaje de alta calidad, abordando aspectos clave de la <b>educación en la era digital</b>. Ya sea que desee fortalecer sus <b>habilidades en el uso de herramientas digitales</b> en el aula o explorar <b>estrategias pedagógicas innovadoras</b>, aquí encontrará opciones que se adaptan a sus necesidades. Su desarrollo profesional es esencial para <b>marcar la diferencia en la educación de sus estudiantes</b>, y estamos aquí para apoyarte en este proceso.</p>
@@ -82,7 +105,7 @@ const CoursesPage = (): JSX.Element => {
                 momento={dataResultados.pedagogica.momento}
               />
             </div>
-            <div className="row justify-content-center pt-1 pb-3 row-cursos">
+            <div className="row justify-content-center pt-1 pb-2 row-cursos">
               <div className="justify-content-between">
                 <a></a>
                 <small className="float-end">Total de cursos: {infoPedagogica?.total}</small>
@@ -90,42 +113,28 @@ const CoursesPage = (): JSX.Element => {
               {
                 cursosPedagogica?.map(
                   (curso): JSX.Element => (
-                    <div className="col-xl-4 col-lg-8 col-md-10 col-sm-12" >
-                      <a href={curso.url} target="_blank" className="card-link ">
-                        <div className="border rounded card" style={{ border: "15px", backgroundColor: "#ffffff", marginBottom: "1rem" }}>
-                          <div className="img-container">
-                            <img className="card-img-top" src={curso.url_img} alt="Card image cap" />
+                    <a href={curso.url} target="_blank" className="card-link ">
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                        <div className="row">
+                          <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
+                            <img src={curso.url_img} className="card-img" />
                           </div>
-                          <div className="card-body" style={{ height: "33vh" }}>
-                            <div className="d-flex flex-column" style={{ paddingBlock: "8px" }} >
-                              <h4 className="text-center" >{curso.titulo}</h4>
+                          <div className="col-xl-9 col-lg-12">
+                            <div className="card-body" >
+                              <h4>{curso.titulo}</h4>
+                              <div className="curso-descripcion" >
+                                <p className="card-text">{curso.descripcion.slice(0, 280)} ... <a style={{ color: "#0460e6" }}> Ver más</a></p>
+                                <StarRating rate={curso.puntuacion}></StarRating>
+                              </div>
                             </div>
-                            {curso.skills.length !== 0 ? (
-                              <>
-                                <h4 className="h4-curso">Lo que aprenderás:</h4>
-                                <div className="curso-descripcion-lqa" >
-
-                                  <ul>
-                                    {curso.skills.map((skill): JSX.Element => (<li>{skill}</li>))}
-                                  </ul>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="curso-descripcion" >
-                                  <p className="card-text">{curso.descripcion}</p>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className="card-footer d-flex justify-content-between" style={{ marginTop: "35px" }} >
-                            <small className="text-muted text-footer"><b>Ofertado por:</b> {curso.ofertante}</small>
-                            <img src={curso.url_img_logo} alt="" width={50} />
+                            <div className="card-footer d-flex justify-content-between">
+                              <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
+                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                            </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
-
+                      </div>
+                    </a>
                   )
                 )
               }
@@ -161,41 +170,28 @@ const CoursesPage = (): JSX.Element => {
               {
                 cursosComunicativa?.map(
                   (curso): JSX.Element => (
-                    <div className="col-xl-4 col-lg-8 col-md-10 col-sm-12" >
-                      <a href={curso.url} target="_blank" className="card-link ">
-                        <div className="border rounded card" style={{ border: "15px", backgroundColor: "#ffffff", marginBottom: "1rem" }}>
-                          <div className="img-container">
-                            <img className="card-img-top" src={curso.url_img} alt="Card image cap" />
+                    <a href={curso.url} target="_blank" className="card-link ">
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                        <div className="row">
+                          <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
+                            <img src={curso.url_img} className="card-img" />
                           </div>
-                          <div className="card-body" style={{ height: "33vh" }}>
-                            <div className="d-flex flex-column" style={{ paddingBlock: "8px" }} >
-                              <h4 className="text-center" >{curso.titulo}</h4>
+                          <div className="col-xl-9 col-lg-12">
+                            <div className="card-body" >
+                              <h4>{curso.titulo}</h4>
+                              <div className="curso-descripcion" >
+                                <p className="card-text">{curso.descripcion.slice(0, 280)} ... <a style={{ color: "#0460e6" }}> Ver más</a></p>
+                                <StarRating rate={curso.puntuacion}></StarRating>
+                              </div>
                             </div>
-                            {curso.skills.length !== 0 ? (
-                              <>
-                                <h4 className="h4-curso">Lo que aprenderás:</h4>
-                                <div className="curso-descripcion-lqa" >
-
-                                  <ul>
-                                    {curso.skills.map((skill): JSX.Element => (<li>{skill}</li>))}
-                                  </ul>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="curso-descripcion" >
-                                  <p className="card-text">{curso.descripcion}</p>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className="card-footer d-flex justify-content-between" style={{ marginTop: "35px" }} >
-                            <small className="text-muted text-footer"><b>Ofertado por:</b> {curso.ofertante}</small>
-                            <img src={curso.url_img_logo} alt="" width={50} />
+                            <div className="card-footer d-flex justify-content-between">
+                              <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
+                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                            </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
+                      </div>
+                    </a>
 
                   )
                 )
@@ -232,41 +228,28 @@ const CoursesPage = (): JSX.Element => {
               {
                 cursosGestion?.map(
                   (curso): JSX.Element => (
-                    <div className="col-xl-4 col-lg-8 col-md-10 col-sm-12" >
-                      <a href={curso.url} target="_blank" className="card-link ">
-                        <div className="border rounded card" style={{ border: "15px", backgroundColor: "#ffffff", marginBottom: "1rem" }}>
-                          <div className="img-container">
-                            <img className="card-img-top" src={curso.url_img} alt="Card image cap" />
+                    <a href={curso.url} target="_blank" className="card-link ">
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                        <div className="row">
+                          <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
+                            <img src={curso.url_img} className="card-img" />
                           </div>
-                          <div className="card-body" style={{ height: "33vh" }}>
-                            <div className="d-flex flex-column" style={{ paddingBlock: "8px" }} >
-                              <h4 className="text-center" >{curso.titulo}</h4>
+                          <div className="col-xl-9 col-lg-12">
+                            <div className="card-body" >
+                              <h4>{curso.titulo}</h4>
+                              <div className="curso-descripcion" >
+                                <p className="card-text">{curso.descripcion.slice(0, 280)} ... <a style={{ color: "#0460e6" }}> Ver más</a></p>
+                                <StarRating rate={curso.puntuacion}></StarRating>
+                              </div>
                             </div>
-                            {curso.skills.length !== 0 ? (
-                              <>
-                                <h4 className="h4-curso">Lo que aprenderás:</h4>
-                                <div className="curso-descripcion-lqa" >
-
-                                  <ul>
-                                    {curso.skills.map((skill): JSX.Element => (<li>{skill}</li>))}
-                                  </ul>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="curso-descripcion" >
-                                  <p className="card-text">{curso.descripcion}</p>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className="card-footer d-flex justify-content-between" style={{ marginTop: "35px" }} >
-                            <small className="text-muted text-footer"><b>Ofertado por:</b> {curso.ofertante}</small>
-                            <img src={curso.url_img_logo} alt="" width={50} />
+                            <div className="card-footer d-flex justify-content-between">
+                              <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
+                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                            </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
+                      </div>
+                    </a>
 
                   )
                 )
@@ -303,41 +286,29 @@ const CoursesPage = (): JSX.Element => {
               {
                 cursosInvestigativa?.map(
                   (curso): JSX.Element => (
-                    <div className="col-xl-4 col-lg-8 col-md-10 col-sm-12" >
-                      <a href={curso.url} target="_blank" className="card-link ">
-                        <div className="border rounded card" style={{ border: "15px", backgroundColor: "#ffffff", marginBottom: "1rem" }}>
-                          <div className="img-container">
-                            <img className="card-img-top" src={curso.url_img} alt="Card image cap" />
+                    <a href={curso.url} target="_blank" className="card-link ">
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                        <div className="row">
+                          <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
+                            <img src={curso.url_img} className="card-img" />
                           </div>
-                          <div className="card-body" style={{ height: "33vh" }}>
-                            <div className="d-flex flex-column" style={{ paddingBlock: "8px" }} >
-                              <h4 className="text-center" >{curso.titulo}</h4>
+                          <div className="col-xl-9 col-lg-12">
+                            <div className="card-body" >
+                              <h4>{curso.titulo}</h4>
+                              <div className="curso-descripcion" >
+                                <p className="card-text">{curso.descripcion.slice(0, 280)} ... <a style={{ color: "#0460e6" }}> Ver más</a></p>
+                                <StarRating rate={curso.puntuacion}></StarRating>
+                              </div>
                             </div>
-                            {curso.skills.length !== 0 ? (
-                              <>
-                                <h4 className="h4-curso">Lo que aprenderás:</h4>
-                                <div className="curso-descripcion-lqa" >
-
-                                  <ul>
-                                    {curso.skills.map((skill): JSX.Element => (<li>{skill}</li>))}
-                                  </ul>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="curso-descripcion" >
-                                  <p className="card-text">{curso.descripcion}</p>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className="card-footer d-flex justify-content-between" style={{ marginTop: "35px" }} >
-                            <small className="text-muted text-footer"><b>Ofertado por:</b> {curso.ofertante}</small>
-                            <img src={curso.url_img_logo} alt="" width={50} />
+                            <div className="card-footer d-flex justify-content-between">
+                              <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
+                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                            </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
+                      </div>
+                    </a>
+
 
                   )
                 )
@@ -374,41 +345,28 @@ const CoursesPage = (): JSX.Element => {
               {
                 cursosTecnologica?.map(
                   (curso): JSX.Element => (
-                    <div className="col-xl-4 col-lg-8 col-md-10 col-sm-12" >
-                      <a href={curso.url} target="_blank" className="card-link ">
-                        <div className="border rounded card" style={{ border: "15px", backgroundColor: "#ffffff", marginBottom: "1rem" }}>
-                          <div className="img-container">
-                            <img className="card-img-top" src={curso.url_img} alt="Card image cap" />
+                    <a href={curso.url} target="_blank" className="card-link ">
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                        <div className="row">
+                          <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
+                            <img src={curso.url_img} className="card-img" />
                           </div>
-                          <div className="card-body" style={{ height: "33vh" }}>
-                            <div className="d-flex flex-column" style={{ paddingBlock: "8px" }} >
-                              <h4 className="text-center" >{curso.titulo}</h4>
+                          <div className="col-xl-9 col-lg-12">
+                            <div className="card-body" >
+                              <h4>{curso.titulo}</h4>
+                              <div className="curso-descripcion" >
+                                <p className="card-text">{curso.descripcion.slice(0, 280)} ... <a style={{ color: "#0460e6" }}> Ver más</a></p>
+                                <StarRating rate={curso.puntuacion}></StarRating>
+                              </div>
                             </div>
-                            {curso.skills.length !== 0 ? (
-                              <>
-                                <h4 className="h4-curso">Lo que aprenderás:</h4>
-                                <div className="curso-descripcion-lqa" >
-
-                                  <ul>
-                                    {curso.skills.map((skill): JSX.Element => (<li>{skill}</li>))}
-                                  </ul>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="curso-descripcion" >
-                                  <p className="card-text">{curso.descripcion}</p>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className="card-footer d-flex justify-content-between" style={{ marginTop: "35px" }} >
-                            <small className="text-muted text-footer"><b>Ofertado por:</b> {curso.ofertante}</small>
-                            <img src={curso.url_img_logo} alt="" width={50} />
+                            <div className="card-footer d-flex justify-content-between">
+                              <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
+                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                            </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
+                      </div>
+                    </a>
                   )
                 )
               }
@@ -429,7 +387,8 @@ const CoursesPage = (): JSX.Element => {
             )}
           </div>
         </>
-      )}
+      )
+      }
 
 
     </>

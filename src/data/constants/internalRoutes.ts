@@ -7,6 +7,9 @@ const INTERNAL_ROUTES = {
   ENCUESTA: "/encuesta",
   RESULTADOS: "/resultados",
   COURSES: "/cursos",
+  COURSES_CERTIFICADOS: "/subircertificado",
+  INSCRIPCIONES: "/inscripciones",
+  CERTIFICADOS: "/certificados",
 
   //SERVER
   SERVER_ERROR_404: `/404`,
