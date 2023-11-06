@@ -10,6 +10,8 @@
   "dependencies": {
     "@firebase/auth": "^0.23.2",
     "@reduxjs/toolkit": "^1.8.2",
+    "@types/moment": "^2.13.0",
+    "@types/react-addons-css-transition-group": "^15.0.9",
     "anychart": "^8.11.0",
     "anychart-react": "^1.4.1",
     "axios": "^0.27.2",
@@ -20,7 +22,9 @@
     "file-saver": "^2.0.5",
     "firebase": "^9.23.0",
     "jquery": "^3.6.0",
+    "moment": "^2.29.4",
     "react": "^18.0.0",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap": "^2.4.0",
     "react-bootstrap-star-rating": "^3.5.5-alpha.0.3",
     "react-chartjs-2": "^5.2.0",

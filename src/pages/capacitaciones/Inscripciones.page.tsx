@@ -7,6 +7,7 @@ import BREADCRUMBS_ITEMS from "../../data/constants/breadcrumbs.const";
 import Loader from "../../shared/loader.component";
 
 import { useAppDispatch } from "../../hooks/reduxHooks";
+
 const InscripcionesPage = (): JSX.Element => {
   // local variables
   // constants
@@ -30,7 +31,6 @@ const InscripcionesPage = (): JSX.Element => {
       ) : (
         <>
           <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3" }} >
-            
           </div>
         </>
       )}
