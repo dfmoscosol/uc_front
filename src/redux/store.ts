@@ -13,6 +13,11 @@ import { CursosTecnologicaGetAllReducer } from "./cursos/getCursosTecnologica.sl
 import { CursosInvestigativaGetAllReducer } from "./cursos/getCursosInvestigativa.slice";
 import { CursosGestionGetAllReducer } from "./cursos/getCursosGestionslice";
 import { CursosComunicativaGetAllReducer } from "./cursos/getCursosComunicativa.slice";
+import { postPalabrasClaveReducer } from "./cursos/postPalabrasClave.slice";
+import { CursosTitulosGetAllReducer } from "./cursos/getTitulosCursos.slice";
+import { postPdfReducer } from "./cursos/postPdfs.slice";
+import { CapacitacionesOpenGetAllReducer } from "./capacitaciones/getOpenCapacitaciones";
+import { postInscripcionReducer } from "./capacitaciones/postInscripcion.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
@@ -29,6 +34,11 @@ const store = configureStore({
     cursosInvestigativa: CursosInvestigativaGetAllReducer,
     cursosGestion: CursosGestionGetAllReducer,
     cursosComunicativa: CursosComunicativaGetAllReducer,
+    send_keywords: postPalabrasClaveReducer,
+    titulos_cursos: CursosTitulosGetAllReducer,
+    send_pdf: postPdfReducer,
+    capacitaciones: CapacitacionesOpenGetAllReducer,
+    post_inscripcion: postInscripcionReducer,
   },
 });
 

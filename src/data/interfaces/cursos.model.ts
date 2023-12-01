@@ -1,6 +1,8 @@
+import { BlobOptions } from "buffer";
+
 export interface Info {
     total: number;
-    totalPages: number;
+    total_pages: number;
     currentPage: number;
     hasPrevPage: boolean;
     prevPage: any;
@@ -13,10 +15,22 @@ export interface Curso {
     titulo: string;
     descripcion: string;
     skills: string[];
-    url_img: string;
+    urlimagen: string;
     url: string;
     ofertante: string;
-    url_img_logo: string;
+    urllogo: string;
     puntuacion: number;
-    key_words: string[];
+    keywords: string[];
+    momento: string
 }
+
+export interface KeyWordsForm {
+    keywords: string[],
+    isValid: boolean,
+    competencia: string,
+}
+
+export interface PdfForm {
+    file: File;
+    id_curso: number;
+  }

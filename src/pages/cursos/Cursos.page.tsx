@@ -10,19 +10,24 @@ import { getFacultadesReset } from "../../redux/encuesta/getFacultades.slice";
 import { getCarrerasReset } from "../../redux/encuesta/getCarreras.slice";
 import { validateEncuestaReset } from "../../redux/encuesta/validateEncuesta.slice";
 import { getPreguntasReset } from "../../redux/encuesta/getPreguntas.slice";
-import { getResultados, getResultadosReset, initialState } from "../../redux/resultados/getResultados.slice";
+import { getResultados, getResultadosReset, getUltimoResultado, initialState } from "../../redux/resultados/getResultados.slice";
 import { getPeriodosReset } from "../../redux/resultados/getPeriodos.slice";
 import { postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
 import TituloCurso from "./componenets/TituloCurso";
 import Pagination from "./componenets/Pagination.component";
 import StarRating from "./componenets/StarRating.component";
-import ModalComponent from "./componenets/Modal.component";
+import ModalComponentLike from "./componenets/ModalLike.component";
+import { getCursosPedagogica } from "../../redux/cursos/getCursosPedagogica.slice";
+import { CursosComunicativaGetAllReset, getCursosComunicativa } from "../../redux/cursos/getCursosComunicativa.slice";
+import { CursosGestionGetAllReset, getCursosGestion } from "../../redux/cursos/getCursosGestionslice";
+import { CursosInvestigativaGetAllReducer, CursosInvestigativaGetAllReset, getCursosInvestigativa } from "../../redux/cursos/getCursosInvestigativa.slice";
+import { CursosTecnologicaGetAllReset, getCursosTecnologica } from "../../redux/cursos/getCursosTecnologica.slice";
 
 const CoursesPage = (): JSX.Element => {
   // local variables
   const [open, setOpen] = useState(false);
   const [keyWords, setKeyWords] = useState([]);
-  const [url, setUrl] = useState("");
+  const [competencia, setCompetencia] = useState("");
 
   // constants
   const {
@@ -48,21 +53,26 @@ const CoursesPage = (): JSX.Element => {
     (state) => state.cursosTecnologica
   );
 
-
   const getCursosPedagogicaByPagination = (page: number): void => {
+    dispatch(getCursosPedagogica(page))
+
   }
   const getCursosComunicativaByPagination = (page: number): void => {
+    dispatch(getCursosComunicativa(page))
   }
   const getCursosGestionByPagination = (page: number): void => {
+    dispatch(getCursosGestion(page))
   }
   const getCursosInvestigativaByPagination = (page: number): void => {
+    dispatch(getCursosInvestigativa(page))
   }
   const getCursosTecnologicaByPagination = (page: number): void => {
+    dispatch(getCursosTecnologica(page))
   }
 
-  const handleOpenModal = (keyWords, url) => {
+  const handleOpenModal = (keyWords, competencia) => {
     setKeyWords(keyWords);
-    setUrl(url);
+    setCompetencia(competencia)
     setOpen(true);
   };
 
@@ -72,14 +82,25 @@ const CoursesPage = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getResultadosReset())
-    dispatch(getResultados(2))
+    dispatch(CursosGestionGetAllReset())
+    dispatch(CursosComunicativaGetAllReset())
+    dispatch(CursosGestionGetAllReset()) 
+    dispatch(CursosInvestigativaGetAllReset())
+    dispatch(CursosTecnologicaGetAllReset())
+    dispatch(getUltimoResultado())
+    dispatch(getCursosPedagogica())
+    dispatch(getCursosComunicativa())
+    dispatch(getCursosGestion())
+    dispatch(getCursosInvestigativa())
+    dispatch(getCursosTecnologica())
   }, [dispatch]);
 
   return (
     <>
       {open &&
-        <ModalComponent
-          url={url}
+        <ModalComponentLike
+          dispatch={dispatch}
+          competencia={competencia}
           keyWords={keyWords}
           onClose={handleCloseModal}
         />
@@ -114,10 +135,10 @@ const CoursesPage = (): JSX.Element => {
                 cursosPedagogica?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "pedagogica")}>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
-                            <img src={curso.url_img} className="card-img" />
+                            <img src={curso.urlimagen} className="card-img" />
                           </div>
                           <div className="col-xl-9 col-lg-12">
                             <div className="card-body" >
@@ -129,7 +150,7 @@ const CoursesPage = (): JSX.Element => {
                             </div>
                             <div className="card-footer d-flex justify-content-between">
                               <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
-                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                              <img className="img-footer" src={curso.urllogo} alt="" />
                             </div>
                           </div>
                         </div>
@@ -145,7 +166,7 @@ const CoursesPage = (): JSX.Element => {
                 totalDocs={infoPedagogica.total}
                 prevPage={infoPedagogica.prevPage}
                 hasPrevPage={infoPedagogica.hasPrevPage}
-                totalPages={infoPedagogica.totalPages}
+                total_pages={infoPedagogica.total_pages}
                 page={infoPedagogica.currentPage}
                 nextPage={infoPedagogica.nextPage}
                 hasNextPage={infoPedagogica.hasNextPage}
@@ -171,10 +192,10 @@ const CoursesPage = (): JSX.Element => {
                 cursosComunicativa?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "comunicativa")}>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
-                            <img src={curso.url_img} className="card-img" />
+                            <img src={curso.urlimagen} className="card-img" />
                           </div>
                           <div className="col-xl-9 col-lg-12">
                             <div className="card-body" >
@@ -186,7 +207,7 @@ const CoursesPage = (): JSX.Element => {
                             </div>
                             <div className="card-footer d-flex justify-content-between">
                               <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
-                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                              <img className="img-footer" src={curso.urllogo} alt="" />
                             </div>
                           </div>
                         </div>
@@ -203,7 +224,7 @@ const CoursesPage = (): JSX.Element => {
                 totalDocs={infoComunicativa.total}
                 prevPage={infoComunicativa.prevPage}
                 hasPrevPage={infoComunicativa.hasPrevPage}
-                totalPages={infoComunicativa.totalPages}
+                total_pages={infoComunicativa.total_pages}
                 page={infoComunicativa.currentPage}
                 nextPage={infoComunicativa.nextPage}
                 hasNextPage={infoComunicativa.hasNextPage}
@@ -229,10 +250,10 @@ const CoursesPage = (): JSX.Element => {
                 cursosGestion?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "gestion")}>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
-                            <img src={curso.url_img} className="card-img" />
+                            <img src={curso.urlimagen} className="card-img" />
                           </div>
                           <div className="col-xl-9 col-lg-12">
                             <div className="card-body" >
@@ -244,7 +265,7 @@ const CoursesPage = (): JSX.Element => {
                             </div>
                             <div className="card-footer d-flex justify-content-between">
                               <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
-                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                              <img className="img-footer" src={curso.urllogo} alt="" />
                             </div>
                           </div>
                         </div>
@@ -261,7 +282,7 @@ const CoursesPage = (): JSX.Element => {
                 totalDocs={infoGestion.total}
                 prevPage={infoGestion.prevPage}
                 hasPrevPage={infoGestion.hasPrevPage}
-                totalPages={infoGestion.totalPages}
+                total_pages={infoGestion.total_pages}
                 page={infoGestion.currentPage}
                 nextPage={infoGestion.nextPage}
                 hasNextPage={infoGestion.hasNextPage}
@@ -287,10 +308,10 @@ const CoursesPage = (): JSX.Element => {
                 cursosInvestigativa?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "investigativa")}>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
-                            <img src={curso.url_img} className="card-img" />
+                            <img src={curso.urlimagen} className="card-img" />
                           </div>
                           <div className="col-xl-9 col-lg-12">
                             <div className="card-body" >
@@ -302,7 +323,7 @@ const CoursesPage = (): JSX.Element => {
                             </div>
                             <div className="card-footer d-flex justify-content-between">
                               <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
-                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                              <img className="img-footer" src={curso.urllogo} alt="" />
                             </div>
                           </div>
                         </div>
@@ -320,7 +341,7 @@ const CoursesPage = (): JSX.Element => {
                 totalDocs={infoInvestigativa.total}
                 prevPage={infoInvestigativa.prevPage}
                 hasPrevPage={infoInvestigativa.hasPrevPage}
-                totalPages={infoInvestigativa.totalPages}
+                total_pages={infoInvestigativa.total_pages}
                 page={infoInvestigativa.currentPage}
                 nextPage={infoInvestigativa.nextPage}
                 hasNextPage={infoInvestigativa.hasNextPage}
@@ -346,10 +367,10 @@ const CoursesPage = (): JSX.Element => {
                 cursosTecnologica?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.key_words, curso.url)}>
+                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "tecnologica")}>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
-                            <img src={curso.url_img} className="card-img" />
+                            <img src={curso.urlimagen} className="card-img" />
                           </div>
                           <div className="col-xl-9 col-lg-12">
                             <div className="card-body" >
@@ -361,7 +382,7 @@ const CoursesPage = (): JSX.Element => {
                             </div>
                             <div className="card-footer d-flex justify-content-between">
                               <small className="text-muted text-footer"><b>{curso.ofertante}</b></small>
-                              <img className="img-footer" src={curso.url_img_logo} alt="" />
+                              <img className="img-footer" src={curso.urllogo} alt="" />
                             </div>
                           </div>
                         </div>
@@ -377,7 +398,7 @@ const CoursesPage = (): JSX.Element => {
                 totalDocs={infoTecnologica.total}
                 prevPage={infoTecnologica.prevPage}
                 hasPrevPage={infoTecnologica.hasPrevPage}
-                totalPages={infoTecnologica.totalPages}
+                total_pages={infoTecnologica.total_pages}
                 page={infoTecnologica.currentPage}
                 nextPage={infoTecnologica.nextPage}
                 hasNextPage={infoTecnologica.hasNextPage}

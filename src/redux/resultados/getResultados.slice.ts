@@ -108,6 +108,20 @@ export const getResultados =
     }
   };
 
+  export const getUltimoResultado =
+  (): AppThunk =>
+  async (dispatch: AppThunkDispatch): Promise<void> => {
+    dispatch(getResultadosRequest());
+    try {
+      const { data }: AxiosResponse<ResultadosResponse> = await axiosInstance.get(
+        "/get_user_last_resultado");
+
+      dispatch(getResultadosSuccess(data.respuesta.data));
+    } catch (err) {
+      dispatch(getResultadosFail(err));
+    }
+  };
+
 export const { getResultadosSuccess, getResultadosRequest, getResultadosFail,getResultadosReset } =
 ResultadosGetAllSlice.actions;
 

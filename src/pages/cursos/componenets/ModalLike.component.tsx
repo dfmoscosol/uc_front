@@ -1,24 +1,26 @@
 import { useRef, useState } from 'react';
 import { Modal, Button, Badge } from 'react-bootstrap';
-
+import { useAppDispatch } from '../../../hooks/reduxHooks';
 import {
     AiFillDislike,
     AiFillLike,
     AiOutlineDislike,
     AiOutlineLike
 } from 'react-icons/ai';
-
-const abrirEnlaceEnNuevaPestana = (enlace) => {
-    window.open(enlace, '_blank'); // Abre el enlace en una nueva pestaña
-};
+import { postPalabrasClave } from '../../../redux/cursos/postPalabrasClave.slice';
 
 
-
-
-const ModalComponent = ({ url, keyWords, onClose }) => {
+const ModalComponentLike = ({ dispatch, competencia, keyWords, onClose }) => {
     const [like, setLike] = useState(false);
     const [dislike, setDislike] = useState(false);
-    const [keyActives, setkeyActives] = useState(Array(keyWords.length).fill(false));
+    const [keyActives, setkeyActives] = useState(Array(keyWords?.length).fill(false));
+
+    const handleSubmitPalabrasClave = () => {
+        const filteredWords = keyWords.filter((_, index) => keyActives[index]);
+        const form = { competencia: competencia, isValid: like, keywords: filteredWords}
+        dispatch(postPalabrasClave(form))
+        onClose()
+    }
 
     const handleLike = () => {
         if (!like) {
@@ -70,7 +72,7 @@ const ModalComponent = ({ url, keyWords, onClose }) => {
                         {keyWords?.map(
                             (word, index): JSX.Element => (
                                 <>
-                                    <Badge onClick={() => changeKeyActive(index)} bg={keyActives[index] ? "primary" : "secondary"}>{word}</Badge>
+                                    <Badge className='badge-words' onClick={() => changeKeyActive(index)} bg={keyActives[index] ? "primary" : "secondary"}>{word}</Badge>
                                 </>
                             ))}
                     </div>
@@ -80,11 +82,12 @@ const ModalComponent = ({ url, keyWords, onClose }) => {
             </Modal.Body>
             {like || dislike ? (<Modal.Footer>
                 <button className="boton-modal" onClick={() => {
-
+                    handleSubmitPalabrasClave()
                 }}>Enviar Retroalimentación</button>
             </Modal.Footer>) : (<></>)}
+            
         </Modal>
     );
 };
 
-export default ModalComponent;
+export default ModalComponentLike;

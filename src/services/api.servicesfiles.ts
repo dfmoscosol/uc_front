@@ -6,15 +6,15 @@ import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";
 
 
-const axiosInstance = axios.create({
+const axiosInstanceFiles = axios.create({
   baseURL,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
 
   },
 });
 
-axiosInstance.interceptors.request.use(function (
+axiosInstanceFiles.interceptors.request.use(function (
   request
 ): AxiosRequestConfig<any> {
   if (request.url?.includes("assets") || request.headers?.Authorization)
@@ -28,7 +28,7 @@ axiosInstance.interceptors.request.use(function (
   return request;
 });
 
-axiosInstance.interceptors.response.use(
+axiosInstanceFiles.interceptors.response.use(
   (response): AxiosResponse<any, any> => response,
   (error) => {
     // TODO: Validate all errors types
@@ -62,4 +62,4 @@ axiosInstance.interceptors.response.use(
 
 
 
-export default axiosInstance;
+export default axiosInstanceFiles;

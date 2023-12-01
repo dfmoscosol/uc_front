@@ -54,3 +54,38 @@ export interface CursosGestionState {
     info?: Info;
     cursos?: Curso[];
 }
+
+export interface PostPalabrasClaveResponse {
+    error: string,
+    estado: boolean,
+    respuesta: PalabrasClavePostState,
+  }
+
+  export interface PalabrasClavePostState {
+    exito: boolean;
+  }
+
+  export interface CursosTitulosResponse {
+    error: string,
+    estado: boolean,
+    respuesta: CursosTitulosState,
+}
+
+export interface CursosTitulos {
+    id_curso: number;
+    titulo: string;
+}
+
+export interface CursosTitulosState {
+    cursos_titulos?: CursosTitulos[];
+}
+
+export interface PostPdfResponse {
+    error: string,
+    estado: boolean,
+    respuesta: PdfPostState,
+  }
+
+  export interface PdfPostState {
+    exito: boolean;
+  }

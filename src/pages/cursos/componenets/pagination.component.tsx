@@ -2,7 +2,7 @@ type Props = {
 	totalDocs: number;
 	prevPage: number | null;
 	hasPrevPage: boolean;
-	totalPages: number;
+	total_pages: number;
 	page: number;
 	nextPage: number | null;
 	hasNextPage: boolean;
@@ -14,7 +14,7 @@ const Pagination: React.FC<Props> = ({
 	totalDocs,
 	prevPage,
 	hasPrevPage,
-	totalPages,
+	total_pages,
 	page,
 	nextPage,
 	hasNextPage,
@@ -23,6 +23,7 @@ const Pagination: React.FC<Props> = ({
 }): JSX.Element => {
 	return (
 		<>
+	
 			{totalDocs > limit && (
 				<ul className="pagination pagination-primary justify-content-center">
 					<li className="page-item">
@@ -34,7 +35,7 @@ const Pagination: React.FC<Props> = ({
 							Anterior
 						</button>
 					</li>
-					{[...Array(totalPages).keys()].map((index): JSX.Element | null => {
+					{[...Array(total_pages).keys()].map((index): JSX.Element | null => {
 						if (index === page - 1 || index === page || index === page + 1) {
 							return (
 								<li key={index} className={`page-item ${index + 1 === page && "active"}`}>
@@ -43,7 +44,7 @@ const Pagination: React.FC<Props> = ({
 									</button>
 								</li>
 							);
-						} else if (index === 0 || index === totalPages - 1) {
+						} else if (index === 0 || index === total_pages - 1) {
 							// Mostrar la primera y última página siempre
 							return (
 								<li key={index} className={`page-item ${index + 1 === page && "active"}`}>
@@ -52,7 +53,7 @@ const Pagination: React.FC<Props> = ({
 									</button>
 								</li>
 							);
-						} else if (index === 1 || index === totalPages - 2) {
+						} else if (index === 1 || index === total_pages - 2) {
 							// Mostrar puntos suspensivos (...) como indicador de más páginas disponibles
 							return (
 								<li key={index} className="page-item disabled">
