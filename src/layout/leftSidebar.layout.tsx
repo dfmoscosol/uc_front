@@ -94,7 +94,7 @@ const LeftSidebar = (): JSX.Element => {
           <ul className="list" >
 
             <li className="pt-4 titulo-menu" >
-              {openSidebar? (<><hr className="hr-sidebar"></hr></>):(<>PENTÁGONO</>)}
+              {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>PENTÁGONO</>)}
             </li>
             <li className="pt-2" title="Inicio">
               <NavLink
@@ -137,7 +137,7 @@ const LeftSidebar = (): JSX.Element => {
               </NavLink>
             </li>
             <li className="pt-4 titulo-menu" >
-            {openSidebar? (<><hr className="hr-sidebar"></hr></>):(<>CURSOS</>)}
+              {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CURSOS</>)}
             </li>
             <li title="Recomendaciones" className="pt-2">
               <NavLink
@@ -166,7 +166,20 @@ const LeftSidebar = (): JSX.Element => {
               </NavLink>
             </li>
             <li className="pt-4 titulo-menu" >
-            {openSidebar? (<><hr className="hr-sidebar"></hr></>):(<>CAPACITACIONES</>)}
+              {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CAPACITACIONES</>)}
+            </li>
+            <li title="Portafolio">
+              <NavLink
+                to={INTERNAL_ROUTES.CERTIFICADOS}
+                className={
+                  location.pathname.includes(INTERNAL_ROUTES.CERTIFICADOS)
+                    ? "navbar_item_active"
+                    : ""
+                }
+              >
+                <i className="zmdi zmdi-collection-bookmark" ></i>
+                <span>Portafolio</span>
+              </NavLink>
             </li>
             <li title="Inscripciones" className="pt-2">
               <NavLink
@@ -181,19 +194,21 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Inscripciones</span>
               </NavLink>
             </li>
-            <li title="Generar Certificados">
-              <NavLink
-                to={INTERNAL_ROUTES.CERTIFICADOS}
-                className={
-                  location.pathname.includes(INTERNAL_ROUTES.CERTIFICADOS)
-                    ? "navbar_item_active"
-                    : ""
-                }
-              >
-                <i className="zmdi zmdi-assignment-check" ></i>
-                <span>Generar Certificados</span>
-              </NavLink>
-            </li>
+            
+            {
+              location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)
+                ?
+                <li title="Generar Certificados">
+                  <NavLink
+                    to={INTERNAL_ROUTES.ASISTENCIA}
+                    className="navbar_item_active"
+                  >
+                    <i className="zmdi zmdi-assignment-check" ></i>
+                    <span>Asistencia</span>
+                  </NavLink>
+                </li>
+                : ""
+            }
             {/* <li title="Capacitaciones">
               <a onClick={toggleSubMenu} style={{ cursor: "pointer", textDecoration: "none" }}
                 className={

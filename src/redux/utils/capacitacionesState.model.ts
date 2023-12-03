@@ -1,4 +1,4 @@
-import { Capacitacion } from "../../data/interfaces/capacitaciones.model";
+import { Asistencia, Capacitacion } from "../../data/interfaces/capacitaciones.model";
 
 export interface CapacitacionesOpenResponse {
     error: string,
@@ -8,6 +8,16 @@ export interface CapacitacionesOpenResponse {
 
 export interface CapacitacionesOpenState {
     capacitaciones: Capacitacion[]
+}
+
+export interface AsistenciasResponse {
+  error: string,
+  estado: boolean,
+  respuesta: AsistenciasState,
+}
+
+export interface AsistenciasState {
+  data: Asistencia[]
 }
 
 export interface PostInscripcionResponse {

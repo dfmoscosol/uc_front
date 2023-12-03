@@ -14,6 +14,18 @@ export interface Capacitacion {
     estado: number
 }
 
+export interface Asistencia {
+    id_asistencia:number,
+    asiste_entrada:boolean,
+    asiste_salida:boolean,
+    fecha:string,
+    id_inscripcion:number,
+    nombre:string,
+    allow_asistencia_entrada:boolean,
+    allow_asistencia_salida:boolean,
+    tipo:string,
+}
+
 export interface InscripcionForm {
     id_capacitacion: number,
     id_taller: number | null,

@@ -34,6 +34,11 @@ const BREADCRUMBS_ITEMS = {
     breadcrumbs: [
     ],
   },
+  asistencia: {
+    pageTitle: "Marcar Asistencia",
+    breadcrumbs: [
+    ],
+  },
   certificados_cursos: {
     pageTitle: "Acreditación de Certificados",
     breadcrumbs: [

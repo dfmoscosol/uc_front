@@ -14,6 +14,7 @@ import CoursesPage from "../pages/cursos/Cursos.page";
 import InscripcionesPage from "../pages/capacitaciones/Inscripciones.page";
 import CertificadosPage from "../pages/capacitaciones/Certificados.page";
 import CertificadosCursosPage from "../pages/cursos/CertificadosCursos.page";
+import AsistenciaPage from "../pages/capacitaciones/Asistencia.page";
 
 
 const RoutesApp = () => {
@@ -27,6 +28,7 @@ const RoutesApp = () => {
         <Route path={INTERNAL_ROUTES.INSCRIPCIONES} element={<InscripcionesPage />} />
         <Route path={INTERNAL_ROUTES.CERTIFICADOS} element={<CertificadosPage />} />
         <Route path={INTERNAL_ROUTES.COURSES_CERTIFICADOS} element={<CertificadosCursosPage/>} />
+        <Route path={INTERNAL_ROUTES.ASISTENCIA} element={<AsistenciaPage/>} />
       </Routes>
     </Skeleton>
   );
