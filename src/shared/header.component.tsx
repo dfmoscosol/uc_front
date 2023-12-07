@@ -11,16 +11,7 @@ const Header: React.FC<Props> = ({
   title,
   children,
 }): JSX.Element => {
-  const [openLeftSidebar, setOpenLeftSidebar] = useState<boolean>(false);
   const [openRightSidebar, setOpenRightSidebar] = useState<boolean>(false);
-
-  /* const handleLeftSidebar = (): void => {
-    setOpenLeftSidebar(!openLeftSidebar);
-    let bodyElement = document.getElementsByClassName("theme-blush");
-    bodyElement[0].className = openLeftSidebar
-      ? "theme-blush"
-      : "theme-blush right_icon_toggle";
-  }; */
 
   const handleRightSidebar = (): void => {
     setOpenRightSidebar(!openRightSidebar);
@@ -35,24 +26,7 @@ const Header: React.FC<Props> = ({
       <div className="row">
         <div className="col-lg-12 col-md-12 col-sm-12">
           <h2 style={{ color: "#002856" }}>{title}</h2>
-          {/* <ul className="breadcrumb mt-2">
-            <li className="breadcrumb-item">
-              <Link to={INTERNAL_PATHS.HOME} style={{ color: "#A51008" }}>
-                Inicio
-              </Link>
-            </li>
-            {breadcrumbs.map(
-              (b, index, row): JSX.Element => (
-                <li
-                  key={index}
-                  className={`breadcrumb-item ${index + 1 === row.length && "active"
-                    }`}
-                >
-                  {!b.link ? b.title : <Link style={{ color: "#A51008" }} to={b.link}>{b.title}</Link>}
-                </li>
-              )
-            )}
-          </ul> */}
+          
           <button
             onClick={handleRightSidebar}
             className="btn"
@@ -62,17 +36,6 @@ const Header: React.FC<Props> = ({
             <i className="zmdi zmdi-sort-amount-desc" style={{color:"white"}}></i>
           </button>
         </div>
-        {/* <div className="col-lg-5 col-md-6 col-sm-12">
-          <button
-            onClick={handleLeftSidebar}
-            className="btn btn-black btn-icon float-end right_icon_toggle_btn"
-            type="button"
-          >
-            <i className="zmdi zmdi-arrow-right"></i>
-          </button>
-          {children}
-
-        </div> */}
       </div>
     </div>
   );

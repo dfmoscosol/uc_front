@@ -1,6 +1,6 @@
 // components
 import Header from "../../shared/header.component";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // constants
 import BREADCRUMBS_ITEMS from "../../data/constants/breadcrumbs.const";
@@ -22,13 +22,17 @@ import { CursosComunicativaGetAllReset, getCursosComunicativa } from "../../redu
 import { CursosGestionGetAllReset, getCursosGestion } from "../../redux/cursos/getCursosGestionslice";
 import { CursosInvestigativaGetAllReducer, CursosInvestigativaGetAllReset, getCursosInvestigativa } from "../../redux/cursos/getCursosInvestigativa.slice";
 import { CursosTecnologicaGetAllReset, getCursosTecnologica } from "../../redux/cursos/getCursosTecnologica.slice";
+import { Toast } from "react-bootstrap";
+import { postPalabrasClaveReset } from "../../redux/cursos/postPalabrasClave.slice";
 
 const CoursesPage = (): JSX.Element => {
   // local variables
   const [open, setOpen] = useState(false);
   const [keyWords, setKeyWords] = useState([]);
   const [competencia, setCompetencia] = useState("");
-
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const toastRefSuccess = useRef<HTMLDivElement>(null);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   // constants
   const {
     cursos: { pageTitle },
@@ -52,10 +56,11 @@ const CoursesPage = (): JSX.Element => {
   const { cursos: cursosTecnologica, info: infoTecnologica } = useAppSelector(
     (state) => state.cursosTecnologica
   );
+  const { exito } = useAppSelector((state) => state.send_keywords)
+
 
   const getCursosPedagogicaByPagination = (page: number): void => {
     dispatch(getCursosPedagogica(page))
-
   }
   const getCursosComunicativaByPagination = (page: number): void => {
     dispatch(getCursosComunicativa(page))
@@ -70,6 +75,14 @@ const CoursesPage = (): JSX.Element => {
     dispatch(getCursosTecnologica(page))
   }
 
+  const handleCloseSuccess = () => {
+    setShowSuccessAlert(false)
+  };
+
+  const handleCloseError = () => {
+    setShowErrorAlert(false)
+  };
+
   const handleOpenModal = (keyWords, competencia) => {
     setKeyWords(keyWords);
     setCompetencia(competencia)
@@ -78,22 +91,28 @@ const CoursesPage = (): JSX.Element => {
 
   const handleCloseModal = () => {
     setOpen(false);
+    if (exito == true) {
+      setShowSuccessAlert(true)
+    } else if (exito == false) {
+      setShowErrorAlert(true)
+    }
   }
 
   useEffect(() => {
     dispatch(getResultadosReset())
     dispatch(CursosGestionGetAllReset())
     dispatch(CursosComunicativaGetAllReset())
-    dispatch(CursosGestionGetAllReset()) 
+    dispatch(CursosGestionGetAllReset())
     dispatch(CursosInvestigativaGetAllReset())
     dispatch(CursosTecnologicaGetAllReset())
+    dispatch(postPalabrasClaveReset())
     dispatch(getUltimoResultado())
     dispatch(getCursosPedagogica())
     dispatch(getCursosComunicativa())
     dispatch(getCursosGestion())
     dispatch(getCursosInvestigativa())
     dispatch(getCursosTecnologica())
-  }, [dispatch]);
+  }, [dispatch,exito]);
 
   return (
     <>
@@ -410,7 +429,66 @@ const CoursesPage = (): JSX.Element => {
         </>
       )
       }
-
+      {showSuccessAlert && (
+        <div
+          ref={toastRefSuccess}
+          style={{
+            position: 'absolute',
+            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            zIndex: 1,
+          }}
+        >
+          <Toast style={{
+            background: '#fff', // Color de fondo
+            color: '#000', // Color del texto
+            maxWidth: '300px', // Ancho máximo del Toast
+          }} show={showSuccessAlert} delay={6000} onClose={handleCloseSuccess} autohide>
+            <Toast.Header closeButton={false} style={{ background: '#157347', color: '#fff' }}>
+              <strong className="me-auto">Éxito</strong>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                aria-label="Cerrar"
+                onClick={handleCloseSuccess}
+              />
+            </Toast.Header>
+            <Toast.Body>
+              Retroalimentación enviada correctamente.
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
+      {showErrorAlert && (
+        <div
+          ref={toastRefSuccess}
+          style={{
+            position: 'absolute',
+            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            zIndex: 1,
+          }}
+        >
+          <Toast style={{
+            background: '#fff', // Color de fondo
+            color: '#000', // Color del texto
+            maxWidth: '300px', // Ancho máximo del Toast
+          }} show={showErrorAlert} onClose={handleCloseError} autohide delay={6000}>
+            <Toast.Header closeButton={false} style={{ background: '#A51008', color: '#fff' }}>
+              <strong className="me-auto">Error</strong>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                aria-label="Cerrar"
+                onClick={handleCloseError}
+              />
+            </Toast.Header>
+            <Toast.Body>
+              No se pudo enviar la retroalimentación.
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
 
     </>
   );

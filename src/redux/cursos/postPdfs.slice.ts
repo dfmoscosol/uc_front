@@ -8,6 +8,7 @@ import axiosInstanceFiles from "../../services/api.servicesfiles";
 
 const initialState: PdfPostState = {
   exito: false,
+  isLoading: false
 };
 
 export const postPdfSlice = createSlice({
@@ -17,6 +18,8 @@ export const postPdfSlice = createSlice({
     postPdfRequest: (state): PdfPostState => {
       return {
         ...state,
+        isLoading: true,
+
       };
     },
     postPdfSuccess: (
@@ -25,6 +28,7 @@ export const postPdfSlice = createSlice({
     ): PdfPostState => {
       return {
         ...state,
+        isLoading: false,
         exito: action.payload,
       };
     },
@@ -34,6 +38,7 @@ export const postPdfSlice = createSlice({
     ): PdfPostState => {
       return {
         ...state,
+        isLoading: false,
         exito: action.payload,
       };
     },

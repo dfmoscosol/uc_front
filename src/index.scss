@@ -10993,6 +10993,18 @@ a:any-link {
   color: #000;
 }
 
+.kpi-container-a-disabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: gray;
+  pointer-events: none;
+}
+
 .kpi-text {
   display: flex;
   flex-direction: column;
@@ -11045,6 +11057,20 @@ a:any-link {
 
 .badge-inscrito.bg-primary {
   background-color: #bbf7d0 !important;
+}
+
+.badge-limpio {
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 20px; // Ajusta este valor según sea necesario
+  padding-left: 15px; // Ajusta según sea necesario
+  padding-right: 15px;
+  color: #15803d;
+  align-self: center
+}
+
+.badge-limpio.bg-primary {
+  background-color: transparent !important;
 }
 
 .badge-pendiente {
@@ -11106,4 +11132,78 @@ a:any-link {
 
 .badge-conn.bg-primary {
   background-color: #fff !important;
+}
+
+.badge-tipo {
+  font-size: 8px;
+  font-weight: 400;
+  border: 1px solid rgba(88, 88, 88, 0.54);
+  border-radius: 20px;
+  padding: 5px 10px;
+  /* Ajusta el padding para proporcionar un espacio uniforme alrededor del contenido */
+  color: #000;
+  align-self: center;
+  white-space: normal;
+  /* Asegura que el texto se mantenga en una sola línea */
+}
+
+.badge-tipo.bg-primary {
+  background-color: #f0f0f0 !important;
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: spin 2s linear infinite;
+  margin-right: 10px;
+  transform-origin: center;
+  /* Ajusta esto si es necesario */
+}
+
+.table-container {
+  overflow-x: scroll;
+  
+}
+
+.table {
+  width: auto;
+  margin-left: auto; /* Centra la tabla a la izquierda */
+    margin-right: auto; /* Centra la tabla a la derecha */
+}
+
+.table thead th {
+  background-color: #002856;
+  /* Color del encabezado */
+  color: white;
+  /* Color del texto del encabezado */
+  align-content: center;
+  text-align: center; /* Centra horizontalmente el contenido */
+  vertical-align: middle; /* Centra verticalmente el contenido */
+}
+
+.table tbody th {
+  color: #000;
+  /* Color de fondo de los datos */
+}
+
+.table tbody td {
+  background-color: #f0f0f0;
+  text-align: center; /* Centra horizontalmente el contenido */
+  vertical-align: middle; /* Centra verticalmente el contenido */
+}
+
+.titulo-portafolio {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 20px 0 20px 20px;
+  color: #002856
 }

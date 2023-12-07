@@ -6,7 +6,8 @@ import { PalabrasClavePostState, PostPalabrasClaveResponse } from "../utils/curs
 import { KeyWordsForm } from "../../data/interfaces/cursos.model";
 
 const initialState: PalabrasClavePostState = {
-  exito: false,
+  exito: null,
+  isLoading: false
 };
 
 export const postPalabrasClaveSlice = createSlice({
@@ -16,6 +17,7 @@ export const postPalabrasClaveSlice = createSlice({
     postPalabrasClaveRequest: (state): PalabrasClavePostState => {
       return {
         ...state,
+        isLoading:true
       };
     },
     postPalabrasClaveSuccess: (
@@ -25,6 +27,7 @@ export const postPalabrasClaveSlice = createSlice({
       return {
         ...state,
         exito: action.payload,
+        isLoading: false
       };
     },
     postPalabrasClaveFail: (
@@ -34,6 +37,7 @@ export const postPalabrasClaveSlice = createSlice({
       return {
         ...state,
         exito: action.payload,
+        isLoading: false
       };
     },
     postPalabrasClaveReset: (state): PalabrasClavePostState => {
@@ -49,7 +53,7 @@ export const postPalabrasClave =
     dispatch(postPalabrasClaveRequest());
     try {
       const { data }: AxiosResponse<PostPalabrasClaveResponse> = await axiosInstance.post(
-        "/save_keywords",
+        "/save_keywords", 
         form
       );
       dispatch(postPalabrasClaveSuccess(data.estado));

@@ -1,6 +1,6 @@
 // components
 import Header from "../../shared/header.component";
-import { ChangeEvent, useEffect, useState,useRef } from "react";
+import { ChangeEvent, useEffect, useState, useRef } from "react";
 
 // constants
 import BREADCRUMBS_ITEMS from "../../data/constants/breadcrumbs.const";
@@ -8,9 +8,11 @@ import Loader from "../../shared/loader.component";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { CursosTitulosGetAllReset, getCursosTitulos } from "../../redux/cursos/getTitulosCursos.slice";
-import { postPdf } from "../../redux/cursos/postPdfs.slice";
+import { postPdf, postPdfReset } from "../../redux/cursos/postPdfs.slice";
 import { CursosTitulos } from "../../redux/utils/cursosState.model";
 import { Toast } from "react-bootstrap";
+import { FaSave } from "react-icons/fa";
+import { ImSpinner } from "react-icons/im";
 
 
 const CertificadosCursosPage = (): JSX.Element => {
@@ -22,8 +24,10 @@ const CertificadosCursosPage = (): JSX.Element => {
   const [search, setSearch] = useState("");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const toastRefSuccess = useRef<HTMLDivElement>(null);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   const { cursos_titulos: data } = useAppSelector((state) => state.titulos_cursos)
+  const { exito, isLoading } = useAppSelector((state) => state.send_pdf)
 
   // constants
   const {
@@ -34,10 +38,29 @@ const CertificadosCursosPage = (): JSX.Element => {
   useEffect(() => {
     dispatch(CursosTitulosGetAllReset())
     dispatch(getCursosTitulos())
+    dispatch(postPdfReset())
   }, [dispatch]);
+
+  useEffect(() => {
+    if (exito == true) {
+      dispatch(CursosTitulosGetAllReset())
+      dispatch(getCursosTitulos())
+      dispatch(postPdfReset())
+      setShowSuccessAlert(true)
+      setSelectedFile(null)
+      setSelectedCourse(null)
+    } else if (exito == 'Server error') {
+      setShowErrorAlert(true)
+    }
+  }, [dispatch, exito]);
+
 
   const handleCloseSuccess = () => {
     setShowSuccessAlert(false)
+  };
+
+  const handleCloseError = () => {
+    setShowErrorAlert(false)
   };
 
   const InputChange = (e) => {
@@ -98,9 +121,7 @@ const CertificadosCursosPage = (): JSX.Element => {
         id_curso: selectedCourse.id_curso
       };
       dispatch(postPdf(data))
-      setShowSuccessAlert(true)
-      setSelectedFile(null)
-      setSelectedCourse(null)
+
     } else {
       if (!selectedfile) {
         setErrorSelectFile(true)
@@ -175,7 +196,9 @@ const CertificadosCursosPage = (): JSX.Element => {
               }
             </div>
             <div className="text-center pb-3">
-              <button type="submit" className="boton-modal form-submit" onClick={handleSubmit}>Enviar Certificado</button>
+              <button type="submit" className="btn btn-primary" onClick={handleSubmit} disabled={isLoading}
+              >
+                {isLoading ? <ImSpinner size={20} className='rotating' /> : <FaSave style={{ marginRight: "5px" }} size={20} />}Enviar Certificado</button>
             </div>
 
           </div>
@@ -196,9 +219,9 @@ const CertificadosCursosPage = (): JSX.Element => {
             background: '#fff', // Color de fondo
             color: '#000', // Color del texto
             maxWidth: '300px', // Ancho máximo del Toast
-          }} show={showSuccessAlert} delay={5000} onClose={handleCloseSuccess} autohide>
+          }} show={showSuccessAlert} delay={6000} onClose={handleCloseSuccess} autohide>
             <Toast.Header closeButton={false} style={{ background: '#157347', color: '#fff' }}>
-              <strong className="me-auto">Exito</strong>
+              <strong className="me-auto">Éxito</strong>
               <button
                 type="button"
                 className="btn-close btn-close-white"
@@ -207,7 +230,37 @@ const CertificadosCursosPage = (): JSX.Element => {
               />
             </Toast.Header>
             <Toast.Body>
-              El certificado se registro correctamente.
+              El certificado se registró correctamente. Un analista de la Dirección lo validará para su posterior acreditación.
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
+      {showErrorAlert && (
+        <div
+          ref={toastRefSuccess}
+          style={{
+            position: 'absolute',
+            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            zIndex: 1,
+          }}
+        >
+          <Toast style={{
+            background: '#fff', // Color de fondo
+            color: '#000', // Color del texto
+            maxWidth: '300px', // Ancho máximo del Toast
+          }} show={showErrorAlert} onClose={handleCloseError} autohide delay={6000}>
+            <Toast.Header closeButton={false} style={{ background: '#A51008', color: '#fff' }}>
+              <strong className="me-auto">Error</strong>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                aria-label="Cerrar"
+                onClick={handleCloseError}
+              />
+            </Toast.Header>
+            <Toast.Body>
+              No se pudo subir el certificado, el tamaño máximo del archivo pdf es de 1MB.
             </Toast.Body>
           </Toast>
         </div>

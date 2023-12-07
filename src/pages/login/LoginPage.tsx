@@ -8,13 +8,31 @@ import google from "../../assets/images/google.ico";
 import fondo from "../../assets/images/fondo.png";
 
 // redux
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import INTERNAL_ROUTES from "../../data/constants/internalRoutes";
+import { getRutaFromLocalStorage, setRuta } from "../../services/persistUser.service";
 
 const LoginPage = (): JSX.Element => {
   const navigate = useNavigate();
   const [authing, setAuthing] = useState(false);
   const auth = getAuth()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        if (getRutaFromLocalStorage() && getRutaFromLocalStorage().includes(INTERNAL_ROUTES.ASISTENCIA)) {
+          navigate(INTERNAL_ROUTES.ASISTENCIA)
+        } else {
+          navigate(INTERNAL_ROUTES.HOME)
+        }
+      } else {
+        if(location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)){
+          setRuta(location.pathname)
+      }
+        navigate(INTERNAL_ROUTES.AUTH_LOGIN)
+      }
+    })
+  }, [auth])
 
   const signInWithGoogle = async () => {
     setAuthing(false);
@@ -45,13 +63,13 @@ const LoginPage = (): JSX.Element => {
       ></div>
       <div className="row justify-content-center" style={{ paddingTop: "30vh" }}>
         <div className="col-lg-4 col-md-6 d-flex justify-content-center align-items-center ">
-          <div className="card auth_form" style={{backgroundColor:"#002856", marginInline:"10px", boxShadow: "0 0 16px rgba(41, 42, 51, 0.04), 0 6px 20px rgba(41, 42, 51)"}}>
+          <div className="card auth_form" style={{ backgroundColor: "#002856", marginInline: "10px", boxShadow: "0 0 16px rgba(41, 42, 51, 0.04), 0 6px 20px rgba(41, 42, 51)" }}>
             <div className="row justify-content-center pt-3">
 
               <img className={`${styles.pagelogo}`} src={logo} alt="" />
             </div>
-            <hr style={{margin:"0.8rem", color:"white"}}></hr>
-            <p style={{ fontSize: "12px", marginInline: "25px", color:"white"}}>Recuerde que el ingreso a la plataforma se lo realiza con su cuenta de correo institucional @ucuenca.edu.ec</p>
+            <hr style={{ margin: "0.8rem", color: "white" }}></hr>
+            <p style={{ fontSize: "12px", marginInline: "25px", color: "white" }}>Recuerde que el ingreso a la plataforma se lo realiza con su cuenta de correo institucional @ucuenca.edu.ec</p>
 
             <div className="row justify-content-center pb-3">
 
@@ -61,7 +79,7 @@ const LoginPage = (): JSX.Element => {
                     className={`${styles.btnLogin}`}
                     disabled={authing} onClick={() => signInWithGoogle()}
                   >
-                    <img src={google} style={{paddingInlineEnd:"10px"}} />
+                    <img src={google} style={{ paddingInlineEnd: "10px" }} />
 
                     {!authing ? "Iniciar Sesión" : "Cargando..."}
                   </button>

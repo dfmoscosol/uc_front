@@ -19,6 +19,7 @@ import { postPdfReducer } from "./cursos/postPdfs.slice";
 import { CapacitacionesOpenGetAllReducer } from "./capacitaciones/getOpenCapacitaciones";
 import { postInscripcionReducer } from "./capacitaciones/postInscripcion.slice";
 import { AsistenciasGetAllReducer } from "./capacitaciones/getAsistencias.slice";
+import { postAsistenciaReducer } from "./capacitaciones/postAsistencia.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
@@ -40,7 +41,8 @@ const store = configureStore({
     send_pdf: postPdfReducer,
     capacitaciones: CapacitacionesOpenGetAllReducer,
     post_inscripcion: postInscripcionReducer,
-    asistencia: AsistenciasGetAllReducer
+    asistencia: AsistenciasGetAllReducer,
+    post_asistencia: postAsistenciaReducer,
   },
 });
 

@@ -20,7 +20,9 @@ export interface Asistencia {
     asiste_salida:boolean,
     fecha:string,
     id_inscripcion:number,
-    nombre:string,
+    id_taller:number,
+    nombre_capacitacion:string,
+    nombre_taller:string,
     allow_asistencia_entrada:boolean,
     allow_asistencia_salida:boolean,
     tipo:string,
@@ -29,4 +31,10 @@ export interface Asistencia {
 export interface InscripcionForm {
     id_capacitacion: number,
     id_taller: number | null,
+}
+
+export interface AsistenciaForm {
+    column: string,
+    id_asistencia: number,
+    value: boolean
 }

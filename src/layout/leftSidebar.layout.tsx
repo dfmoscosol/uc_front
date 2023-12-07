@@ -96,7 +96,7 @@ const LeftSidebar = (): JSX.Element => {
             <li className="pt-4 titulo-menu" >
               {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>PENTÁGONO</>)}
             </li>
-            <li className="pt-2" title="Inicio">
+            <li className="pt-1" title="Inicio">
               <NavLink
                 to={INTERNAL_ROUTES.HOME}
                 className={
@@ -109,7 +109,7 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Inicio</span>
               </NavLink>
             </li>
-            <li title="Encuesta">
+            <li title="Encuesta" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.ENCUESTA}
 
@@ -123,7 +123,7 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Encuesta</span>
               </NavLink>
             </li>
-            <li title="Resultados">
+            <li title="Resultados" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.RESULTADOS}
                 className={
@@ -139,7 +139,7 @@ const LeftSidebar = (): JSX.Element => {
             <li className="pt-4 titulo-menu" >
               {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CURSOS</>)}
             </li>
-            <li title="Recomendaciones" className="pt-2">
+            <li title="Recomendaciones" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.COURSES}
                 className={
@@ -152,7 +152,7 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Recomendaciones</span>
               </NavLink>
             </li>
-            <li title="Subir Certificados">
+            <li title="Subir Certificados" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.COURSES_CERTIFICADOS}
                 className={
@@ -168,7 +168,7 @@ const LeftSidebar = (): JSX.Element => {
             <li className="pt-4 titulo-menu" >
               {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CAPACITACIONES</>)}
             </li>
-            <li title="Portafolio">
+            <li title="Portafolio" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.CERTIFICADOS}
                 className={
@@ -181,7 +181,7 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Portafolio</span>
               </NavLink>
             </li>
-            <li title="Inscripciones" className="pt-2">
+            <li title="Inscripciones" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.INSCRIPCIONES}
                 className={
@@ -196,12 +196,16 @@ const LeftSidebar = (): JSX.Element => {
             </li>
             
             {
-              location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)
-                ?
-                <li title="Generar Certificados">
+              /* location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA) */
+                true?
+                <li title="Generar Certificados" className="pt-1">
                   <NavLink
                     to={INTERNAL_ROUTES.ASISTENCIA}
-                    className="navbar_item_active"
+                    className={
+                      location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)
+                        ? "navbar_item_active"
+                        : ""
+                    }
                   >
                     <i className="zmdi zmdi-assignment-check" ></i>
                     <span>Asistencia</span>
@@ -209,43 +213,6 @@ const LeftSidebar = (): JSX.Element => {
                 </li>
                 : ""
             }
-            {/* <li title="Capacitaciones">
-              <a onClick={toggleSubMenu} style={{ cursor: "pointer", textDecoration: "none" }}
-                className={
-                  location.pathname.includes(INTERNAL_ROUTES.INSCRIPCIONES) || location.pathname.includes(INTERNAL_ROUTES.CERTIFICADOS)
-                    ? "navbar_item_active"
-                    : ""
-                }>
-                <i className="zmdi zmdi-collection-text" ></i>
-                <span>Capacitaciones</span>
-              </a>
-              {isSubMenuOpen && (
-                <ul className="submenu" style={{ paddingLeft: openSidebar ? "0" : "2rem" }}>
-                  <li title="Inscripciones" >
-                    <NavLink to={INTERNAL_ROUTES.INSCRIPCIONES} className={
-                      location.pathname.includes(INTERNAL_ROUTES.INSCRIPCIONES)
-                        ? "navbar_item_active"
-                        : ""
-                    }>
-                      <i className="zmdi zmdi-calendar-check" ></i>
-
-                      <span>Inscripciones</span>
-                    </NavLink>
-                  </li>
-                  <li title="Certificados" >
-                    <NavLink to={INTERNAL_ROUTES.CERTIFICADOS} className={
-                      location.pathname.includes(INTERNAL_ROUTES.CERTIFICADOS)
-                        ? "navbar_item_active"
-                        : ""
-                    }>
-                      <i className="zmdi zmdi-assignment-check"></i>
-
-                      <span>Certificados</span>
-                    </NavLink>
-                  </li>
-                </ul>
-              )}
-            </li> */}
           </ul>
         </div>
       </aside>

@@ -1,6 +1,6 @@
 // components
 import Header from "../../shared/header.component";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // constants
 import BREADCRUMBS_ITEMS from "../../data/constants/breadcrumbs.const";
@@ -18,14 +18,16 @@ import { FiUserPlus } from "react-icons/fi";
 import { Capacitacion } from "../../data/interfaces/capacitaciones.model";
 import ModalComponentInscripcion from "./ModalInscription.component";
 import KPIView from "./KPI.component";
-import { Badge } from "react-bootstrap";
+import { Badge, Toast } from "react-bootstrap";
 import { postInscripcionReset } from "../../redux/capacitaciones/postInscripcion.slice";
 
 const InscripcionesPage = (): JSX.Element => {
   // local variables
   const { capacitaciones } = useAppSelector((state) => state.capacitaciones);
   const { exito } = useAppSelector((state) => state.post_inscripcion);
-
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const toastRefSuccess = useRef<HTMLDivElement>(null);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [open, setOpen] = useState(false);
   const [capacitacion, setCapacitacion] = useState<Capacitacion>({
     cupo: 0,
@@ -48,6 +50,14 @@ const InscripcionesPage = (): JSX.Element => {
   } = BREADCRUMBS_ITEMS;
   const dispatch = useAppDispatch();
 
+  const handleCloseSuccess = () => {
+    setShowSuccessAlert(false)
+  };
+
+  const handleCloseError = () => {
+    setShowErrorAlert(false)
+  };
+
   const handleOpenModal = (capacitacion) => {
     setCapacitacion(capacitacion)
     setOpen(true);
@@ -58,12 +68,18 @@ const InscripcionesPage = (): JSX.Element => {
   }
 
   useEffect(() => {
-    dispatch(CapacitacionesOpenGetAllReset())
     dispatch(getCapacitacionesOpen())
-    if (exito) {
-      dispatch(postInscripcionReset())
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (exito == true) {
+      setShowSuccessAlert(true)
+    } else if (exito == false) {
+      setShowErrorAlert(true)
     }
-  }, [dispatch, exito]);
+    dispatch(getCapacitacionesOpen())
+    dispatch(postInscripcionReset())
+  }, [dispatch,exito]);
 
 
   return (
@@ -77,8 +93,8 @@ const InscripcionesPage = (): JSX.Element => {
       }
       <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3" }}>
         <Header title={pageTitle} />
-        <p className="descripcion-cursos" style={{ textAlign: "justify", paddingBottom: "20px" }}></p>
-      </div>
+        {/*         <p className="descripcion-cursos" style={{ textAlign: "justify", paddingBottom: "20px" }}></p>
+ */}      </div>
       {capacitaciones.length === 0 ? (
         <>
           <div className="row justify-content-center" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
@@ -90,73 +106,75 @@ const InscripcionesPage = (): JSX.Element => {
       ) : (
         <>
 
-          <div className="row justify-content-center align-items-stretch pt-2" style={{ paddingRight: "15px" }}>
+          <div className="row justify-content-center align-items-stretch pt-3" style={{ paddingRight: "5px" }}>
             {
               capacitaciones?.map(
                 (capacitacion): JSX.Element => (
                   <div className="col-xl-4 col-lg-6 col-md-12 col-sm-12 pb-3">
                     <div className="card-capacitacion text-center d-flex flex-column h-100" >
                       <div className="card-header">
-
-                        {capacitacion.tipo === 'Jornada' ? <GiTeamIdea style={{ marginRight: "10px" }}></GiTeamIdea> :
-                          capacitacion.tipo === 'Taller' ? <GrWorkshop style={{ marginRight: "10px" }}></GrWorkshop> :
-                            capacitacion.tipo === 'Observación Aulica' ? <SiGoogleclassroom style={{ marginRight: "10px" }}></SiGoogleclassroom> :
-                              capacitacion.tipo === 'Charla' ? <FaChalkboardTeacher style={{ marginRight: "10px" }}></FaChalkboardTeacher> : <></>
+                        {capacitacion.tipo === 'jornada' ? <GiTeamIdea style={{ marginRight: "10px" }}></GiTeamIdea> :
+                          capacitacion.tipo === 'taller' ? <GrWorkshop style={{ marginRight: "10px" }}></GrWorkshop> :
+                            capacitacion.tipo === 'observacion' ? <SiGoogleclassroom style={{ marginRight: "10px" }}></SiGoogleclassroom> :
+                              capacitacion.tipo === 'charla' ? <FaChalkboardTeacher style={{ marginRight: "10px" }}></FaChalkboardTeacher> : <></>
                         }
-                        {capacitacion.tipo === 'Jornada' ? 'Jornada de Innovación' : capacitacion.tipo}
+                        {capacitacion.tipo === 'jornada' ? 'Jornada de Innovación' :
+                          capacitacion.tipo === 'taller' ? 'Taller' :
+                            capacitacion.tipo === 'observacion' ? 'Observación Áulica' : 'Charla'
+                        }
                       </div>
                       <div className="card-body d-flex flex-column flex-fill justify-content-around">
-                        <h5 className="card-title">{capacitacion.tipo === 'Jornada' ? (capacitacion.nombre + ": " + capacitacion.nombre_taller) : capacitacion.nombre}</h5>
+                        <h5 className="card-title">{capacitacion.tipo === 'jornada' ? (capacitacion.nombre + ": " + capacitacion.nombre_taller) : capacitacion.nombre}</h5>
                         {capacitacion.estado == 1 ?
-                          <>{console.log('aaa: ',capacitacion.cupo,'-',capacitacion.num_inscritos)}
+                          <>
                             {
-                            capacitacion.cupo - capacitacion.num_inscritos > 0 ?
-                              <>
-                                <div className="row justify-content-center d-flex justify-content-center">
-                                  <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
-                                    <KPIView
-                                      icon={<MdOutlineMoreTime size={40} />}
-                                      title={"Horas"}
-                                      title2={"Acreditadas"}
-                                      description={capacitacion.horas}
-                                      presencial={capacitacion.presencial}
-                                    />
+                              capacitacion.cupo - capacitacion.num_inscritos > 0 ?
+                                <>
+                                  <div className="row justify-content-center d-flex justify-content-center">
+                                    <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
+                                      <KPIView
+                                        icon={<MdOutlineMoreTime size={40} />}
+                                        title={"Horas"}
+                                        title2={"Acreditadas"}
+                                        description={capacitacion.horas}
+                                        presencial={capacitacion.presencial}
+                                      />
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
+                                      <KPIView
+                                        icon={<MdPeopleOutline size={40} />}
+                                        title={"Cupos"}
+                                        title2={"Disponibles"}
+                                        description={capacitacion.cupo - capacitacion.num_inscritos}
+                                        presencial={capacitacion.presencial}
+                                      /></div>
                                   </div>
-                                  <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
-                                    <KPIView
-                                      icon={<MdPeopleOutline size={40} />}
-                                      title={"Cupos"}
-                                      title2={"Disponibles"}
-                                      description={capacitacion.cupo - capacitacion.num_inscritos}
-                                      presencial={capacitacion.presencial}
-                                    /></div>
-                                </div>
-                                <button className="btn btn-primary" onClick={() => handleOpenModal(capacitacion)}><FiUserPlus size={20} style={{ paddingRight: "5px" }} /> Incribirse</button>
+                                  <button className="btn btn-primary" onClick={() => handleOpenModal(capacitacion)}><FiUserPlus size={20} style={{ paddingRight: "5px" }} /> Incribirse</button>
 
-                              </>
-                              :
-                              <>
-                                <div className="row justify-content-center d-flex justify-content-center">
-                                  <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
-                                    <KPIView
-                                      icon={<MdOutlineMoreTime size={40} />}
-                                      title={"Horas"}
-                                      title2={"Acreditadas"}
-                                      description={capacitacion.horas}
-                                      presencial={capacitacion.presencial}
-                                    />
+                                </>
+                                :
+                                <>
+                                  <div className="row justify-content-center d-flex justify-content-center">
+                                    <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
+                                      <KPIView
+                                        icon={<MdOutlineMoreTime size={40} />}
+                                        title={"Horas"}
+                                        title2={"Acreditadas"}
+                                        description={capacitacion.horas}
+                                        presencial={capacitacion.presencial}
+                                      />
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
+                                      <KPIView
+                                        icon={<MdPeopleOutline size={40} />}
+                                        title={"Cupos"}
+                                        title2={"Disponibles"}
+                                        description={0}
+                                        presencial={capacitacion.presencial}
+                                      /></div>
                                   </div>
-                                  <div className="col-xl-6 col-lg-6 col-md-4 col-sm-4">
-                                    <KPIView
-                                      icon={<MdPeopleOutline size={40} />}
-                                      title={"Cupos"}
-                                      title2={"Disponibles"}
-                                      description={0}
-                                      presencial={capacitacion.presencial}
-                                    /></div>
-                                </div>
-                                <Badge className="badge-sin-cupos" bg="primary"><RxCrossCircled size={20} style={{ paddingRight: "5px" }} />No hay Cupos</Badge>
-                              </>
+                                  <Badge className="badge-sin-cupos" bg="primary"><RxCrossCircled size={20} style={{ paddingRight: "5px" }} />No hay Cupos</Badge>
+                                </>
                             }
                           </>
                           :
@@ -173,6 +191,7 @@ const InscripcionesPage = (): JSX.Element => {
                                           title2={'i'}
                                           description={'Presencial'}
                                           presencial={true}
+                                          pendiente={true}
                                         />
                                       </div>
                                     </div>
@@ -187,6 +206,7 @@ const InscripcionesPage = (): JSX.Element => {
                                           title2={'i'}
                                           description={'Virtual'}
                                           presencial={false}
+                                          pendiente={true}
                                         />
                                       </div>
                                     </div>
@@ -276,7 +296,66 @@ const InscripcionesPage = (): JSX.Element => {
         </>
       )}
 
-
+      {showSuccessAlert && (
+        <div
+          ref={toastRefSuccess}
+          style={{
+            position: 'absolute',
+            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            zIndex: 1,
+          }}
+        >
+          <Toast style={{
+            background: '#fff', // Color de fondo
+            color: '#000', // Color del texto
+            maxWidth: '300px', // Ancho máximo del Toast
+          }} show={showSuccessAlert} delay={6000} onClose={handleCloseSuccess} autohide>
+            <Toast.Header closeButton={false} style={{ background: '#157347', color: '#fff' }}>
+              <strong className="me-auto">Éxito</strong>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                aria-label="Cerrar"
+                onClick={handleCloseSuccess}
+              />
+            </Toast.Header>
+            <Toast.Body>
+              Inscripción enviada correctamente. Un analista de la Dirección revisará su solicitud.
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
+      {showErrorAlert && (
+        <div
+          ref={toastRefSuccess}
+          style={{
+            position: 'absolute',
+            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
+            zIndex: 1,
+          }}
+        >
+          <Toast style={{
+            background: '#fff', // Color de fondo
+            color: '#000', // Color del texto
+            maxWidth: '300px', // Ancho máximo del Toast
+          }} show={showErrorAlert} onClose={handleCloseError} autohide delay={6000}>
+            <Toast.Header closeButton={false} style={{ background: '#A51008', color: '#fff' }}>
+              <strong className="me-auto">Error</strong>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                aria-label="Cerrar"
+                onClick={handleCloseError}
+              />
+            </Toast.Header>
+            <Toast.Body>
+              No se pudo realizar la inscripción.
+            </Toast.Body>
+          </Toast>
+        </div>
+      )}
     </>
   );
 };

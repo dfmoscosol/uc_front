@@ -50,6 +50,7 @@ export interface PreguntasState {
 
   export interface RespuestaPostState {
     exito: boolean;
+    isLoading: boolean;
   }
   
   export interface ValidarEncuestaState {

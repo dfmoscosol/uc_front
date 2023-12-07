@@ -62,7 +62,8 @@ export interface PostPalabrasClaveResponse {
   }
 
   export interface PalabrasClavePostState {
-    exito: boolean;
+    exito: any;
+    isLoading: boolean
   }
 
   export interface CursosTitulosResponse {
@@ -87,5 +88,6 @@ export interface PostPdfResponse {
   }
 
   export interface PdfPostState {
-    exito: boolean;
+    exito: any;
+    isLoading: boolean;
   }

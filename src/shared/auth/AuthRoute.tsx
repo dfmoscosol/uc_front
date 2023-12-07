@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import LoginPage from "../../pages/login/LoginPage";
 import INTERNAL_ROUTES from "../../data/constants/internalRoutes";
 import { User } from "../../redux/utils/authState.model";
-import { setUserLocalStorage } from "../../services/persistUser.service";
+import { getRutaFromLocalStorage, setRuta, setUserLocalStorage } from "../../services/persistUser.service";
 import { Login } from "../../data/interfaces/auth.model";
 import { login } from "../../redux/auth/login.slice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 
-export interface IAuthRouteProps {children: React.ReactNode};
+export interface IAuthRouteProps { children: React.ReactNode };
 const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
     const { children } = props;
     const auth = getAuth();
@@ -21,32 +21,35 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 setLoading(false);
-                const auxuser:User = {
+                const auxuser: User = {
                     correo: user.email,
-                    id_universidad:1,
-                    nombre:user.displayName,
-                    uid:user.uid,
+                    id_universidad: 1,
+                    nombre: user.displayName,
+                    uid: user.uid,
                     token: await user.getIdToken(),
                     photoUrl: user.photoURL,
                 }
-                const data:Login = {
-                    correo:user.email,
-                    firebase_uid:user.uid,
-                    id_universidad_fk:1,
-                    nombres:user.displayName,
-                  }
+                const data: Login = {
+                    correo: user.email,
+                    firebase_uid: user.uid,
+                    id_universidad_fk: 1,
+                    nombres: user.displayName,
+                }
                 dispatch(login(data));
                 setUserLocalStorage(auxuser);
                 
             } else {
+                if(location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)){
+                    setRuta(location.pathname)
+                }
                 navigate(INTERNAL_ROUTES.AUTH_LOGIN)
             }
         })
     }, [auth])
 
-   
 
-    return <>{loading?(<><LoginPage></LoginPage></>):(<>{children}</>)}</>
+
+    return <>{loading ? (<><LoginPage></LoginPage></>) : (<>{children}</>)}</>
 };
 
 export default AuthRoute;

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Modal, Button, Badge } from 'react-bootstrap';
-import { useAppDispatch } from '../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
     AiFillDislike,
     AiFillLike,
@@ -8,16 +8,19 @@ import {
     AiOutlineLike
 } from 'react-icons/ai';
 import { postPalabrasClave } from '../../../redux/cursos/postPalabrasClave.slice';
+import { ImSpinner } from 'react-icons/im';
+import { IoIosSend } from "react-icons/io";
 
 
 const ModalComponentLike = ({ dispatch, competencia, keyWords, onClose }) => {
     const [like, setLike] = useState(false);
     const [dislike, setDislike] = useState(false);
     const [keyActives, setkeyActives] = useState(Array(keyWords?.length).fill(false));
+    const { isLoading } = useAppSelector((state) => state.send_keywords)
 
     const handleSubmitPalabrasClave = () => {
         const filteredWords = keyWords.filter((_, index) => keyActives[index]);
-        const form = { competencia: competencia, isValid: like, keywords: filteredWords}
+        const form = { competencia: competencia, isValid: like, keywords: filteredWords }
         dispatch(postPalabrasClave(form))
         onClose()
     }
@@ -81,11 +84,13 @@ const ModalComponentLike = ({ dispatch, competencia, keyWords, onClose }) => {
 
             </Modal.Body>
             {like || dislike ? (<Modal.Footer>
-                <button className="boton-modal" onClick={() => {
+                <button className="btn btn-primary" onClick={() => {
                     handleSubmitPalabrasClave()
-                }}>Enviar Retroalimentación</button>
+                }}>
+                    {isLoading ? <ImSpinner size={20} className='rotating' /> : <IoIosSend style={{ marginRight: "10px" }} size={20} />}
+                    Enviar Retroalimentación</button>
             </Modal.Footer>) : (<></>)}
-            
+
         </Modal>
     );
 };

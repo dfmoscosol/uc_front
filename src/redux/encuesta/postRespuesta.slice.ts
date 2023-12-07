@@ -7,6 +7,7 @@ import { EncuestaForm } from "../../data/interfaces/encuesta.model";
 
 const initialState: RespuestaPostState = {
   exito: false,
+  isLoading: false, 
 };
 
 export const postPreguntasSlice = createSlice({
@@ -16,6 +17,7 @@ export const postPreguntasSlice = createSlice({
     postPreguntasRequest: (state): RespuestaPostState => {
       return {
         ...state,
+        isLoading: true,
       };
     },
     postPreguntasSuccess: (
@@ -24,6 +26,7 @@ export const postPreguntasSlice = createSlice({
     ): RespuestaPostState => {
       return {
         ...state,
+        isLoading: false,
         exito: action.payload,
       };
     },
@@ -33,6 +36,7 @@ export const postPreguntasSlice = createSlice({
     ): RespuestaPostState => {
       return {
         ...state,
+        isLoading:false,
         exito: action.payload,
       };
     },

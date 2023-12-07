@@ -27,5 +27,17 @@ export interface PostInscripcionResponse {
   }
 
   export interface PostInscripcionState {
-    exito: boolean;
+    exito: any;
+    isLoading: boolean
+  }
+
+  export interface PostAsistenciaResponse {
+    error: string,
+    estado: boolean,
+    respuesta: PostAsistenciaState,
+  }
+
+  export interface PostAsistenciaState {
+    exito: any;
+    isLoading: boolean;
   }

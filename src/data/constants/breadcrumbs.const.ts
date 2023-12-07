@@ -25,12 +25,12 @@ const BREADCRUMBS_ITEMS = {
     ],
   },
   inscripciones: {
-    pageTitle: "Incripciones a Capacitaciones",
+    pageTitle: "Incripciones",
     breadcrumbs: [
     ],
   },
   certificados: {
-    pageTitle: "Generación de Certificados",
+    pageTitle: "Portafolio",
     breadcrumbs: [
     ],
   },

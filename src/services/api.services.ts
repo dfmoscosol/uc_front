@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
       case 404:
         window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`;
         break;
-       case 500:
+      case 500:
         window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Server error
         break;
       default:

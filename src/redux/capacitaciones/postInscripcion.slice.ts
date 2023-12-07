@@ -6,7 +6,8 @@ import { PostInscripcionResponse, PostInscripcionState } from "../utils/capacita
 import { InscripcionForm } from "../../data/interfaces/capacitaciones.model";
 
 const initialState: PostInscripcionState = {
-  exito: false,
+  exito: null,
+  isLoading: false
 };
 
 export const postInscripcionSlice = createSlice({
@@ -16,6 +17,7 @@ export const postInscripcionSlice = createSlice({
     postInscripcionRequest: (state): PostInscripcionState => {
       return {
         ...state,
+        isLoading:true
       };
     },
     postInscripcionSuccess: (
@@ -25,6 +27,7 @@ export const postInscripcionSlice = createSlice({
       return {
         ...state,
         exito: action.payload,
+        isLoading: false
       };
     },
     postInscripcionFail: (
@@ -34,6 +37,7 @@ export const postInscripcionSlice = createSlice({
       return {
         ...state,
         exito: action.payload,
+        isLoading:false
       };
     },
     postInscripcionReset: (state): PostInscripcionState => {
