@@ -131,14 +131,14 @@ const EncuestaPage = (): JSX.Element => {
   useEffect(() => {
     // Enfocar el elemento del toast cuando se muestre
     if (showSuccessAlert && toastRefSuccess.current) {
-      toastRefSuccess.current.scrollIntoView({ behavior: 'instant', block: 'start' });
+      toastRefSuccess.current.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   }, [showSuccessAlert]);
 
   useEffect(() => {
     // Enfocar el elemento del toast cuando se muestre
     if (showErrorAlert && toastRefError.current) {
-      toastRefError.current.scrollIntoView({ behavior: 'instant', block: 'start' });
+      toastRefError.current.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   }, [showErrorAlert]);
 

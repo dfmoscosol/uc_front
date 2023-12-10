@@ -11073,6 +11073,26 @@ a:any-link {
   background-color: transparent !important;
 }
 
+.badge-link {
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 20px; // Ajusta este valor según sea necesario
+  padding-left: 15px; // Ajusta según sea necesario
+  padding-right: 15px;
+  color: #0460e6;
+  align-self: center;
+  cursor: pointer;
+}
+
+.badge-link:hover {
+  transform: scale(1.2);
+  z-index: 9999;
+}
+
+.badge-link.bg-primary {
+  background-color: transparent !important;
+}
+
 .badge-pendiente {
   font-size: 15px;
   font-weight: 500;
@@ -11171,13 +11191,15 @@ a:any-link {
 
 .table-container {
   overflow-x: scroll;
-  
+
 }
 
 .table {
   width: auto;
-  margin-left: auto; /* Centra la tabla a la izquierda */
-    margin-right: auto; /* Centra la tabla a la derecha */
+  margin-left: auto;
+  /* Centra la tabla a la izquierda */
+  margin-right: auto;
+  /* Centra la tabla a la derecha */
 }
 
 .table thead th {
@@ -11186,8 +11208,10 @@ a:any-link {
   color: white;
   /* Color del texto del encabezado */
   align-content: center;
-  text-align: center; /* Centra horizontalmente el contenido */
-  vertical-align: middle; /* Centra verticalmente el contenido */
+  text-align: center;
+  /* Centra horizontalmente el contenido */
+  vertical-align: middle;
+  /* Centra verticalmente el contenido */
 }
 
 .table tbody th {
@@ -11197,8 +11221,10 @@ a:any-link {
 
 .table tbody td {
   background-color: #f0f0f0;
-  text-align: center; /* Centra horizontalmente el contenido */
-  vertical-align: middle; /* Centra verticalmente el contenido */
+  text-align: center;
+  /* Centra horizontalmente el contenido */
+  vertical-align: middle;
+  /* Centra verticalmente el contenido */
 }
 
 .titulo-portafolio {
@@ -11206,4 +11232,55 @@ a:any-link {
   font-weight: 600;
   margin: 20px 0 20px 20px;
   color: #002856
+}
+
+.tooltip-custom {
+  color: #002856;
+  /* Dark blue text */
+  padding: 10px 15px;
+  border-radius: 5px;
+  mix-blend-mode: normal;
+  filter: none;
+  z-index: 1050;
+}
+
+
+/* Estilos para el contenido del tooltip */
+.tooltip-inner {
+  background-color: white !important;
+  background: white !important;  
+  color: #002856;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Poppins, sans-serif;
+  font-size: 13px;
+  border: 1px solid #ccc;
+}
+
+.tooltip.in{opacity:1!important;}
+
+/* Otras reglas para la flecha cuando el tooltip está en diferentes posiciones */
+.tooltip.top .tooltip-arrow {
+  bottom: -5px;
+  /* Ajustar si es necesario */
+  border-color: #002856 transparent transparent transparent !important;
+}
+
+.tooltip.right .tooltip-arrow {
+  left: -5px;
+  /* Ajustar si es necesario */
+  border-color: transparent #002856 transparent transparent !important;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  top: -5px;
+  /* Ajustar si es necesario */
+  border-color: transparent transparent #002856 transparent !important;
+}
+
+.tooltip.left .tooltip-arrow {
+  right: -5px;
+  /* Ajustar si es necesario */
+  border-color: transparent transparent transparent #002856 !important;
 }

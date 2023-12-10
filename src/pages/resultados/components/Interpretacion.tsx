@@ -8,25 +8,25 @@ import {
   MdComputer
 } from 'react-icons/md';
 
-import COM1EXPL from '../../../assets/images/pentagono_momentos/COM-1-EXPL.png'
-import COM2INTE from '../../../assets/images/pentagono_momentos/COM-2-INTE.png'
+import COM1EXPL from '../../../assets/images/pentagono_momentos/PED-1-EXPL.png'
+import COM2INTE from '../../../assets/images/pentagono_momentos/GES-2-INTE.png'
 import COM3INNO from '../../../assets/images/pentagono_momentos/COM-3-INNO.png'
 
-import GES1EXPL from '../../../assets/images/pentagono_momentos/GES-1-EXPL.png'
+import GES1EXPL from '../../../assets/images/pentagono_momentos/PED-1-EXPL.png'
 import GES2INTE from '../../../assets/images/pentagono_momentos/GES-2-INTE.png'
-import GES3INNO from '../../../assets/images/pentagono_momentos/GES-3-INNO.png'
+import GES3INNO from '../../../assets/images/pentagono_momentos/COM-3-INNO.png'
 
-import INV1EXPL from '../../../assets/images/pentagono_momentos/INV-1-EXPL.png'
-import INV2INTE from '../../../assets/images/pentagono_momentos/INV-2-INTE.png'
-import INV3INNO from '../../../assets/images/pentagono_momentos/INV-3-INNO.png'
+import INV1EXPL from '../../../assets/images/pentagono_momentos/PED-1-EXPL.png'
+import INV2INTE from '../../../assets/images/pentagono_momentos/GES-2-INTE.png'
+import INV3INNO from '../../../assets/images/pentagono_momentos/COM-3-INNO.png'
 
 import PED1EXPL from '../../../assets/images/pentagono_momentos/PED-1-EXPL.png'
-import PED2INTE from '../../../assets/images/pentagono_momentos/PED-2-INTE.png'
-import PED3INNO from '../../../assets/images/pentagono_momentos/PED-3-INNO.png'
+import PED2INTE from '../../../assets/images/pentagono_momentos/GES-2-INTE.png'
+import PED3INNO from '../../../assets/images/pentagono_momentos/COM-3-INNO.png'
 
-import TEC1EXPL from '../../../assets/images/pentagono_momentos/TEC-1-EXPL.png'
-import TEC2INTE from '../../../assets/images/pentagono_momentos/TEC-2-INTE.png'
-import TEC3INNO from '../../../assets/images/pentagono_momentos/TEC-3-INNO.png'
+import TEC1EXPL from '../../../assets/images/pentagono_momentos/PED-1-EXPL.png'
+import TEC2INTE from '../../../assets/images/pentagono_momentos/GES-2-INTE.png'
+import TEC3INNO from '../../../assets/images/pentagono_momentos/COM-3-INNO.png'
 
 const Interpretacion = (props): JSX.Element => {
 

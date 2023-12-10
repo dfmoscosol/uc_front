@@ -59,14 +59,14 @@ export interface PostPalabrasClaveResponse {
     error: string,
     estado: boolean,
     respuesta: PalabrasClavePostState,
-  }
+}
 
-  export interface PalabrasClavePostState {
+export interface PalabrasClavePostState {
     exito: any;
     isLoading: boolean
-  }
+}
 
-  export interface CursosTitulosResponse {
+export interface CursosTitulosResponse {
     error: string,
     estado: boolean,
     respuesta: CursosTitulosState,
@@ -85,9 +85,49 @@ export interface PostPdfResponse {
     error: string,
     estado: boolean,
     respuesta: PdfPostState,
-  }
+}
 
-  export interface PdfPostState {
+export interface PdfPostState {
     exito: any;
     isLoading: boolean;
-  }
+}
+
+export interface AcreditacionesCapacitacionResponse {
+    error: string,
+    estado: boolean,
+    respuesta: AcreditacionesCapacitacionState,
+}
+
+export interface AcreditacionesCapacitacionState {
+    acreditaciones_capacitacion: AcreditacionesCapacitacion[];
+    isLoading:boolean;
+}
+
+export interface AcreditacionesCapacitacion {
+    aprobado: boolean;
+    asistencia: boolean;
+    horas: number;
+    nombre: string;
+    presencial: boolean;
+    tipo:string;
+    observacion: string;
+}
+
+export interface AcreditacionesCursosResponse {
+    error: string,
+    estado: boolean,
+    respuesta: AcreditacionesCursosState,
+}
+
+export interface AcreditacionesCursosState {
+    acreditaciones_cursos: AcreditacionesCursos[];
+    isLoading:boolean;
+}
+
+export interface AcreditacionesCursos {
+    horas: number;
+    titulo: string;
+    isapproved: boolean;
+    competencia:string;
+    observacion: string;
+}

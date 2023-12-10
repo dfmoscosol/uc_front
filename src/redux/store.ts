@@ -20,6 +20,8 @@ import { CapacitacionesOpenGetAllReducer } from "./capacitaciones/getOpenCapacit
 import { postInscripcionReducer } from "./capacitaciones/postInscripcion.slice";
 import { AsistenciasGetAllReducer } from "./capacitaciones/getAsistencias.slice";
 import { postAsistenciaReducer } from "./capacitaciones/postAsistencia.slice";
+import { AcreditacionesCapacitacionGetAllReducer } from "./cursos/getAcreditacionesCapacitaciones.slice";
+import { AcreditacionesCursosGetAllReducer } from "./cursos/getAcreditacionesCursos.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
@@ -43,6 +45,8 @@ const store = configureStore({
     post_inscripcion: postInscripcionReducer,
     asistencia: AsistenciasGetAllReducer,
     post_asistencia: postAsistenciaReducer,
+    acreditaciones_capacitaciones: AcreditacionesCapacitacionGetAllReducer,
+    acreditaciones_cursos: AcreditacionesCursosGetAllReducer,
   },
 });
 

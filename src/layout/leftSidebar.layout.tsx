@@ -14,7 +14,7 @@ import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getRole } from "@/utils/getRole.util"; */
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { getUserFromLocalStorage, removeUserFromLocalStorage } from "../services/persistUser.service";
+import { getUserFromLocalStorage, removeRutaFromLocalStorage, removeUserFromLocalStorage } from "../services/persistUser.service";
 import { validateEncuesta } from "../redux/encuesta/validateEncuesta.slice";
 
 const LeftSidebar = (): JSX.Element => {
@@ -38,6 +38,7 @@ const LeftSidebar = (): JSX.Element => {
   const logoutHandler = (): void => {
     auth.signOut();
     removeUserFromLocalStorage()
+    removeRutaFromLocalStorage()
   };
 
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
@@ -196,8 +197,7 @@ const LeftSidebar = (): JSX.Element => {
             </li>
             
             {
-              /* location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA) */
-                true?
+               location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA) ?
                 <li title="Generar Certificados" className="pt-1">
                   <NavLink
                     to={INTERNAL_ROUTES.ASISTENCIA}
