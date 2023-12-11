@@ -70,7 +70,7 @@ const TituloCurso = (props): JSX.Element => {
             "lineHeight": "28px",
             "fontWeight": "600",
             "marginLeft": "10px",
-            "color": "#000",
+            "color": "#002856",
           }}
         >
           {icon} {competencia}

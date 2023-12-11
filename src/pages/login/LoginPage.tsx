@@ -17,28 +17,15 @@ const LoginPage = (): JSX.Element => {
   const [authing, setAuthing] = useState(false);
   const auth = getAuth()
 
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
+  const signInWithGoogle = async () => {
+    setAuthing(true);
+    signInWithPopup(auth, new GoogleAuthProvider())
+      .then((response) => {
         if (getRutaFromLocalStorage() && getRutaFromLocalStorage().includes(INTERNAL_ROUTES.ASISTENCIA)) {
           navigate(INTERNAL_ROUTES.ASISTENCIA)
         } else {
           navigate(INTERNAL_ROUTES.HOME)
         }
-      } else {
-        if(location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)){
-          setRuta(location.pathname)
-      }
-        navigate(INTERNAL_ROUTES.AUTH_LOGIN)
-      }
-    })
-  }, [auth])
-
-  const signInWithGoogle = async () => {
-    setAuthing(false);
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
-        navigate(INTERNAL_ROUTES.HOME);
       })
       .catch((error) => {
         setAuthing(false);

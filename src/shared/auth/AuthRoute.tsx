@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import LoginPage from "../../pages/login/LoginPage";
 import INTERNAL_ROUTES from "../../data/constants/internalRoutes";
 import { User } from "../../redux/utils/authState.model";
-import { getRutaFromLocalStorage, setRuta, setUserLocalStorage } from "../../services/persistUser.service";
+import { getRutaFromLocalStorage, getUserFromLocalStorage, setRuta, setUserLocalStorage } from "../../services/persistUser.service";
 import { Login } from "../../data/interfaces/auth.model";
 import { login } from "../../redux/auth/login.slice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
@@ -20,7 +20,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                setLoading(false);
+                setLoading(true);
                 const auxuser: User = {
                     correo: user.email,
                     id_universidad: 1,
@@ -37,19 +37,18 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
                 }
                 dispatch(login(data));
                 setUserLocalStorage(auxuser);
-                
             } else {
-                if(location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)){
+                setLoading(false);
+                if (location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)) {
                     setRuta(location.pathname)
                 }
-                navigate(INTERNAL_ROUTES.AUTH_LOGIN)
             }
         })
     }, [auth])
 
 
 
-    return <>{loading ? (<><LoginPage></LoginPage></>) : (<>{children}</>)}</>
+    return <>{loading && getUserFromLocalStorage() ? (<>{children}</>) : (<><LoginPage></LoginPage></>)}</>
 };
 
 export default AuthRoute;

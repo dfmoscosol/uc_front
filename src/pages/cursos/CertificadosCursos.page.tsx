@@ -69,13 +69,18 @@ const CertificadosCursosPage = (): JSX.Element => {
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      setSelectedFile(file);
+      if (file.type == 'application/pdf') {
+        setSelectedFile(file);
+        setErrorSelectFile(false)
+      }else{
+        setSelectedFile(null)
+        setErrorSelectFile(true)
+      }
     }
+
     if (e.target.files[0]) {
       reader.readAsDataURL(file);
     }
-
-    setErrorSelectFile(false)
 
   }
 
@@ -178,7 +183,7 @@ const CertificadosCursosPage = (): JSX.Element => {
                 <input type="file" id="fileupload" className="file-upload-input" onChange={InputChange} />
                 <span>Arrastra y suelta o<span className="file-link">elije el archivo .pdf</span></span>
               </div>
-              {errorSelectFile! ? (<><label className="error">{`Debe adjuntar el certificado `}</label></>) : (<></>)}
+              {errorSelectFile! ? (<><label className="error">{`Debe adjuntar el certificado en formato PDF`}</label></>) : (<></>)}
             </div>
 
             <div className="kb-attach-box mb-3">
