@@ -63,7 +63,7 @@ const EncuestaPage = (): JSX.Element => {
     dispatch(getPeriodosReset())
     dispatch(getFacultadesReset())
     dispatch(getCarrerasReset())
-    dispatch(postPreguntasReset())
+    dispatch(postPreguntasReset()) 
     dispatch(validateEncuesta(getUserFromLocalStorage()?.uid))
     dispatch(getFacus());
     dispatch(getPreguntas());
@@ -75,6 +75,18 @@ const EncuestaPage = (): JSX.Element => {
   }): void => {
 
     const puntajes: Puntaje[] = selectedNumber.map((num: number, index) => ({ id_pregunta: index + 1, puntaje: Number(num) }));
+    console.log({
+      cedula: cedula,
+      id_carrera: selectCarrera,
+      id_facultad: selectFacultad,
+      puntajes: puntajes,
+      uid_firebase_fk: getUserFromLocalStorage()?.uid
+    })
+    console.log(selectedNumber.includes(0) || selectedNumber.length != num_preguntas)
+    console.log(selectedNumber.includes(0) )
+    console.log(selectedNumber.length )
+    console.log(num_preguntas )
+    
     if (selectFacultad === 0) {
       setErrorSelectFacu(true)
       setShowErrorAlert(true)
@@ -97,7 +109,6 @@ const EncuestaPage = (): JSX.Element => {
           uid_firebase_fk: getUserFromLocalStorage()?.uid
         }))
       setShowSuccessAlert(true)
-
     }
   };
 

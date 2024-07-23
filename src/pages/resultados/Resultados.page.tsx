@@ -44,6 +44,7 @@ const ResultadosPage = (): JSX.Element => {
   const { data: dataResultados } = useAppSelector((state) => state.resultados)
 
   const handlePeriodoSelectChange = (selectedOption) => {
+    console.log(selectedOption)
     const value = selectedOption ? selectedOption.value : '';
     const label = selectedOption ? selectedOption.label : '';
     setPeriodo(label)
@@ -175,6 +176,7 @@ const ResultadosPage = (): JSX.Element => {
                             showLabel={true}
                           />
                         </div>
+                        
                       </div>
                       <div className="col-xl-4 col-lg-8 col-md-8 col-sm-12 d-flex flex-column justify-content-between align-items-center">
                         <DescriptorSmall

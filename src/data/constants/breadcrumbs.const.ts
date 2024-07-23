@@ -25,7 +25,7 @@ const BREADCRUMBS_ITEMS = {
     ],
   },
   inscripciones: {
-    pageTitle: "Incripciones",
+    pageTitle: "Eventos",
     breadcrumbs: [
     ],
   },

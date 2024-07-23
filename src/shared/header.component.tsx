@@ -23,7 +23,7 @@ const Header: React.FC<Props> = ({
 
   return (
     <div className="block-header" style={{ marginBottom: "0" }}>
-      <div className="row">
+      <div className="row mt-1">
         <div className="col-lg-12 col-md-12 col-sm-12">
           <h2 style={{ color: "#002856" }}>{title}</h2>
           

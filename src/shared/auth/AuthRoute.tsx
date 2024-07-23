@@ -46,8 +46,6 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
         })
     }, [auth])
 
-
-
     return <>{loading && getUserFromLocalStorage() ? (<>{children}</>) : (<><LoginPage></LoginPage></>)}</>
 };
 

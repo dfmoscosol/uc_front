@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import axiosInstance from "../../services/api.services";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
 import { PostInscripcionResponse, PostInscripcionState } from "../utils/capacitacionesState.model";
@@ -17,7 +17,7 @@ export const postInscripcionSlice = createSlice({
     postInscripcionRequest: (state): PostInscripcionState => {
       return {
         ...state,
-        isLoading:true
+        isLoading: true
       };
     },
     postInscripcionSuccess: (
@@ -37,7 +37,7 @@ export const postInscripcionSlice = createSlice({
       return {
         ...state,
         exito: action.payload,
-        isLoading:false
+        isLoading: false
       };
     },
     postInscripcionReset: (state): PostInscripcionState => {
@@ -47,22 +47,31 @@ export const postInscripcionSlice = createSlice({
 });
 
 export const postInscripcion =
-  (form:InscripcionForm): AppThunk =>
-  
+  (form: InscripcionForm): AppThunk =>
   async (dispatch: AppThunkDispatch): Promise<void> => {
     dispatch(postInscripcionRequest());
     try {
       const { data }: AxiosResponse<PostInscripcionResponse> = await axiosInstance.post(
-        "/inscribirse",
+        "/eventos/inscripcion",
         form
       );
-      dispatch(postInscripcionSuccess(data.estado));
-    } catch (err) {
-      dispatch(postInscripcionFail(err));
+      dispatch(postInscripcionSuccess(data));
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          const errorData = error.response.data;
+          // Manejar el error de acuerdo a tus necesidades
+          dispatch(postInscripcionFail(errorData));
+        } else {
+          console.error('Error:', error.message);
+        }
+      } else {
+        console.error('Unexpected error:', error);
+      }
     }
   };
 
-export const { postInscripcionSuccess, postInscripcionRequest, postInscripcionFail,postInscripcionReset } =
-postInscripcionSlice.actions;
+export const { postInscripcionSuccess, postInscripcionRequest, postInscripcionFail, postInscripcionReset } =
+  postInscripcionSlice.actions;
 
 export const postInscripcionReducer = postInscripcionSlice.reducer;

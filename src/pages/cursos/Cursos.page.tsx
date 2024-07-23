@@ -14,8 +14,8 @@ import { getResultados, getResultadosReset, getUltimoResultado, initialState } f
 import { getPeriodosReset } from "../../redux/resultados/getPeriodos.slice";
 import { postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
 import TituloCurso from "./componenets/TituloCurso";
-import Pagination from "./componenets/Pagination.component";
 import StarRating from "./componenets/StarRating.component";
+import Pagination from "./componenets/Pagination.component";
 import ModalComponentLike from "./componenets/ModalLike.component";
 import { getCursosPedagogica } from "../../redux/cursos/getCursosPedagogica.slice";
 import { CursosComunicativaGetAllReset, getCursosComunicativa } from "../../redux/cursos/getCursosComunicativa.slice";

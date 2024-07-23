@@ -138,6 +138,22 @@ const LeftSidebar = (): JSX.Element => {
               </NavLink>
             </li>
             <li className="pt-4 titulo-menu" >
+              {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CAPACITACIONES</>)}
+            </li>
+            <li title="Inscripciones" className="pt-1">
+              <NavLink
+                to={INTERNAL_ROUTES.INSCRIPCIONES}
+                className={
+                  location.pathname.includes(INTERNAL_ROUTES.INSCRIPCIONES)
+                    ? "navbar_item_active"
+                    : ""
+                }
+              >
+                <i className="zmdi zmdi-calendar-check" ></i>
+                <span>Inscripciones</span>
+              </NavLink>
+            </li>
+            {/* <li className="pt-4 titulo-menu" >
               {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CURSOS</>)}
             </li>
             <li title="Recomendaciones" className="pt-1">
@@ -212,7 +228,7 @@ const LeftSidebar = (): JSX.Element => {
                   </NavLink>
                 </li>
                 : ""
-            }
+            } */}
           </ul>
         </div>
       </aside>

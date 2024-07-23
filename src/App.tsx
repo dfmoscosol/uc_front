@@ -13,6 +13,7 @@ import LoginPage from "./pages/login/LoginPage";
 import { initializeApp } from "firebase/app";
 import { config } from "./services/firebase/config";
 import AuthRoute from "./shared/auth/AuthRoute";
+import Error404 from "./pages/errors/error404.page";
 
 initializeApp(config.firebaseConfig)
 
@@ -20,8 +21,10 @@ function App(): JSX.Element {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/*" element={<AuthRoute><RoutesApp /></AuthRoute>} />
+      <Route path="/" element={<LoginPage />} />
+      <Route path='/404' element={<Error404 />} />
+      <Route path='/401' element={<Error404 />} />
+      <Route path="/*" element={<AuthRoute><RoutesApp /></AuthRoute>} />
       </Routes>
     </Router>
   );

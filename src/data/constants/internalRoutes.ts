@@ -8,7 +8,8 @@ const INTERNAL_ROUTES = {
   RESULTADOS: "/resultados",
   COURSES: "/cursos",
   COURSES_CERTIFICADOS: "/subircertificado",
-  INSCRIPCIONES: "/inscripciones",
+  INSCRIPCIONES: "/eventos",
+  EVENTO: "/eventos/:id",
   CERTIFICADOS: "/certificados",
   ASISTENCIA: "/asistencia",
 

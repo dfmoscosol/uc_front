@@ -3,11 +3,9 @@ import { AxiosResponse } from "axios";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
 import axiosInstance from "../../services/api.services";
 import { CapacitacionesOpenResponse, CapacitacionesOpenState } from "../utils/capacitacionesState.model";
-import { Capacitacion } from "../../data/interfaces/capacitaciones.model";
-import { getJSON } from "jquery";
 
 const initialState: CapacitacionesOpenState = {
-    capacitaciones: []
+    eventos: []
 };
 
 export const CapacitacionesOpenGetAllSlice = createSlice({
@@ -25,7 +23,7 @@ export const CapacitacionesOpenGetAllSlice = createSlice({
         ): CapacitacionesOpenState => {
             return {
                 ...state,
-                capacitaciones: action.payload.respuesta.capacitaciones
+                eventos: action.payload.respuesta.eventos
             };
         },
         CapacitacionesOpenGetAllReset: (): CapacitacionesOpenState => {
@@ -39,8 +37,7 @@ export const getCapacitacionesOpen =
         async (dispatch: AppThunkDispatch): Promise<void> => {
             dispatch(CapacitacionesOpenGetAllRequest());
             try {
-                const { data }: AxiosResponse<CapacitacionesOpenResponse> =
-                    await axiosInstance.get("/get_open_capacitaciones");
+                const { data }: AxiosResponse<CapacitacionesOpenResponse> = await axiosInstance.get("/eventos");
                 dispatch(CapacitacionesOpenGetAllSuccess(data));
             } catch (error) {
                 console.log(error)

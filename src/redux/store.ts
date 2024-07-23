@@ -18,10 +18,9 @@ import { CursosTitulosGetAllReducer } from "./cursos/getTitulosCursos.slice";
 import { postPdfReducer } from "./cursos/postPdfs.slice";
 import { CapacitacionesOpenGetAllReducer } from "./capacitaciones/getOpenCapacitaciones";
 import { postInscripcionReducer } from "./capacitaciones/postInscripcion.slice";
-import { AsistenciasGetAllReducer } from "./capacitaciones/getAsistencias.slice";
-import { postAsistenciaReducer } from "./capacitaciones/postAsistencia.slice";
 import { AcreditacionesCapacitacionGetAllReducer } from "./cursos/getAcreditacionesCapacitaciones.slice";
 import { AcreditacionesCursosGetAllReducer } from "./cursos/getAcreditacionesCursos.slice";
+import { CapacitacionGetOneReducer } from "./capacitaciones/getCapacitacion.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application
@@ -41,12 +40,9 @@ const store = configureStore({
     send_keywords: postPalabrasClaveReducer,
     titulos_cursos: CursosTitulosGetAllReducer,
     send_pdf: postPdfReducer,
-    capacitaciones: CapacitacionesOpenGetAllReducer,
-    post_inscripcion: postInscripcionReducer,
-    asistencia: AsistenciasGetAllReducer,
-    post_asistencia: postAsistenciaReducer,
-    acreditaciones_capacitaciones: AcreditacionesCapacitacionGetAllReducer,
-    acreditaciones_cursos: AcreditacionesCursosGetAllReducer,
+    eventos: CapacitacionesOpenGetAllReducer,
+    evento: CapacitacionGetOneReducer,
+    postIncripcion: postInscripcionReducer
   },
 });
 

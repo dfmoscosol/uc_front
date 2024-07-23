@@ -1,43 +1,32 @@
-import { Asistencia, Capacitacion } from "../../data/interfaces/capacitaciones.model";
+import { Evento } from "../../data/interfaces/capacitaciones.model";
+
+export interface CapacitacionResponse {
+  error: string;
+  estado: boolean;
+  respuesta: CapacitacionState;
+}
+
+export interface CapacitacionState {
+  evento: Evento | null;
+}
 
 export interface CapacitacionesOpenResponse {
-    error: string,
-    estado: boolean,
-    respuesta: CapacitacionesOpenState,
+  error: string;
+  estado: boolean;
+  respuesta: CapacitacionesOpenState;
 }
 
 export interface CapacitacionesOpenState {
-    capacitaciones: Capacitacion[]
-}
-
-export interface AsistenciasResponse {
-  error: string,
-  estado: boolean,
-  respuesta: AsistenciasState,
-}
-
-export interface AsistenciasState {
-  data: Asistencia[]
+  eventos: Evento[];
 }
 
 export interface PostInscripcionResponse {
-    error: string,
-    estado: boolean,
-    respuesta: PostInscripcionState,
-  }
+  estado: boolean;
+  respuesta?: string;
+  error?: string;
+}
 
-  export interface PostInscripcionState {
-    exito: any;
-    isLoading: boolean
-  }
-
-  export interface PostAsistenciaResponse {
-    error: string,
-    estado: boolean,
-    respuesta: PostAsistenciaState,
-  }
-
-  export interface PostAsistenciaState {
-    exito: any;
-    isLoading: boolean;
-  }
+export interface PostInscripcionState {
+  exito: PostInscripcionResponse | null;
+  isLoading: boolean;
+}

@@ -51,6 +51,7 @@ const ModalComponentLike = ({ dispatch, competencia, keyWords, onClose }) => {
     };
 
     return (
+        
         <Modal show={true} backdrop="static" keyboard={false} onHide={onClose} centered>
             <Modal.Header >
                 <Modal.Title>Ayúdanos a mejorar las recomendaciones</Modal.Title>

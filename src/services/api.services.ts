@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
-
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";
 
@@ -36,27 +35,15 @@ axiosInstance.interceptors.response.use(
       case 401:
         window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_401}`; // Unauthorized
         break;
-      case 503:
-        window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Service unavailable
-        break;
       case 404:
-        window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`;
+        window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`;
         break;
-      case 500:
-        window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Server error
-        break;
+
       default:
         break;
     }
-    let errorMessage = "";
-    if (error.response && error.response.data?.errors) {
-      errorMessage = error.response.data.errors[0].message;
-    } else if (error.response && error.response.data) {
-      errorMessage = error.response.data.msg;
-    } else {
-      errorMessage = "Server error";
-    }
-    return Promise.reject(errorMessage);
+
+    return Promise.reject(error);
   }
 );
 

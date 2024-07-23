@@ -1,40 +1,51 @@
-export interface Capacitacion {
-    cupo: number;
-    direccion: string;
-    fechas: string[];
-    horas: number;
-    id_capacitacion: number;
-    id_taller: number | null; 
+export interface Evento {
+    id: number;
     nombre: string;
-    nombre_taller: string | null;
-    nombre_tutor: string;
-    num_inscritos: number;
-    presencial: boolean;
-    tipo: string;
-    estado: number
+    tipo: number;
+    horas_acreditadas: number;
+    cupos: number;
+    inscripcion: boolean;
+    id_jornada?: number;
+    nombre_jornada?: string;
+    fechas: Fecha[];
+    inscrito_jornada?: boolean;
+    inscrito_taller?: boolean;
+    inscrito?: boolean;
+    aceptada?: boolean;
+    horas?: number;
+    tipo_modalidad: string;
+    sesiones?: Sesion[];
+    ponentes?: Ponente[];
+    hora_inicio?: string;
+    duracion?: number;
+    modalidad?: string;
+    ubicacion?: string;
+    periodo?: string;
 }
 
-export interface Asistencia {
-    id_asistencia:number,
-    asiste_entrada:boolean,
-    asiste_salida:boolean,
-    fecha:string,
-    id_inscripcion:number,
-    id_taller:number,
-    nombre_capacitacion:string,
-    nombre_taller:string,
-    allow_asistencia_entrada:boolean,
-    allow_asistencia_salida:boolean,
-    tipo:string,
+export interface Fecha {
+    id: number;
+    fecha: string; // Formato 'dd-mm-yyyy'
+}
+
+export interface Sesion {
+    id: number;
+    fecha: string; // Formato 'yyyy-mm-dd'
+    fecha_id: number;
+    hora_inicio: string; // Formato 'HH:MM'
+    duracion: number;
+    modalidad: string;
+    ubicacion: string;
+}
+
+export interface Ponente {
+    nombre: string;
+    titulo_charla?: string; // Solo para charlas
 }
 
 export interface InscripcionForm {
-    id_capacitacion: number,
-    id_taller: number | null,
-}
-
-export interface AsistenciaForm {
-    column: string,
-    id_asistencia: number,
-    value: boolean
-}
+    evento_id: number;
+    taller_id?: number;
+    aceptada?: boolean;
+  }
+  
