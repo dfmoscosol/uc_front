@@ -38,8 +38,8 @@ axiosInstance.interceptors.response.use(
       case 404:
         window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`;
         break;
-
       default:
+        window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`;
         break;
     }
 

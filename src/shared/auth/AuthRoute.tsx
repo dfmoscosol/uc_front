@@ -39,7 +39,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
                 setUserLocalStorage(auxuser);
             } else {
                 setLoading(false);
-                if (location.pathname.includes(INTERNAL_ROUTES.ASISTENCIA)) {
+                if (location.pathname.includes(INTERNAL_ROUTES.INSCRIPCIONES)) {
                     setRuta(location.pathname)
                 }
             }

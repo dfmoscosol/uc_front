@@ -14,6 +14,7 @@ import CoursesPage from "../pages/cursos/Cursos.page";
 import InscripcionesPage from "../pages/capacitaciones/Inscripciones.page";
 import CertificadosCursosPage from "../pages/cursos/CertificadosCursos.page";
 import EventoDetallePage from "../pages/capacitaciones/EventoDetail.page";
+import Error401 from "../pages/errors/error401.page";
 
 
 const RoutesApp = () => {

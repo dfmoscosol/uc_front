@@ -14,6 +14,7 @@ import { initializeApp } from "firebase/app";
 import { config } from "./services/firebase/config";
 import AuthRoute from "./shared/auth/AuthRoute";
 import Error404 from "./pages/errors/error404.page";
+import Error401 from "./pages/errors/error401.page";
 
 initializeApp(config.firebaseConfig)
 
@@ -23,7 +24,7 @@ function App(): JSX.Element {
       <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route path='/404' element={<Error404 />} />
-      <Route path='/401' element={<Error404 />} />
+      <Route path='/401' element={<Error401 />} />
       <Route path="/*" element={<AuthRoute><RoutesApp /></AuthRoute>} />
       </Routes>
     </Router>
