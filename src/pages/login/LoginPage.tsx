@@ -1,37 +1,40 @@
-import { useNavigate } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 import styles from "./Login.module.scss";
 // images
 import logo from "../../assets/images/logo2.png";
 import google from "../../assets/images/google.ico";
 import fondo from "../../assets/images/fondo.png";
 
-// redux
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect } from "firebase/auth";
+// firebase
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import INTERNAL_ROUTES from "../../data/constants/internalRoutes";
-import { getRutaFromLocalStorage, setRuta } from "../../services/persistUser.service";
+
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
 
 const LoginPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [authing, setAuthing] = useState(false);
-  const auth = getAuth()
+  const auth = getAuth();
+
+  const from = (location.state as LocationState)?.from?.pathname || INTERNAL_ROUTES.HOME;
 
   const signInWithGoogle = async () => {
-    setAuthing(true);
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
-        if (getRutaFromLocalStorage() && getRutaFromLocalStorage().includes(INTERNAL_ROUTES.ASISTENCIA)) {
-          navigate(INTERNAL_ROUTES.ASISTENCIA)
-        } else {
-          navigate(INTERNAL_ROUTES.HOME)
-        }
+        setAuthing(true);
+        navigate(from); // Redirigir a la ruta almacenada
       })
       .catch((error) => {
         setAuthing(false);
       });
   };
-
 
   return (
     <div >

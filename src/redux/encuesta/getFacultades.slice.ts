@@ -4,8 +4,13 @@ import axiosInstance from "../../services/api.services";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
 import { FacultadesResponse, FacultadesState } from "../utils/encuestaState.model";
 
+// Definición de las interfaces
+
+
 const initialState: FacultadesState = {
-  data: [],
+  lista: [],
+  loading: false,
+  error: null,
 };
 
 export const facusGetAllSlice = createSlice({
@@ -15,23 +20,23 @@ export const facusGetAllSlice = createSlice({
     getFacultadesRequest: (state): FacultadesState => {
       return {
         ...state,
+        loading: true,
+        error: null,
       };
     },
-    getFacultadesSuccess: (
-      state,
-      action: PayloadAction<any>
-    ): FacultadesState => {
+    getFacultadesSuccess: (state, action: PayloadAction<any[]>): FacultadesState => {
       return {
         ...state,
-        data: action.payload,
+        loading: false,
+        lista: action.payload,
+        error: null,
       };
     },
-    getFacultadesFail: (
-      state,
-      action: PayloadAction<any>
-    ): FacultadesState => {
+    getFacultadesFail: (state, action: PayloadAction<string>): FacultadesState => {
       return {
         ...state,
+        loading: false,
+        error: action.payload,
       };
     },
     getFacultadesReset: (state): FacultadesState => {
@@ -53,11 +58,13 @@ export const getFacus =
         );
         dispatch(getFacultadesSuccess(data.respuesta.data));
       } catch (err) {
-        dispatch(getFacultadesFail(err));
+        const errorMessage = 'Error al obtener facultades';
+        dispatch(getFacultadesFail(errorMessage));
       }
     };
 
 export const { getFacultadesSuccess, getFacultadesRequest, getFacultadesFail, getFacultadesReset } =
   facusGetAllSlice.actions;
 
-export const facusGetAllReducer = facusGetAllSlice.reducer;
+  export const facusGetAllReducer = facusGetAllSlice.reducer;
+

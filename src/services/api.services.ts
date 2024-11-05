@@ -1,8 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
+const baseURL = "https://pentagonoapi.ucuenca.edu.ec";
+
+//const baseURL = "http://127.0.0.1:8088/";
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";
+import { userInfo } from "os";
 
 
 const axiosInstance = axios.create({
@@ -33,16 +36,15 @@ axiosInstance.interceptors.response.use(
     // TODO: Validate all errors types
     switch (error.response.status) {
       case 401:
-        window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_401}`; // Unauthorized
+        //window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Unauthorized
         break;
-      case 404:
+      /* case 404:
         window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`;
         break;
       default:
         window.location.href = `${INTERNAL_ROUTES.SERVER_ERROR_404}`;
-        break;
+        break; */
     }
-
     return Promise.reject(error);
   }
 );

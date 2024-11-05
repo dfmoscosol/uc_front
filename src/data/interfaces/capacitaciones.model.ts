@@ -49,3 +49,23 @@ export interface InscripcionForm {
     aceptada?: boolean;
   }
   
+  export interface ObservacionForm {
+    numero_celular: string; 
+    evento_id?: number;        
+    anios_ejercicio: number;           
+    facultad_id: number;              
+    carrera_id: number;               
+    asignatura: string;                
+    ciclo_carrera: number;            
+    numero_estudiantes: number;        
+    campus: string;                   
+    duracion_clase: number;            
+    inclusion: boolean;               
+    horariosDisponibles: {             
+      dia: string;                     
+      hora_inicio: string;             
+      hora_fin: string;               
+    }[];
+    comentarios: string;               
+  }
+  

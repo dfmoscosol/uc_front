@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useNavigate } from "react-router-dom";
-import LoginPage from "../../pages/login/LoginPage";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useNavigate, useLocation } from "react-router-dom";
 import INTERNAL_ROUTES from "../../data/constants/internalRoutes";
 import { User } from "../../redux/utils/authState.model";
-import { getRutaFromLocalStorage, getUserFromLocalStorage, setRuta, setUserLocalStorage } from "../../services/persistUser.service";
+import { setUserLocalStorage } from "../../services/persistUser.service";
 import { Login } from "../../data/interfaces/auth.model";
 import { login } from "../../redux/auth/login.slice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
+import LoginPage from "../../pages/login/LoginPage";
+
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
 
 export interface IAuthRouteProps { children: React.ReactNode };
+
 const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
     const { children } = props;
     const auth = getAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                setLoading(true);
                 const auxuser: User = {
                     correo: user.email,
                     id_universidad: 1,
@@ -28,25 +35,23 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
                     uid: user.uid,
                     token: await user.getIdToken(),
                     photoUrl: user.photoURL,
-                }
+                };
                 const data: Login = {
                     correo: user.email,
                     firebase_uid: user.uid,
                     id_universidad_fk: 1,
                     nombres: user.displayName,
-                }
+                };
                 dispatch(login(data));
                 setUserLocalStorage(auxuser);
-            } else {
                 setLoading(false);
-                if (location.pathname.includes(INTERNAL_ROUTES.INSCRIPCIONES)) {
-                    setRuta(location.pathname)
-                }
+            } else {
+                navigate(INTERNAL_ROUTES.AUTH_LOGIN, { state: { from: location } });
             }
         })
-    }, [auth])
+    }, [auth, navigate, location, dispatch]);
 
-    return <>{loading && getUserFromLocalStorage() ? (<>{children}</>) : (<><LoginPage></LoginPage></>)}</>
+    return <>{loading ? <LoginPage></LoginPage> : children}</>;
 };
 
 export default AuthRoute;

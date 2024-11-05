@@ -1,5 +1,5 @@
 import { FaGraduationCap, FaUsers } from 'react-icons/fa';
-import { MdCheck, MdCheckCircle, MdMoreTime, MdOutlinePending } from 'react-icons/md';
+import { MdBlock, MdCheck, MdCheckCircle, MdMoreTime, MdOutlinePending } from 'react-icons/md';
 import MICROTALLER from '../../assets/images/microtalleres.png';
 import { FiUserPlus } from 'react-icons/fi';
 import { Carousel, Modal, Toast } from 'react-bootstrap';
@@ -14,10 +14,10 @@ import { RxCross2 } from 'react-icons/rx';
 import { getCapacitacion } from '../../redux/capacitaciones/getCapacitacion.slice';
 import { Navigate, useNavigate } from 'react-router-dom';
 import INTERNAL_ROUTES from '../../data/constants/internalRoutes';
+import DescriptorEvento from '../resultados/components/DescriptorEvento';
 
 const MicrotallerEvent = ({ evento }) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
@@ -45,109 +45,123 @@ const MicrotallerEvent = ({ evento }) => {
   }, [exito, dispatch]);
   return (
     <>
-    <div className="row justify-content-center align-items-stretch px-xl-5">
-      <div className="container">
-        <div className="row mb-2 justify-content-center">
-          <div className="col-xl-7 col-lg-10 col-md-12">
-            <div className="container">
-              <div className="col-md-12 text-center">
-                <img src={MICROTALLER} alt="Evento" className="img-fluid event-image" />
-                <div className="row justify-content-center mb-4">
-                  <div className="col-md-4">
-                    <p className="event-info-img">
-                      <span className="info-title-img"><FaGraduationCap /> Modalidad</span>
-                      <span className="info-value-img">{evento.tipo_modalidad}</span>
-                    </p>
-                  </div>
-                  <div className="col-md-4">
-                    <p className="event-info-img">
-                      <span className="info-title-img"><MdMoreTime /> Acredita</span>
-                      <span className="info-value-img">{evento.horas_acreditadas} horas</span>
-                    </p>
-                  </div>
-                  <div className="col-md-4">
-                    <p className="event-info-img">
-                      <span className="info-title-img"><FaUsers /> Cupos</span>
-                      <span className="info-value-img">{evento.cupos}</span>
-                    </p>
-                  </div>
+      <div className="row justify-content-center align-items-stretch px-xl-5">
+        <div className="col-xl-7 col-lg-10 col-md-12">
+          <div className="container">
+            <div className="col-md-12 text-center">
+              <img src={MICROTALLER} alt="Evento" className="img-fluid event-image" />
+              <div className="row justify-content-center mb-4">
+                <div className="col-md-4">
+                  <p className="event-info-img">
+                    <span className="info-title-img"><FaGraduationCap /> Modalidad</span>
+                    <span className="info-value-img">{evento.tipo_modalidad}</span>
+                  </p>
+                </div>
+                <div className="col-md-4">
+                  <p className="event-info-img">
+                    <span className="info-title-img"><MdMoreTime /> Acredita</span>
+                    <span className="info-value-img">{evento.horas_acreditadas} horas</span>
+                  </p>
+                </div>
+                <div className="col-md-4">
+                  <p className="event-info-img">
+                    <span className="info-title-img"><FaUsers /> Cupos</span>
+                    <span className="info-value-img">{evento.cupos}</span>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-xl-5 col-lg-10 col-md-12">
-            <div className="container mb-4">
-              <p className="event-info-der">
-                <span className="info-title-der"><HiInformationCircle /> Sesiones</span>
-                <Carousel className="custom-carousel">
-                  {evento.sesiones?.map((sesion, index) => (
-                    <Carousel.Item key={index}>
-                      <table className="table-custom mt-2 mb-4">
-                        <tbody>
-                          <tr>
-                            <td className="font-weight-bold">Fecha:</td>
-                            <td>{formatDateString(sesion.fecha)}</td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Modalidad:</td>
-                            <td>{sesion.modalidad}</td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Ubicación:</td>
-                            <td>{sesion.ubicacion}</td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Hora de Inicio:</td>
-                            <td>{sesion.hora_inicio}</td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Duración:</td>
-                            <td>{sesion.duracion} horas</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </Carousel.Item>
-                  ))}
-                </Carousel>
-              </p>
-            </div>
-            <div className="container">
-              <p className="event-info-der">
-                <span className="info-title-der"><BsPersonCircle /> Facilitadores</span>
-                <Carousel className="custom-carousel">
-                  {evento.ponentes?.map((ponente, index) => (
-                    <Carousel.Item key={index}>
-                      <div className="ponente-slide">
-                        <span className="info-charla">{ponente.nombre}</span>
-                      </div>
-                    </Carousel.Item>
-                  ))}
-                </Carousel>
-              </p>
-            </div>
-            <div className="container mt-4 px-5">
-              <div className="row justify-content-center px-5">
-                {evento.aceptada === null ?
-                  <button className="btn btn-primary" onClick={() => setShowModal(true)} disabled={isLoading}>
-                    <FiUserPlus size={20} style={{ paddingRight: "5px" }} /> Inscribirse
-                  </button> :
-                  evento.aceptada === true ?
-                    <button className="btn btn-success" disabled onClick={() => console.log(evento.id)}>
-                      <MdCheckCircle size={20} style={{ paddingRight: "5px" }} /> Inscrito
-                    </button>
-                    :
-                    evento.aceptada === false ?
-                      <button className="btn btn-secondary" disabled onClick={() => console.log(evento.id)}>
-                        <MdOutlinePending size={20} style={{ paddingRight: "5px" }} /> Pendiente
-                      </button> : <></>
-                }
-              </div>
+          <div className="container">
+            <p className="event-info-desc">    {evento.descripcion}     </p>
+          </div>
+        </div>
+        <div className="col-xl-5 col-lg-10 col-md-12">
+          <div className="container mb-4">
+            <p className="event-info-der">
+              <DescriptorEvento competencia={`Competencia ${evento.competencia}`} momento={`Momento ${evento.momento}`} />
+
+            </p>
+          </div>
+          <div className="container mb-4">
+            <p className="event-info-der">
+              <span className="info-title-der"><HiInformationCircle /> Sesiones</span>
+              <Carousel className="custom-carousel">
+                {evento.sesiones?.map((sesion, index) => (
+                  <Carousel.Item key={index}>
+                    <table className="table-custom mt-2 mb-4">
+                      <tbody>
+                        <tr>
+                          <td className="font-weight-bold">Fecha:</td>
+                          <td>{formatDateString(sesion.fecha)}</td>
+                        </tr>
+                        <tr>
+                          <td className="font-weight-bold">Modalidad:</td>
+                          <td>{sesion.modalidad}</td>
+                        </tr>
+                        <tr>
+                          <td className="font-weight-bold">Ubicación:</td>
+                          <td>{sesion.ubicacion}</td>
+                        </tr>
+                        <tr>
+                          <td className="font-weight-bold">Hora de Inicio:</td>
+                          <td>{sesion.hora_inicio}</td>
+                        </tr>
+                        <tr>
+                          <td className="font-weight-bold">Duración:</td>
+                          <td>{sesion.duracion} horas</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </p>
+          </div>
+          <div className="container mb-4">
+            <p className="event-info-der">
+              <span className="info-title-der"><BsPersonCircle /> Facilitadores</span>
+              <Carousel className="custom-carousel">
+                {evento.ponentes?.map((ponente, index) => (
+                  <Carousel.Item key={index}>
+                    <div className="ponente-slide">
+                      <span className="info-charla">{ponente.nombre}</span>
+                    </div>
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </p>
+          </div>
+          <div className="container mb-4 px-5">
+            <div className="row justify-content-center px-5">
+            {evento.cupos > 0 ? (
+                <>
+                  {evento.aceptada === null ?
+                    <button className="btn btn-primary boton-modal" onClick={() => setShowModal(true)} disabled={isLoading}>
+                      <FiUserPlus size={20} style={{ paddingRight: "5px" }} /> Inscribirse
+                    </button> :
+                    evento.aceptada === true ?
+                      <button className="btn btn-success boton-modal" disabled>
+                        <MdCheckCircle size={20} style={{ paddingRight: "5px" }} /> Inscrito
+                      </button> :
+                      evento.aceptada === false ?
+                        <button className="btn btn-secondary boton-modal" disabled>
+                          <MdOutlinePending size={20} style={{ paddingRight: "5px" }} /> Pendiente
+                        </button> : <></>
+                  }
+                </>
+              ) : (
+                <>
+                  <button className="btn btn-secondary boton-modal" disabled>
+                    <MdBlock size={20} style={{ paddingRight: "5px" }} /> No hay cupos
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </div>
-    
+
       {/* Confirmation Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} backdrop="static" keyboard={false} centered>
         <Modal.Header>
@@ -233,9 +247,9 @@ const MicrotallerEvent = ({ evento }) => {
             onClick={() => setShowErrorToast(false)}
           />
         </Toast.Header>
-        <Toast.Body style={{background:'white'}}>Hubo un error al intentar inscribirse en el evento: {exito?.error}</Toast.Body>
+        <Toast.Body style={{ background: 'white' }}>Hubo un error al intentar inscribirse en el evento: {exito?.error}</Toast.Body>
       </Toast>
-      </>
+    </>
   )
 };
 

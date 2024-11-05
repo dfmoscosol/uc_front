@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import axiosInstance from "../../services/api.services";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
-import { FacultadesResponse } from "../utils/encuestaState.model";
 import { PeriodosResponse, PeriodosState } from "../utils/resultadosState.model";
 
 const initialState: PeriodosState = {

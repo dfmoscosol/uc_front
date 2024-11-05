@@ -40,8 +40,8 @@ const EncuestaPage = (): JSX.Element => {
     formState: { errors },
   } = useForm<EncuestaForm>();
 
-  const { data: dataFacus } = useAppSelector((state) => state.facus)
-  const { data: dataCarreras } = useAppSelector((state) => state.carreras)
+  const { lista: dataFacus } = useAppSelector((state) => state.facus)
+  const { lista: dataCarreras } = useAppSelector((state) => state.carreras)
   const { encuesta } = useAppSelector((state) => state.encuesta)
   const { exito, isLoading } = useAppSelector((state) => state.save_encuesta)
   const { num_preguntas, data: dataPreguntas } = useAppSelector((state) => state.preguntas)

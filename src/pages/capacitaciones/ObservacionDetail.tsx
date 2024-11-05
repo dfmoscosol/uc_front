@@ -1,32 +1,41 @@
 import { FaGraduationCap, FaUsers } from 'react-icons/fa';
-import { MdBlock, MdCheck, MdCheckCircle, MdMoreTime, MdOutlinePending } from 'react-icons/md';
-import CHARLA from '../../assets/images/charlas.png';
+import { MdBlock, MdCheckCircle, MdMoreTime, MdOutlinePending } from 'react-icons/md';
+import Observacion from '../../assets/images/observacion.png';
 import { FiUserPlus } from 'react-icons/fi';
-import { Carousel, Modal, Toast } from 'react-bootstrap';
-import { BsPersonCircle } from 'react-icons/bs';
-import { formatDateString } from './Inscripciones.page';
 import { HiInformationCircle } from 'react-icons/hi';
-import { postInscripcion, postInscripcionReset } from '../../redux/capacitaciones/postInscripcion.slice';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { ImSpinner } from 'react-icons/im';
-import { RxCross2 } from 'react-icons/rx';
+import { formatDateString } from './Inscripciones.page';
+import DynamicFormModal from './DynamicModal';
+import { Toast } from 'react-bootstrap';
+import { postInscripcion, postInscripcionReset } from '../../redux/capacitaciones/postInscripcion.slice';
 import { getCapacitacion } from '../../redux/capacitaciones/getCapacitacion.slice';
-import DescriptorEvento from '../resultados/components/DescriptorEvento';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { ObservacionForm } from '../../data/interfaces/capacitaciones.model';
 
-const CharlaEvent = ({ evento }) => {
-  const dispatch = useAppDispatch();
-  const [showModal, setShowModal] = useState(false);
+const ObservacionEvent = ({ evento }) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const dispatch = useAppDispatch()
   const [showToast, setShowToast] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
 
   const { exito, isLoading } = useAppSelector((state) => state.postIncripcion);
 
-  const handleInscribirse = () => {
-    const formData = {
-      evento_id: evento.id
-    };
-    dispatch(postInscripcion(formData));
+  const handleInscripcion = (data: any) => {
+    data.evento_id=evento.id
+    data.anios_ejercicio=Number(data.anios_ejercicio)
+    data.carrera_id=Number(data.carrera_id)
+    data.ciclo_carrera=Number(data.ciclo_carrera)
+    data.duracion_clase=Number(data.duracion_clase)
+    data.facultad_id=Number(data.facultad_id)    
+    data.numero_estudiantes=Number(data.numero_estudiantes)
+    data.inclusion = (typeof data.inclusion === "string" && data.inclusion === "si") ? true : false;
+    /* data.anios_ejercicio=Number(data.anios_ejercicio)
+    data.anios_ejercicio=Number(data.anios_ejercicio)
+    data.anios_ejercicio=Number(data.anios_ejercicio) */
+    console.log("Datos del formulario", data);
+    
+    dispatch(postInscripcion(data));
+    // Aquí puedes hacer la lógica para enviar la inscripción con los datos del formulario al backend.
   };
 
   useEffect(() => {
@@ -35,6 +44,7 @@ const CharlaEvent = ({ evento }) => {
         setShowToast(true);
       } else {
         setShowErrorToast(true)
+        console.log(exito?.error)
       }
       setShowModal(false);
       setTimeout(() => dispatch(postInscripcionReset()), 3000); // Reset the state after showing the toast
@@ -44,87 +54,52 @@ const CharlaEvent = ({ evento }) => {
 
   return (
     <>
-      {console.log(evento)}
       <div className="row justify-content-center align-items-stretch px-xl-5">
-
         <div className="col-xl-7 col-lg-10 col-md-12">
           <div className="container">
             <div className="col-md-12 text-center">
-              <img src={CHARLA} alt="Evento" className="img-fluid event-image" />
+              <img src={Observacion} alt="Evento" className="img-fluid event-image" />
               <div className="row justify-content-center mb-4">
                 <div className="col-md-4">
                   <p className="event-info-img">
-                    <span className="info-title-img"><FaGraduationCap /> Modalidad</span>
-                    <span className="info-value-img">{evento.modalidad}</span>
+                    <span className="info-title-img">
+                      <FaGraduationCap /> Inicia
+                    </span>
+                    <span className="info-value-img">{formatDateString(evento.fechas[0].fecha)}</span>
                   </p>
                 </div>
                 <div className="col-md-4">
                   <p className="event-info-img">
-                    <span className="info-title-img"><MdMoreTime /> Acredita</span>
+                    <span className="info-title-img">
+                      <MdMoreTime /> Acredita
+                    </span>
                     <span className="info-value-img">{evento.horas_acreditadas} horas</span>
                   </p>
                 </div>
                 <div className="col-md-4">
                   <p className="event-info-img">
-                    <span className="info-title-img"><FaUsers /> Cupos</span>
+                    <span className="info-title-img">
+                      <FaUsers /> Cupos
+                    </span>
                     <span className="info-value-img">{evento.cupos}</span>
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container">
-            <p className="event-info-desc">    {evento.descripcion}     </p>
-          </div>
         </div>
         <div className="col-xl-5 col-lg-10 col-md-12">
           <div className="container mb-4">
             <p className="event-info-der">
-              <DescriptorEvento competencia={`Competencia ${evento.competencia}`} momento={`Momento ${evento.momento}`} />
+              <span className="info-title-der">
+                <HiInformationCircle /> Información
+              </span>
+              <div className="container mt-2">
+                <p className="event-info-desc"> {evento.descripcion} </p>
+              </div>
             </p>
           </div>
-          <div className="container mb-4">
-            <p className="event-info-der">
-              <span className="info-title-der"><HiInformationCircle /> Información</span>
-              <table className="table-custom mt-2">
-                <tbody>
-                  <tr>
-                    <td className="font-weight-bold">Fecha de inicio:</td>
-                    <td>{formatDateString(evento.fechas[0].fecha)}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-weight-bold">Ubicación:</td>
-                    <td>{evento.ubicacion}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-weight-bold">Hora de inicio:</td>
-                    <td>{evento.hora_inicio}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-weight-bold">Duración:</td>
-                    <td>{evento.duracion} horas</td>
-                  </tr>
-                </tbody>
-              </table>
-            </p>
-          </div>
-          <div className="container mb-4">
-            <p className="event-info-der">
-              <span className="info-title-der"><BsPersonCircle /> Ponencias</span>
-              <Carousel className="custom-carousel">
-                {evento.ponentes?.map((ponente, index) => (
-                  <Carousel.Item key={index}>
-                    <div className="ponente-slide">
-                      <span className="info-charla">{ponente.titulo_charla}</span>
-                      <div className="text-center">
-                        <span className="info-ponente">{ponente.nombre}</span>
-                      </div>
-                    </div>
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-            </p>
-          </div>
+
           <div className="container mb-4 px-5">
             <div className="row justify-content-center px-5">
             {evento.cupos > 0 ? (
@@ -154,38 +129,13 @@ const CharlaEvent = ({ evento }) => {
           </div>
         </div>
       </div>
-
-
-      {/* Confirmation Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} backdrop="static" keyboard={false} centered>
-        <Modal.Header>
-          <Modal.Title>Confirmar Inscripción</Modal.Title>
-          <button
-            type="button"
-            className="btn-close btn-close-white"
-            aria-label="Cerrar"
-            onClick={() => setShowModal(false)}
-          />
-        </Modal.Header>
-        <Modal.Body>¿Está seguro de que desea inscribirse en este evento?</Modal.Body>
-        <Modal.Footer >
-          <button
-            type="button"
-            className="btn btn-modal boton-modal"
-            aria-label="Cerrar"
-            onClick={() => handleInscribirse()}
-          >{isLoading ? <ImSpinner size={20} className='rotating' /> : <MdCheck style={{ marginRight: "10px" }} size={20} />}
-            Confirmar</button>
-          <button
-            type="button"
-            className="btn boton-modal"
-            aria-label="Cerrar"
-            onClick={() => setShowModal(false)}
-          ><RxCross2 style={{ marginRight: "10px" }} size={20} />
-            Cancelar</button>
-        </Modal.Footer>
-      </Modal>
-
+      {/* Modal con el formulario */}
+      <DynamicFormModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        evento={evento}
+        handleInscripcion={handleInscripcion}
+      />
       {/* Success Toast */}
       <Toast
         onClose={() => setShowToast(false)}
@@ -244,7 +194,7 @@ const CharlaEvent = ({ evento }) => {
         <Toast.Body style={{ background: 'white' }}>Hubo un error al intentar inscribirse en el evento: {exito?.error}</Toast.Body>
       </Toast>
     </>
-  )
+  );
 };
 
-export default CharlaEvent;
+export default ObservacionEvent;

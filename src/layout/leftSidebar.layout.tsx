@@ -93,7 +93,7 @@ const LeftSidebar = (): JSX.Element => {
 
         <div className="menu" >
           <ul className="list" >
-
+            
             <li className="pt-4 titulo-menu" >
               {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>PENTÁGONO</>)}
             </li>
@@ -153,6 +153,7 @@ const LeftSidebar = (): JSX.Element => {
                 <span>Inscripciones</span>
               </NavLink>
             </li>
+
             {/* <li className="pt-4 titulo-menu" >
               {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CURSOS</>)}
             </li>

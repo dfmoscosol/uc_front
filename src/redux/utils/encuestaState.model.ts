@@ -21,26 +21,30 @@ export interface PreguntasState {
       tecnologica: Pregunta[];
     };
   }
-
-  export interface FacultadesResponse {
-    error: string,
-    estado: boolean,
-    respuesta: FacultadesState,
-  }
-
+  
   export interface FacultadesState {
-    data: Facultad[];
+    lista: any[];
+    loading: boolean;
+    error: string | null;
+  }
+  
+  export interface FacultadesResponse {
+    respuesta: {
+      data: Facultad[];
+    };
   }
 
-  export interface CarrerasResponse {
-    error: string,
-    estado: boolean,
-    respuesta: CarrerasState,
-  }
+export interface CarrerasState {
+  lista: Carrera[];
+  loading: boolean;
+  error: string | null;
+}
 
-  export interface CarrerasState {
+export interface CarrerasResponse {
+  respuesta: {
     data: Carrera[];
-  }
+  };
+}
 
   export interface PostPreguntasResponse {
     error: string,

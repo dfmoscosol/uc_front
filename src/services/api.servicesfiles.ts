@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-//const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
-const baseURL = " https://192.168.1.4:8088/";
+const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
+//const baseURL = "http://127.0.0.1:8088/";
 
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";

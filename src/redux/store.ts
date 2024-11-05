@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { facusGetAllReducer } from "./encuesta/getFacultades.slice"; 
 
 import { carrerasGetAllReducer } from "./encuesta/getCarreras.slice";
 import { preguntasGetAllReducer } from "./encuesta/getPreguntas.slice";
@@ -18,9 +17,8 @@ import { CursosTitulosGetAllReducer } from "./cursos/getTitulosCursos.slice";
 import { postPdfReducer } from "./cursos/postPdfs.slice";
 import { CapacitacionesOpenGetAllReducer } from "./capacitaciones/getOpenCapacitaciones";
 import { postInscripcionReducer } from "./capacitaciones/postInscripcion.slice";
-import { AcreditacionesCapacitacionGetAllReducer } from "./cursos/getAcreditacionesCapacitaciones.slice";
-import { AcreditacionesCursosGetAllReducer } from "./cursos/getAcreditacionesCursos.slice";
 import { CapacitacionGetOneReducer } from "./capacitaciones/getCapacitacion.slice";
+import { facusGetAllReducer } from "./encuesta/getFacultades.slice";
 
 const store = configureStore({
   // Reducers allow us to modify/update the state of the application

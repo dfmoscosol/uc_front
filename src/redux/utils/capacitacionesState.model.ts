@@ -18,6 +18,7 @@ export interface CapacitacionesOpenResponse {
 
 export interface CapacitacionesOpenState {
   eventos: Evento[];
+  isLoading: boolean;
 }
 
 export interface PostInscripcionResponse {

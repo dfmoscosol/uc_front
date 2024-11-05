@@ -10944,12 +10944,13 @@ a:any-link {
 .boton-modal {
   font-size: 14px;
   border-radius: 8px;
-  border-style: inset;
+  border-style: solid;
+  border-width: 1px;
   opacity: 0.9;
   background: #002856;
   color: white;
   border-color: cornflowerblue;
-  padding-block: 5px;
+  padding-block: 7.5px;
 }
 
 .boton-modal:hover {
@@ -11319,14 +11320,14 @@ a:any-link {
 }
 
 .event-info-der {
-  background-color: #f7f7f7;
   border: #f5f5f5;
   border-style: solid;
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 10px;
   text-align: start;
-  //box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: #f7f7f7;
+
 }
 
 .info-value-der {
@@ -11334,12 +11335,12 @@ a:any-link {
 }
 
 .info-title-der {
-  font-size: 1.15rem;
-  font-weight: bold;
   color: #002856;
   display: flex;
   align-items: center;
   justify-content: start;
+  font-size: 1.15rem;
+  font-weight: bold;
   gap: 0.5rem;
 }
 
@@ -11421,4 +11422,7 @@ a:any-link {
   color: #002856 !important;
 }
 
+.event-info-desc {
+  text-align: justify;
+}
 

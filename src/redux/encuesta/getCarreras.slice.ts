@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from 'axios';
 import axiosInstance from "../../services/api.services";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
 import { CarrerasResponse, CarrerasState } from "../utils/encuestaState.model";
+import { Carrera } from "../../data/interfaces/encuesta.model";
 
 const initialState: CarrerasState = {
-  data: [],
+  lista: [],
+  loading: false,
+  error: null,
 };
 
 export const carrerasGetAllSlice = createSlice({
@@ -15,49 +18,61 @@ export const carrerasGetAllSlice = createSlice({
     getCarrerasRequest: (state): CarrerasState => {
       return {
         ...state,
+        loading: true,
+        error: null,
       };
     },
     getCarrerasSuccess: (
       state,
-      action: PayloadAction<any>
+      action: PayloadAction<Carrera[]>
     ): CarrerasState => {
       return {
         ...state,
-        data: action.payload,
+        loading: false,
+        lista: action.payload,
+        error: null,
       };
     },
     getCarrerasFail: (
       state,
-      action: PayloadAction<any>
+      action: PayloadAction<string>
     ): CarrerasState => {
       return {
         ...state,
+        loading: false,
+        error: action.payload,
       };
     },
-    getCarrerasReset: (state): CarrerasState => {
+    getCarrerasReset: (): CarrerasState => {
       return initialState;
     },
   },
 });
 
 export const getCarreras =
-  (id:number): AppThunk =>
-  async (dispatch: AppThunkDispatch): Promise<void> => {
-    dispatch(getCarrerasRequest());
-    try {
-      const { data }: AxiosResponse<CarrerasResponse> = await axiosInstance.post(
-        "/carrera_by_id_facultad",
-        {
-        id_facultad: id,
-        }
-      );
-      dispatch(getCarrerasSuccess(data.respuesta.data));
-    } catch (err) {
-      dispatch(getCarrerasFail(err));
-    }
-  };
+  (id: number): AppThunk =>
+    async (dispatch: AppThunkDispatch): Promise<void> => {
+      dispatch(getCarrerasRequest());
+      try {
+        const { data }: AxiosResponse<CarrerasResponse> = await axiosInstance.post(
+          "/carrera_by_id_facultad",
+          {
+            id_facultad: id,
+          }
+        );
+        dispatch(getCarrerasSuccess(data.respuesta.data));
+      } catch (err) {
+        let errorMessage = 'Error al obtener carreras';
+        dispatch(getCarrerasFail(errorMessage));
+      }
+    };
 
-export const { getCarrerasSuccess, getCarrerasRequest, getCarrerasFail,getCarrerasReset } =
-carrerasGetAllSlice.actions;
+export const {
+  getCarrerasSuccess,
+  getCarrerasRequest,
+  getCarrerasFail,
+  getCarrerasReset,
+} = carrerasGetAllSlice.actions;
+
 
 export const carrerasGetAllReducer = carrerasGetAllSlice.reducer;

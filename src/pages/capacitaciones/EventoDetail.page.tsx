@@ -3,11 +3,11 @@ import Loader from '../../shared/loader.component';
 import Header from '../../shared/header.component';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useEffect } from 'react';
-import { CapacitacionGetOneReset, getCapacitacion } from '../../redux/capacitaciones/getCapacitacion.slice';
-
+import { getCapacitacion } from '../../redux/capacitaciones/getCapacitacion.slice';
 import CharlaEvent from './CharlaDetail';
 import TallerJornadaEvent from './TallerJornadaDetail';
 import MicrotallerEvent from './MicrotallerDetail';
+import ObservacionEvent from './ObservacionDetail';
 
 const EventoDetallePage = () => {
   const { id, tallerId } = useParams();
@@ -22,11 +22,13 @@ const EventoDetallePage = () => {
   const renderEventDetails = () => {
     switch (evento?.tipo) {
       case 1:
-        return <TallerJornadaEvent evento={evento}  />;
+        return <TallerJornadaEvent evento={evento} />;
       case 2:
         return <CharlaEvent evento={evento} />;
       case 3:
         return <MicrotallerEvent evento={evento} />;
+      case 4:
+        return <ObservacionEvent evento={evento} />;
       default:
         return <div>Unknown event type</div>;
     }
