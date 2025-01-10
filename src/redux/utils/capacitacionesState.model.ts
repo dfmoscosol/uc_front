@@ -1,4 +1,5 @@
 import { Evento } from "../../data/interfaces/capacitaciones.model";
+import { Configuracion } from "../../data/interfaces/cursos.model";
 
 export interface CapacitacionResponse {
   error: string;
@@ -30,4 +31,20 @@ export interface PostInscripcionResponse {
 export interface PostInscripcionState {
   exito: PostInscripcionResponse | null;
   isLoading: boolean;
+}
+
+export interface ConfiguracionResponse {
+  estado: boolean;
+  respuesta: {
+      configuraciones: Configuracion;
+      total_horas_certificados: number;
+  };
+  error: string;
+}
+
+export interface ConfiguracionState {
+  configuraciones: Configuracion;
+  totalHorasCertificados: number;
+  loading: boolean;
+  error: string | null;
 }

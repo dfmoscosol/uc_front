@@ -1,7 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
-//const baseURL = "http://127.0.0.1:8088/";
+//const baseURL = " https://pentagonoapi.ucuenca.edu.ec";
+
+const baseURL = "http://127.0.0.1:8088/";
 
 import INTERNAL_ROUTES from "../data/constants/internalRoutes";
 import { getUserFromLocalStorage } from "./persistUser.service";
@@ -44,7 +45,7 @@ axiosInstanceFiles.interceptors.response.use(
         window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`;
         break;
         case 500:
-          window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Server error
+          //window.location.href = `${INTERNAL_ROUTES.AUTH_LOGIN}`; // Server error
           break;
       default:
         break;

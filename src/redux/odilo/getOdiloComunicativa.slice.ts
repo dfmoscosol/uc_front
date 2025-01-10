@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
-import { CursosComunicativaResponse, CursosComunicativaState } from "../utils/cursosState.model";
 import axiosInstance from "../../services/api.services";
+import { OdiloComunicativaResponse, OdiloComunicativaState } from "../utils/odiloState.model";
 
-const initialState: CursosComunicativaState = {
-    cursos: [],
+const initialState: OdiloComunicativaState = {
+    odilo: [],
     info: {
         currentPage: 0,
         hasNextPage: false,
@@ -17,56 +17,55 @@ const initialState: CursosComunicativaState = {
         total_pages: 0
     },
     loading:false
-
 };
 
-export const CursosComunicativaGetAllSlice = createSlice({
+export const OdiloComunicativaGetAllSlice = createSlice({
     name: "getAllComunicativa",
     initialState,
     reducers: {
-        CursosComunicativaGetAllRequest: (state): CursosComunicativaState => {
+        OdiloComunicativaGetAllRequest: (state): OdiloComunicativaState => {
             return {
                 ...state,
-                loading:true
+                loading: true,
             };
         },
-        CursosComunicativaGetAllSuccess: (
+        OdiloComunicativaGetAllSuccess: (
             state,
-            action: PayloadAction<CursosComunicativaResponse>
-        ): CursosComunicativaState => {
+            action: PayloadAction<OdiloComunicativaResponse>
+        ): OdiloComunicativaState => {
             return {
                 ...state,
-                cursos: action.payload.respuesta.cursos,
+                odilo: action.payload.respuesta.odilo,
                 info: action.payload.respuesta.info,
-                loading:false
+                loading: false
             };
         },
-        CursosComunicativaGetAllReset: (): CursosComunicativaState => {
+        OdiloComunicativaGetAllReset: (): OdiloComunicativaState => {
             return initialState;
         },
     },
 });
 
-export const getCursosComunicativa =
+export const getOdiloComunicativa =
     (pagina: number = 1, competencia: string = "comunicativa"): AppThunk =>
         async (dispatch: AppThunkDispatch): Promise<void> => {
-            dispatch(CursosComunicativaGetAllRequest());
+            dispatch(OdiloComunicativaGetAllRequest());
             try {
-                const { data }: AxiosResponse<CursosComunicativaResponse> =
-                    await axiosInstance.get("/cursos",
+                const { data }: AxiosResponse<OdiloComunicativaResponse> =
+                    await axiosInstance.get("/odilo",
                         {
                             params: { pagina, competencia },
                         });
-                dispatch(CursosComunicativaGetAllSuccess(data));
+                dispatch(OdiloComunicativaGetAllSuccess(data));
             } catch (error) {
                 console.log(error)
             }
         };
 
 export const {
-    CursosComunicativaGetAllSuccess,
-    CursosComunicativaGetAllRequest,
-    CursosComunicativaGetAllReset,
-} = CursosComunicativaGetAllSlice.actions;
+    OdiloComunicativaGetAllSuccess,
+    OdiloComunicativaGetAllRequest,
+    OdiloComunicativaGetAllReset,
+} = OdiloComunicativaGetAllSlice.actions;
 
-export const CursosComunicativaGetAllReducer = CursosComunicativaGetAllSlice.reducer;
+export const OdiloComunicativaGetAllReducer = OdiloComunicativaGetAllSlice.reducer;

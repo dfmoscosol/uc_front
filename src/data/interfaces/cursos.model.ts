@@ -31,6 +31,18 @@ export interface KeyWordsForm {
 }
 
 export interface PdfForm {
-    file: File;
-    id_curso: number;
+    file: File; // El archivo PDF
+    nombre_curso: string;
+    horas_certificado: number;
+    horas_acredita: number;
+    institucion: string;
   }
+
+export interface Configuracion {
+    porcentaje_programa: number;
+    porcentaje_certificado: number;
+    horas_programa: number;
+}
+
+
+

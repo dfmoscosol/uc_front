@@ -15,7 +15,8 @@ const initialState: CursosTecnologicaState = {
         prevPage: null,
         total: 0,
         total_pages: 0
-    }
+    },
+    loading:false
 
 };
 
@@ -26,6 +27,7 @@ export const CursosTecnologicaGetAllSlice = createSlice({
         CursosTecnologicaGetAllRequest: (state): CursosTecnologicaState => {
             return {
                 ...state,
+                loading:true
             };
         },
         CursosTecnologicaGetAllSuccess: (
@@ -36,6 +38,7 @@ export const CursosTecnologicaGetAllSlice = createSlice({
                 ...state,
                 cursos: action.payload.respuesta.cursos,
                 info: action.payload.respuesta.info,
+                loading:false
             };
         },
         CursosTecnologicaGetAllReset: (): CursosTecnologicaState => {
@@ -50,7 +53,7 @@ export const getCursosTecnologica =
             dispatch(CursosTecnologicaGetAllRequest());
             try {
                 const { data }: AxiosResponse<CursosTecnologicaResponse> =
-                await axiosInstance.get("/get_user_last_resultado_cursos",
+                await axiosInstance.get("/cursos",
                 {
                     params: { pagina, competencia },
                 });

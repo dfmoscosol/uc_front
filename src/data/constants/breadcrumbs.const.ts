@@ -23,9 +23,13 @@ const BREADCRUMBS_ITEMS = {
     pageTitle: "Cursos Recomendados",
     breadcrumbs: [
     ],
+  },odilo: {
+    pageTitle: "Plataforma de Formación y Aprendizaje ODILO - UCuenca",
+    breadcrumbs: [
+    ],
   },
   inscripciones: {
-    pageTitle: "Eventos",
+    pageTitle: "Inscripción a Eventos de Formación",
     breadcrumbs: [
     ],
   },
@@ -40,7 +44,7 @@ const BREADCRUMBS_ITEMS = {
     ],
   },
   certificados_cursos: {
-    pageTitle: "Acreditación de Certificados",
+    pageTitle: "Subir Certificados Otorgados por Instituciones Externas",
     breadcrumbs: [
     ],
   },

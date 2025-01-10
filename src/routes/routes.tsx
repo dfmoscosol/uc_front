@@ -14,7 +14,8 @@ import CoursesPage from "../pages/cursos/Cursos.page";
 import InscripcionesPage from "../pages/capacitaciones/Inscripciones.page";
 import CertificadosCursosPage from "../pages/cursos/CertificadosCursos.page";
 import EventoDetallePage from "../pages/capacitaciones/EventoDetail.page";
-import Error401 from "../pages/errors/error401.page";
+import HistorialPage from "../pages/historial/Historial.page";
+import OdiloPage from "../pages/cursos/Odilo.page";
 
 
 const RoutesApp = () => {
@@ -25,9 +26,11 @@ const RoutesApp = () => {
         <Route path={INTERNAL_ROUTES.ENCUESTA} element={<EncuestaPage />} />
         <Route path={INTERNAL_ROUTES.RESULTADOS} element={<ResultadosPage />} />
         <Route path={INTERNAL_ROUTES.COURSES} element={<CoursesPage />} />
+        <Route path={INTERNAL_ROUTES.ODILO} element={<OdiloPage />} />
         <Route path={INTERNAL_ROUTES.INSCRIPCIONES} element={<InscripcionesPage />} />
         <Route path={INTERNAL_ROUTES.COURSES_CERTIFICADOS} element={<CertificadosCursosPage/>} />
         <Route path={INTERNAL_ROUTES.EVENTO} element={<EventoDetallePage/>} /> 
+        <Route path={INTERNAL_ROUTES.HISTORIAL} element={<HistorialPage/>} /> 
         <Route path={`${INTERNAL_ROUTES.EVENTO}/:tallerId`} element={<EventoDetallePage />} />
       </Routes>
     </Skeleton>

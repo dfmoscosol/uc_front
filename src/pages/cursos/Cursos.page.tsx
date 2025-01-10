@@ -6,58 +6,40 @@ import { useEffect, useState, useRef } from "react";
 import BREADCRUMBS_ITEMS from "../../data/constants/breadcrumbs.const";
 import Loader from "../../shared/loader.component";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { getFacultadesReset } from "../../redux/encuesta/getFacultades.slice";
-import { getCarrerasReset } from "../../redux/encuesta/getCarreras.slice";
-import { validateEncuestaReset } from "../../redux/encuesta/validateEncuesta.slice";
-import { getPreguntasReset } from "../../redux/encuesta/getPreguntas.slice";
-import { getResultados, getResultadosReset, getUltimoResultado, initialState } from "../../redux/resultados/getResultados.slice";
-import { getPeriodosReset } from "../../redux/resultados/getPeriodos.slice";
-import { postPreguntasReset } from "../../redux/encuesta/postRespuesta.slice";
+import { getUltimoResultado } from "../../redux/resultados/getResultados.slice";
 import TituloCurso from "./componenets/TituloCurso";
 import StarRating from "./componenets/StarRating.component";
 import Pagination from "./componenets/Pagination.component";
-import ModalComponentLike from "./componenets/ModalLike.component";
 import { getCursosPedagogica } from "../../redux/cursos/getCursosPedagogica.slice";
-import { CursosComunicativaGetAllReset, getCursosComunicativa } from "../../redux/cursos/getCursosComunicativa.slice";
-import { CursosGestionGetAllReset, getCursosGestion } from "../../redux/cursos/getCursosGestionslice";
-import { CursosInvestigativaGetAllReducer, CursosInvestigativaGetAllReset, getCursosInvestigativa } from "../../redux/cursos/getCursosInvestigativa.slice";
-import { CursosTecnologicaGetAllReset, getCursosTecnologica } from "../../redux/cursos/getCursosTecnologica.slice";
-import { Toast } from "react-bootstrap";
-import { postPalabrasClaveReset } from "../../redux/cursos/postPalabrasClave.slice";
-
+import { getCursosComunicativa } from "../../redux/cursos/getCursosComunicativa.slice";
+import { getCursosGestion } from "../../redux/cursos/getCursosGestionslice";
+import { getCursosInvestigativa } from "../../redux/cursos/getCursosInvestigativa.slice";
+import { getCursosTecnologica } from "../../redux/cursos/getCursosTecnologica.slice";
 const CoursesPage = (): JSX.Element => {
-  // local variables
-  const [open, setOpen] = useState(false);
-  const [keyWords, setKeyWords] = useState([]);
-  const [competencia, setCompetencia] = useState("");
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const toastRefSuccess = useRef<HTMLDivElement>(null);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
+
   // constants
   const {
     cursos: { pageTitle },
   } = BREADCRUMBS_ITEMS;
 
   const dispatch = useAppDispatch();
-  const { data: dataResultados } = useAppSelector((state) => state.resultados)
+  const { data: dataResultados, loading: loadingResultados } = useAppSelector((state) => state.resultados)
 
-  const { cursos: cursosPedagogica, info: infoPedagogica } = useAppSelector(
+  const { cursos: cursosPedagogica, info: infoPedagogica, loading: loadingPedagogica } = useAppSelector(
     (state) => state.cursosPedagogica
   );
-  const { cursos: cursosComunicativa, info: infoComunicativa } = useAppSelector(
+  const { cursos: cursosComunicativa, info: infoComunicativa, loading: loadingComunicativa } = useAppSelector(
     (state) => state.cursosComunicativa
   );
-  const { cursos: cursosInvestigativa, info: infoInvestigativa } = useAppSelector(
+  const { cursos: cursosInvestigativa, info: infoInvestigativa, loading: loadingInvestigativa } = useAppSelector(
     (state) => state.cursosInvestigativa
   );
-  const { cursos: cursosGestion, info: infoGestion } = useAppSelector(
+  const { cursos: cursosGestion, info: infoGestion, loading: loadingGestion } = useAppSelector(
     (state) => state.cursosGestion
   );
-  const { cursos: cursosTecnologica, info: infoTecnologica } = useAppSelector(
+  const { cursos: cursosTecnologica, info: infoTecnologica, loading: loadingTecnologica } = useAppSelector(
     (state) => state.cursosTecnologica
   );
-  const { exito } = useAppSelector((state) => state.send_keywords)
-
 
   const getCursosPedagogicaByPagination = (page: number): void => {
     dispatch(getCursosPedagogica(page))
@@ -75,60 +57,22 @@ const CoursesPage = (): JSX.Element => {
     dispatch(getCursosTecnologica(page))
   }
 
-  const handleCloseSuccess = () => {
-    setShowSuccessAlert(false)
-  };
-
-  const handleCloseError = () => {
-    setShowErrorAlert(false)
-  };
-
-  const handleOpenModal = (keyWords, competencia) => {
-    setKeyWords(keyWords);
-    setCompetencia(competencia)
-    setOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-    if (exito == true) {
-      setShowSuccessAlert(true)
-    } else if (exito == false) {
-      setShowErrorAlert(true)
-    }
-  }
-
   useEffect(() => {
-    dispatch(getResultadosReset())
-    dispatch(CursosGestionGetAllReset())
-    dispatch(CursosComunicativaGetAllReset())
-    dispatch(CursosGestionGetAllReset())
-    dispatch(CursosInvestigativaGetAllReset())
-    dispatch(CursosTecnologicaGetAllReset())
-    dispatch(postPalabrasClaveReset())
     dispatch(getUltimoResultado())
     dispatch(getCursosPedagogica())
     dispatch(getCursosComunicativa())
     dispatch(getCursosGestion())
     dispatch(getCursosInvestigativa())
     dispatch(getCursosTecnologica())
-  }, [dispatch,exito]);
+  }, [dispatch]);
 
   return (
     <>
-      {open &&
-        <ModalComponentLike
-          dispatch={dispatch}
-          competencia={competencia}
-          keyWords={keyWords}
-          onClose={handleCloseModal}
-        />
-      }
       <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderTop: "1px solid #d7dfe3" }}>
         <Header title={pageTitle} />
         <p className="descripcion-cursos" style={{ textAlign: "justify", paddingBottom: "20px" }}>En esta sección, encontrará una <b>selección de cursos</b> extraídos de la web en base a su perfil para <b>mejorar sus competencias TIC como docente</b>. Estos cursos están diseñados por expertos y respaldados por plataformas de aprendizaje de alta calidad, abordando aspectos clave de la <b>educación en la era digital</b>. Ya sea que desee fortalecer sus <b>habilidades en el uso de herramientas digitales</b> en el aula o explorar <b>estrategias pedagógicas innovadoras</b>, aquí encontrará opciones que se adaptan a sus necesidades. Su desarrollo profesional es esencial para <b>marcar la diferencia en la educación de sus estudiantes</b>, y estamos aquí para apoyarte en este proceso.</p>
       </div>
-      {dataResultados == initialState.data ? (
+      {(loadingComunicativa || loadingInvestigativa || loadingPedagogica || loadingGestion || loadingTecnologica || loadingResultados) ? (
         <>
           <div className="row justify-content-center" style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", }}>
             <div className="col-6">
@@ -154,7 +98,7 @@ const CoursesPage = (): JSX.Element => {
                 cursosPedagogica?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "pedagogica")}>
+                      <div className="card border rounded" /* onClick={() => handleOpenModal(curso.keywords, "pedagogica")} */>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
                             <img src={curso.urlimagen} className="card-img" />
@@ -211,7 +155,7 @@ const CoursesPage = (): JSX.Element => {
                 cursosComunicativa?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "comunicativa")}>
+                      <div className="card border rounded" /* onClick={() => handleOpenModal(curso.keywords, "comunicativa")} */>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
                             <img src={curso.urlimagen} className="card-img" />
@@ -269,7 +213,7 @@ const CoursesPage = (): JSX.Element => {
                 cursosGestion?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "gestion")}>
+                      <div className="card border rounded" /* onClick={() => handleOpenModal(curso.keywords, "gestion")} */>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
                             <img src={curso.urlimagen} className="card-img" />
@@ -327,7 +271,7 @@ const CoursesPage = (): JSX.Element => {
                 cursosInvestigativa?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "investigativa")}>
+                      <div className="card border rounded" /* onClick={() => handleOpenModal(curso.keywords, "investigativa")} */>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
                             <img src={curso.urlimagen} className="card-img" />
@@ -386,7 +330,7 @@ const CoursesPage = (): JSX.Element => {
                 cursosTecnologica?.map(
                   (curso): JSX.Element => (
                     <a href={curso.url} target="_blank" className="card-link ">
-                      <div className="card border rounded" onClick={() => handleOpenModal(curso.keywords, "tecnologica")}>
+                      <div className="card border rounded" /* onClick={() => handleOpenModal(curso.keywords, "tecnologica")} */>
                         <div className="row">
                           <div className="col-xl-3 col-lg-12" style={{ height: "100%" }}>
                             <img src={curso.urlimagen} className="card-img" />
@@ -429,66 +373,6 @@ const CoursesPage = (): JSX.Element => {
         </>
       )
       }
-      {showSuccessAlert && (
-        <div
-          ref={toastRefSuccess}
-          style={{
-            position: 'absolute',
-            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
-            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
-            zIndex: 1,
-          }}
-        >
-          <Toast style={{
-            background: '#fff', // Color de fondo
-            color: '#000', // Color del texto
-            maxWidth: '300px', // Ancho máximo del Toast
-          }} show={showSuccessAlert} delay={6000} onClose={handleCloseSuccess} autohide>
-            <Toast.Header closeButton={false} style={{ background: '#157347', color: '#fff' }}>
-              <strong className="me-auto">Éxito</strong>
-              <button
-                type="button"
-                className="btn-close btn-close-white"
-                aria-label="Cerrar"
-                onClick={handleCloseSuccess}
-              />
-            </Toast.Header>
-            <Toast.Body>
-              Retroalimentación enviada correctamente.
-            </Toast.Body>
-          </Toast>
-        </div>
-      )}
-      {showErrorAlert && (
-        <div
-          ref={toastRefSuccess}
-          style={{
-            position: 'absolute',
-            top: 20, // Puedes ajustar esta posición para que se muestre donde desees
-            right: 20, // Puedes ajustar esta posición para que se muestre donde desees
-            zIndex: 1,
-          }}
-        >
-          <Toast style={{
-            background: '#fff', // Color de fondo
-            color: '#000', // Color del texto
-            maxWidth: '300px', // Ancho máximo del Toast
-          }} show={showErrorAlert} onClose={handleCloseError} autohide delay={6000}>
-            <Toast.Header closeButton={false} style={{ background: '#A51008', color: '#fff' }}>
-              <strong className="me-auto">Error</strong>
-              <button
-                type="button"
-                className="btn-close btn-close-white"
-                aria-label="Cerrar"
-                onClick={handleCloseError}
-              />
-            </Toast.Header>
-            <Toast.Body>
-              No se pudo enviar la retroalimentación.
-            </Toast.Body>
-          </Toast>
-        </div>
-      )}
 
     </>
   );

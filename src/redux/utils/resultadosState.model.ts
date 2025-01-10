@@ -19,6 +19,7 @@ export interface ResultadosState {
         pedagogica: Competencia,
         tecnologica: Competencia
     }
+    loading:boolean
 }
 
 export interface ResultadosResponse {

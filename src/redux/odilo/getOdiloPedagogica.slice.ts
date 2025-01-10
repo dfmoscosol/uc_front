@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import { AppThunk, AppThunkDispatch } from "../utils/types";
-import { CursosPedagogicaResponse, CursosPedagogicaState } from "../utils/cursosState.model";
 import axiosInstance from "../../services/api.services";
+import { OdiloPedagogicaResponse, OdiloPedagogicaState } from "../utils/odiloState.model";
 
-const initialState: CursosPedagogicaState = {
-    cursos: [],
+const initialState: OdiloPedagogicaState = {
+    odilo: [],
     info: {
         currentPage: 0,
         hasNextPage: false,
@@ -19,53 +19,53 @@ const initialState: CursosPedagogicaState = {
     loading:false
 };
 
-export const CursosPedagogicaGetAllSlice = createSlice({
+export const OdiloPedagogicaGetAllSlice = createSlice({
     name: "getAllPedagogica",
     initialState,
     reducers: {
-        CursosPedagogicaGetAllRequest: (state): CursosPedagogicaState => {
+        OdiloPedagogicaGetAllRequest: (state): OdiloPedagogicaState => {
             return {
                 ...state,
-                loading:true
+                loading: true,
             };
         },
-        CursosPedagogicaGetAllSuccess: (
+        OdiloPedagogicaGetAllSuccess: (
             state,
-            action: PayloadAction<CursosPedagogicaResponse>
-        ): CursosPedagogicaState => {
+            action: PayloadAction<OdiloPedagogicaResponse>
+        ): OdiloPedagogicaState => {
             return {
                 ...state,
-                cursos: action.payload.respuesta.cursos,
+                odilo: action.payload.respuesta.odilo,
                 info: action.payload.respuesta.info,
-                loading:false
+                loading: false
             };
         },
-        CursosPedagogicaGetAllReset: (): CursosPedagogicaState => {
+        OdiloPedagogicaGetAllReset: (): OdiloPedagogicaState => {
             return initialState;
         },
     },
 });
 
-export const getCursosPedagogica =
+export const getOdiloPedagogica =
     (pagina: number = 1, competencia: string = "pedagogica"): AppThunk =>
         async (dispatch: AppThunkDispatch): Promise<void> => {
-            dispatch(CursosPedagogicaGetAllRequest());
+            dispatch(OdiloPedagogicaGetAllRequest());
             try {
-                const { data }: AxiosResponse<CursosPedagogicaResponse> =
-                    await axiosInstance.get("/cursos",
+                const { data }: AxiosResponse<OdiloPedagogicaResponse> =
+                    await axiosInstance.get("/odilo",
                         {
                             params: { pagina, competencia },
                         });
-                dispatch(CursosPedagogicaGetAllSuccess(data));
+                dispatch(OdiloPedagogicaGetAllSuccess(data));
             } catch (error) {
                 console.log(error)
             }
         };
 
 export const {
-    CursosPedagogicaGetAllSuccess,
-    CursosPedagogicaGetAllRequest,
-    CursosPedagogicaGetAllReset,
-} = CursosPedagogicaGetAllSlice.actions;
+    OdiloPedagogicaGetAllSuccess,
+    OdiloPedagogicaGetAllRequest,
+    OdiloPedagogicaGetAllReset,
+} = OdiloPedagogicaGetAllSlice.actions;
 
-export const CursosPedagogicaGetAllReducer = CursosPedagogicaGetAllSlice.reducer;
+export const OdiloPedagogicaGetAllReducer = OdiloPedagogicaGetAllSlice.reducer;

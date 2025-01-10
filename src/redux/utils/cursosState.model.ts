@@ -9,6 +9,7 @@ export interface CursosPedagogicaResponse {
 export interface CursosPedagogicaState {
     info?: Info;
     cursos?: Curso[];
+    loading: boolean
 }
 
 export interface CursosInvestigativaResponse {
@@ -20,6 +21,7 @@ export interface CursosInvestigativaResponse {
 export interface CursosInvestigativaState {
     info?: Info;
     cursos?: Curso[];
+    loading: boolean
 }
 
 export interface CursosTecnologicaResponse {
@@ -31,6 +33,7 @@ export interface CursosTecnologicaResponse {
 export interface CursosTecnologicaState {
     info?: Info;
     cursos?: Curso[];
+    loading: boolean
 }
 
 export interface CursosComunicativaResponse {
@@ -42,6 +45,7 @@ export interface CursosComunicativaResponse {
 export interface CursosComunicativaState {
     info?: Info;
     cursos?: Curso[];
+    loading: boolean
 }
 
 export interface CursosGestionResponse {
@@ -53,6 +57,7 @@ export interface CursosGestionResponse {
 export interface CursosGestionState {
     info?: Info;
     cursos?: Curso[];
+    loading: boolean
 }
 
 export interface PostPalabrasClaveResponse {
@@ -92,42 +97,3 @@ export interface PdfPostState {
     isLoading: boolean;
 }
 
-export interface AcreditacionesCapacitacionResponse {
-    error: string,
-    estado: boolean,
-    respuesta: AcreditacionesCapacitacionState,
-}
-
-export interface AcreditacionesCapacitacionState {
-    acreditaciones_capacitacion: AcreditacionesCapacitacion[];
-    isLoading:boolean;
-}
-
-export interface AcreditacionesCapacitacion {
-    aprobado: boolean;
-    asistencia: boolean;
-    horas: number;
-    nombre: string;
-    presencial: boolean;
-    tipo:string;
-    observacion: string;
-}
-
-export interface AcreditacionesCursosResponse {
-    error: string,
-    estado: boolean,
-    respuesta: AcreditacionesCursosState,
-}
-
-export interface AcreditacionesCursosState {
-    acreditaciones_cursos: AcreditacionesCursos[];
-    isLoading:boolean;
-}
-
-export interface AcreditacionesCursos {
-    horas: number;
-    titulo: string;
-    isapproved: boolean;
-    competencia:string;
-    observacion: string;
-}

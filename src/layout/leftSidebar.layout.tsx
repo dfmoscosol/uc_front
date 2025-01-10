@@ -154,10 +154,51 @@ const LeftSidebar = (): JSX.Element => {
               </NavLink>
             </li>
 
-            {/* <li className="pt-4 titulo-menu" >
-              {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>CURSOS</>)}
+            <li title="Certificados Externos" className="pt-1">
+              <NavLink
+                to={INTERNAL_ROUTES.COURSES_CERTIFICADOS}
+                className={
+                  location.pathname.includes(INTERNAL_ROUTES.COURSES_CERTIFICADOS)
+                    ? "navbar_item_active"
+                    : ""
+                }
+              >
+                <i className="zmdi zmdi-file-plus" ></i>
+                <span>Certificados Externos</span>
+              </NavLink>
             </li>
-            <li title="Recomendaciones" className="pt-1">
+           
+            <li title="Formación D360" className="pt-1">
+              <NavLink
+                to={INTERNAL_ROUTES.HISTORIAL}
+                className={
+                  location.pathname.includes(INTERNAL_ROUTES.HISTORIAL)
+                    ? "navbar_item_active"
+                    : ""
+                }
+              >
+                <i className="zmdi zmdi-graduation-cap" ></i>
+                <span>Horas de Formación</span>
+              </NavLink>
+            </li>
+
+            <li className="pt-4 titulo-menu" >
+              {openSidebar ? (<><hr className="hr-sidebar"></hr></>) : (<>RECOMENDADORES</>)}
+            </li>
+            <li title="MOOCs" className="pt-1">
+              <NavLink
+                to={INTERNAL_ROUTES.ODILO}
+                className={
+                  location.pathname.includes(INTERNAL_ROUTES.ODILO)
+                    ? "navbar_item_active"
+                    : ""
+                }
+              >
+                <i className="zmdi zmdi-collection-bookmark" ></i>
+                <span>ODILO - UCuenca</span>
+              </NavLink>
+            </li>
+            <li title="MOOCs" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.COURSES}
                 className={
@@ -167,9 +208,10 @@ const LeftSidebar = (): JSX.Element => {
                 }
               >
                 <i className="zmdi zmdi-laptop-mac" ></i>
-                <span>Recomendaciones</span>
+                <span>MOOCs</span>
               </NavLink>
             </li>
+            {/* 
             <li title="Subir Certificados" className="pt-1">
               <NavLink
                 to={INTERNAL_ROUTES.COURSES_CERTIFICADOS}

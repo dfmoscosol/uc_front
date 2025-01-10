@@ -7,11 +7,13 @@ const INTERNAL_ROUTES = {
   ENCUESTA: "/encuesta",
   RESULTADOS: "/resultados",
   COURSES: "/cursos",
+  ODILO: "/odilo",
   COURSES_CERTIFICADOS: "/subircertificado",
   INSCRIPCIONES: "/eventos",
   EVENTO: "/eventos/:id",
   CERTIFICADOS: "/certificados",
   ASISTENCIA: "/asistencia",
+  HISTORIAL: "/historial",
 
   //SERVER
   SERVER_ERROR_404: `/404`,

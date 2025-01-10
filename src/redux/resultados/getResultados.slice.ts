@@ -57,6 +57,7 @@ export const initialState: ResultadosState = {
       puntaje:0
     }
   },
+  loading:false
 };
 
 export const ResultadosGetAllSlice = createSlice({
@@ -66,6 +67,7 @@ export const ResultadosGetAllSlice = createSlice({
     getResultadosRequest: (state): ResultadosState => {
       return {
         ...state,
+        loading:true
       };
     },
     getResultadosSuccess: (
@@ -75,6 +77,7 @@ export const ResultadosGetAllSlice = createSlice({
       return {
         ...state,
         data: action.payload,
+        loading:false
       };
     },
     getResultadosFail: (
@@ -83,6 +86,7 @@ export const ResultadosGetAllSlice = createSlice({
     ): ResultadosState => {
       return {
         ...state,
+        loading:false
       };
     },
     getResultadosReset: (state): ResultadosState => {
@@ -114,7 +118,7 @@ export const getResultados =
     dispatch(getResultadosRequest());
     try {
       const { data }: AxiosResponse<ResultadosResponse> = await axiosInstance.get(
-        "/get_user_last_resultado");
+        "/resultados_last");
 
       dispatch(getResultadosSuccess(data.respuesta.data));
     } catch (err) {
