@@ -163,6 +163,16 @@ const EncuestaPage = (): JSX.Element => {
     setErrorPreguntas(newArrayError);
 
   };
+  if (dataPreguntas){
+
+    const sortedComunicativa = [...dataPreguntas.comunicativa].sort((a, b) => a.id_pregunta - b.id_pregunta);
+    const sortedinvestigativa = [...dataPreguntas.investigativa].sort((a, b) => a.id_pregunta - b.id_pregunta);
+    const sortedgestion = [...dataPreguntas.gestion].sort((a, b) => a.id_pregunta - b.id_pregunta);
+    const sortedpedagogica = [...dataPreguntas.pedagogica].sort((a, b) => a.id_pregunta - b.id_pregunta);
+    const sortedtecnologica = [...dataPreguntas.tecnologica].sort((a, b) => a.id_pregunta - b.id_pregunta);
+    console.log(sortedComunicativa)
+  }
+
 
   return (
     <>
@@ -431,7 +441,7 @@ const EncuestaPage = (): JSX.Element => {
                 <div style={{ background: "#ffffff", borderRight: "1px solid #d7dfe3", borderLeft: "1px solid #d7dfe3", borderBottom: "1px solid #d7dfe3", borderTop: "2px solid #002856" }}>
                   <div className="row justify-content-center pt-3 pb-3">
                     <div className="col-xl-8 col-sm-12" style={{ textAlign: "justify", paddingInline: "25px" }}>
-                      <h5>Competencia Teconológica</h5>
+                      <h5>Competencia Tecnológica</h5>
                       <p>Esta competencia se define como la capacidad para <b>seleccionar</b> y <b>utilizar</b> de forma pertinente, responsable y eficiente una variedad de <b>herramientas tecnológicas</b> entendiendo los principios que las rigen, la forma de combinarlas y su utilización en el contexto educativo.</p>
                       <p>Identificación de características, usos y oportunidades de las TIC en los procesos educativos.</p>
                     </div>
